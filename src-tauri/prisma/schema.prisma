@@ -21,6 +21,7 @@ model Prompt {
 model SessionData {
     id        Int      @id @default(autoincrement())
     sessionId Int
+    role      String
     message   String
     createdAt DateTime @default(now()) @map(name: "created_at")
     updatedAt DateTime @updatedAt @map(name: "updated_at")

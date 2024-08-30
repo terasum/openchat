@@ -1,15 +1,16 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
-use log::info;
+use futures::executor;
+// use log::info;
 use tauri::api::path::{resolve_path, BaseDirectory};
-use tauri::Manager;
+use tauri::Manager; // 0.3.1
 
 mod commands;
-mod nativesql;
+mod db;
 mod tray;
 
-fn main() {
+#[tokio::main]
+async fn main() -> std::io::Result<()> {
     tauri::Builder::default()
         .setup(|_app| {
             #[cfg(target_os = "windows")]
@@ -33,19 +34,21 @@ fn main() {
             )?;
 
             // init databases
-            let result = nativesql::init_app(&path);
-            match result {
-                Ok(()) => {
-                    info!("App started done.");
+
+            let init_result = executor::block_on(db::init_db());
+            match init_result {
+                Ok(_) => {
+                    println!("[init] database init ok");
                 }
                 Err(err) => {
-                    info!("App started faild. {}", err);
+                    println!("[init] database init error {}", err);
                 }
             }
+
             Ok(())
         })
         .system_tray(tray::main_menu())
-        .plugin(tauri_plugin_sql::Builder::default().build())
+        // .plugin(tauri_plugin_sql::Builder::default().build())
         .plugin(tauri_plugin_system_info::init())
         .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
             let window = app.get_window("main").unwrap();
@@ -61,4 +64,18 @@ fn main() {
         .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    Ok(())
 }
+
+// fn main() {
+
+//     let init_result = db::init_db().await;
+//     match init_result {
+//         Ok(result) => {}
+//         Err(err) => {
+//             println!("{}", err);
+//         }
+//     }
+
+// }

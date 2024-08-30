@@ -1,0 +1,24 @@
+.tab-navigation {
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    justify-content: space-between;
+  }
+  
+  .tab-navigation button {
+    width: 36px;
+    padding: 4px 0px;
+    margin: 4px auto;
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .tab-navigation button:hover {
+  }

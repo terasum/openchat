@@ -9,10 +9,6 @@ use crate::db::{self, prisma_client::PrismaClient};
 use crate::db::prisma_client::session;
 use crate::db::prisma_client::session_data;
 
-pub type DbState<'a> = State<'a, Arc<PrismaClient>>;
-
-// -------------- db releated commands -----------------
-
 /// 定义一个包装器函数来处理异步调用
 #[tauri::command]
 #[specta::specta]

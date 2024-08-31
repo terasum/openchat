@@ -19,7 +19,10 @@ use tauri_specta::ts;
 fn generate_bindings() {
     println!("cargo:rerun-if-changed=../src/rust-bindings.ts");
     ts::export(
-        collect_types![commands::wrap_get_session_list],
+        collect_types![
+            commands::wrap_get_session_list,
+            commands::wrap_get_session_data_by_id
+        ],
         "../src/rust-bindings.ts",
     )
     .unwrap();

@@ -15,12 +15,17 @@ import GearPage from "./SettingsPage";
 import { invoke } from "@tauri-apps/api/tauri";
 
 import { MarkdownDemoData } from "./lib/data/markdown-demo";
-import { wrapGetSessionList, Session } from "./bindings-v2";
+import {
+  wrapGetSessionList,
+  Session,
+  wrapGetSessionDataById,
+  SessionData,
+} from "./rust-bindings";
 
 interface Conversation {
   id: string;
   title: string;
-  messages: string[];
+  messages: { role: string; content: string }[];
 }
 
 const openDevTool = async () => {
@@ -35,9 +40,9 @@ const ChatInterface: React.FC = () => {
       id: "0",
       title: "如果我fork了一个项目...",
       messages: [
-        "请问有什么可以帮您的吗？",
-        "请问如何处理MDX文档?",
-        MarkdownDemoData(),
+        { role: "assistant", content: "请问有什么可以帮您的吗？?" },
+        { role: "user", content: "请问如何处理MDX文档?" },
+        { role: "assistant", content: MarkdownDemoData() },
       ],
     },
   ]);
@@ -52,20 +57,22 @@ const ChatInterface: React.FC = () => {
     { id: 3, label: "Settings", icon: Gear },
   ];
 
-  function getMessage(): string[] {
+  function getMessage(): { role: string; content: string }[] {
     const selected = conversations.filter((conversation) => {
       return conversation.id == selectedConversation;
     });
-    
+
     if (selected.length <= 0) {
-      return ["有什么可以帮您的吗?"];
+      return [{ role: "assistant", content: "有什么可以帮您的吗?" }];
     }
 
     const messages = selected[0].messages.map((message) => {
       return message;
     });
 
-    return messages.length > 0 ? messages : ["有什么可以帮您的吗?"];
+    return messages.length > 0
+      ? messages
+      : [{ role: "assistant", content: "有什么可以帮您的吗?" }];
   }
 
   const handleSelectTab = async (id: number) => {
@@ -76,8 +83,37 @@ const ChatInterface: React.FC = () => {
     setSelectedTab(id);
   };
 
-  const handleSelectConversation = (id: string) => {
+  const handleSelectConversation = async (id: string) => {
+    console.log(
+      "[debug/App.tsx](handleSelectConversation): selectedConversation: ",
+      selectedConversation
+    );
     setSelectedConversation(id);
+    const session_data = await wrapGetSessionDataById(id);
+    console.log(
+      "[debug/App.tsx](handleSelectConversation): session_data: ",
+      session_data
+    );
+    if (session_data && session_data instanceof Array) {
+      console.log(
+        "[debug/App.tsx](handleSelectConversation): session_data(instance of Array): ",
+        session_data
+      );
+
+      const session_data_list = session_data as unknown as SessionData[];
+      const messages = session_data_list.map((session_data) => {
+        const session_message = JSON.parse(session_data.message);
+        return session_message;
+      });
+
+      setConversations((prevConversations) =>
+        prevConversations.map((conversation) =>
+          conversation.id === id
+            ? { ...conversation, messages: messages }
+            : conversation
+        )
+      );
+    }
   };
 
   const handleSendMessage = (message: string) => {
@@ -97,20 +133,20 @@ const ChatInterface: React.FC = () => {
           return {
             id: session.id,
             title: session.title,
-            messages: [] as string[],
+            messages: [] as  { role: string; content: string }[],
           };
         });
         conversationList.push({
           id: "0",
           title: "demo",
           messages: [
-            "请问有什么可以帮您的吗？",
-            "请问如何处理MDX文档?",
-            MarkdownDemoData(),
+            { role: "assistant", content: "请问有什么可以帮您的吗？?" },
+            { role: "user", content: "请问如何处理MDX文档?" },
+            { role: "assistant", content: MarkdownDemoData() },
           ],
         });
         setConversations(conversationList);
-        setSelectedConversation(conversationList[0].id);
+        handleSelectConversation(conversationList[0].id)
       } else {
         console.error(res as unknown as string);
       }

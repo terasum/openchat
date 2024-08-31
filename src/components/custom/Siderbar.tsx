@@ -4,7 +4,7 @@ import { PlusCircledIcon } from "@radix-ui/react-icons";
 import "./Siderbar.scss";
 
 interface SidebarProps {
-  conversations: { id: string; title: string; messages: string[] }[];
+  conversations: { id: string; title: string; messages:  { role: string; content: string }[] }[];
   selectedConversation: string;
   onSelectConversation: (id: string) => void;
 }

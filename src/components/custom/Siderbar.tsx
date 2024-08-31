@@ -4,9 +4,9 @@ import { PlusCircledIcon } from "@radix-ui/react-icons";
 import "./Siderbar.scss";
 
 interface SidebarProps {
-  conversations: { id: number; title: string; messages: string[] }[];
-  selectedConversation: number;
-  onSelectConversation: (id: number) => void;
+  conversations: { id: string; title: string; messages: string[] }[];
+  selectedConversation: string;
+  onSelectConversation: (id: string) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -24,13 +24,13 @@ const Sidebar: React.FC<SidebarProps> = ({
         <div className="flex flex-col w-full overflow-y-auto">
           {conversations.map((conversation) => (
             <div
-              key={+"parent-" + String(conversation.id)}
+              key={conversation.id}
               className="flex flex-col w-full"
             >
               <button
                 key={conversation.id}
                 onClick={() => onSelectConversation(conversation.id)}
-                className={`text-left p-2 pl-4 pr-4 rounded-lg mb-2 shadow-md hover:bg-gray-200 ${
+                className={`text-left p-2 pl-4 pr-4 truncate overflow-hidden rounded-lg mb-2 shadow-md hover:bg-gray-200 ${
                   selectedConversation === conversation.id
                     ? "bg-gray-200"
                     : "bg-white"

@@ -1,23 +1,27 @@
 datasource db {
     provider = "sqlite"
-    url      = "file:dev/openchat-dev.db"
+    url      = "file:/Users/chenquan/Library/Application\\ Support/OpenChat/openchat-data-dev.db"
 }
 
 generator client {
     provider    = "cargo prisma"
-    output      = "../src/prisma.rs"
-    module_path = "crate::prisma"
+    output      = "../src/db/prisma_client.rs"
+    module_path = "crate::db::prisma_client"
 }
 
 model Prompt {
-    id       Int    @id @default(autoincrement())
-    title    String
-    descript String
-    prompt   String
+    id        Int      @id @default(autoincrement())
+    title     String
+    descript  String
+    prompt    String
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+    @@map("prompt")
 }
 
 model SessionData {
-    id           Int     @id @default(autoincrement())
+    id           Int      @id @default(autoincrement())
     sessionId    String
     role         String
     message      String
@@ -25,17 +29,31 @@ model SessionData {
     is_memory    Boolean
     message_type String
     model        String
+    session      Session? @relation(fields: [sessionId], references: [id], name: "SessionData")
+    createdAt    DateTime @default(now()) @map(name: "created_at")
+    updatedAt    DateTime @updatedAt @map(name: "updated_at")
+
+    @@map("session_data")
 }
 
 model Session {
-    id          String @id
+    id          String        @id @default(cuid())
     title       String
     role_id     Int
     type        String
+    SessionData SessionData[] @relation(name: "SessionData")
+    createdAt   DateTime      @default(now()) @map(name: "created_at")
+    updatedAt   DateTime      @updatedAt @map(name: "updated_at")
+
+    @@map("session")
 }
 
 model Settings {
-    id    Int    @id @default(autoincrement())
-    key   String
-    value String
+    id        Int      @id @default(autoincrement())
+    key       String
+    value     String
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
+
+    @@map("settings")
 }

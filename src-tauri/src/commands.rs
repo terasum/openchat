@@ -7,6 +7,7 @@ use webbrowser::{open_browser, Browser};
 use crate::db::{self, prisma_client::PrismaClient};
 
 use crate::db::prisma_client::session;
+use crate::db::prisma_client::session_data;
 
 pub type DbState<'a> = State<'a, Arc<PrismaClient>>;
 
@@ -22,6 +23,17 @@ pub async fn wrap_get_session_list(
 ) -> Result<Vec<session::Data>, String> {
     let db_client = Arc::clone(&state);
     let result = db::command_session::get_session_list(&db_client, start.into(), end.into()).await;
+    return result;
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_get_session_data_by_id(
+    state: State<'_, Arc<PrismaClient>>,
+    id: String,
+) -> Result<Vec<session_data::Data>, String> {
+    let db_client = Arc::clone(&state);
+    let result = db::command_session::get_session_data_by_id(&db_client, id.into()).await;
     return result;
 }
 

@@ -17,10 +17,10 @@ use specta::functions::collect_types;
 use tauri_specta::ts;
 
 fn generate_bindings() {
-    println!("cargo:rerun-if-changed=../src/bindings.ts");
+    println!("cargo:rerun-if-changed=../src/rust-bindings.ts");
     ts::export(
         collect_types![commands::wrap_get_session_list],
-        "../src/bindings.ts",
+        "../src/rust-bindings.ts",
     )
     .unwrap();
 }
@@ -64,6 +64,7 @@ async fn main() -> std::io::Result<()> {
             commands::open_url,
             commands::open_devtools,
             commands::wrap_get_session_list,
+            commands::wrap_get_session_data_by_id,
         ])
         .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())

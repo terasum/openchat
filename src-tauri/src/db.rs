@@ -20,7 +20,7 @@ pub fn get_db_path(_app: &App) -> String {
         &_app.config(),
         _app.package_info(),
         &_app.env(),
-        "openchat-dev.db",
+        "openchat-data-dev.db",
         Some(BaseDirectory::AppData),
     );
 
@@ -29,7 +29,7 @@ pub fn get_db_path(_app: &App) -> String {
         &_app.config(),
         _app.package_info(),
         &_app.env(),
-        "openchat.db",
+        "openchat-data.db",
         Some(BaseDirectory::AppData),
     );
     return path.unwrap().into_os_string().into_string().unwrap();
@@ -43,6 +43,7 @@ pub async fn init_db(db_path: String) -> Result<PrismaClient, String> {
 
     match client {
         Ok(client) => {
+            init_tables(&client).await.ok();
             init_default_prompt(&client).await.ok();
             init_config_table_version(&client).await.ok();
             return Ok(client);
@@ -51,6 +52,17 @@ pub async fn init_db(db_path: String) -> Result<PrismaClient, String> {
             return Err(error.to_string());
         }
     }
+}
+
+async fn init_tables(client: &PrismaClient) -> Result<(),Box<dyn std::error::Error>> {
+    client._migrate_resolve("20240831160915_init").await?;
+
+    #[cfg(debug_assertions)]
+    client._db_push().await?;
+    #[cfg(not(debug_assertions))]
+    client._migrate_deploy().await?;
+
+    Ok(())
 }
 
 async fn init_default_prompt(client: &PrismaClient) -> Result<(), String> {

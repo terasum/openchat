@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:app":"tauri dev",
     "test": "vitest",
     "build": "tsc && vite build",
     "preview": "vite preview",
@@ -14,7 +15,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
-    "@microsoft/fetch-event-source": "^2.0.1",
     "@phosphor-icons/react": "^2.1.7",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",

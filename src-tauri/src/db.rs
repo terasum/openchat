@@ -1,20 +1,51 @@
 // Stops the client from outputting a huge number of warnings during compilation.
 #[allow(warnings, unused)]
-mod prisma_client;
+pub mod prisma_client;
 
 use prisma_client::prompt;
 use prisma_client::settings;
 use prisma_client::PrismaClient;
 use prisma_client_rust::NewClientError;
+use tauri::api::path::{resolve_path, BaseDirectory};
+use tauri::App;
+use tauri::Manager;
 
-pub async fn init_db() -> Result<(), String> {
-    let client: Result<PrismaClient, NewClientError> = PrismaClient::_builder().build().await;
+use std::sync::{Mutex, OnceLock};
+
+pub mod command_session;
+
+pub fn get_db_path(_app: &App) -> String {
+    #[cfg(debug_assertions)]
+    let path = resolve_path(
+        &_app.config(),
+        _app.package_info(),
+        &_app.env(),
+        "openchat-dev.db",
+        Some(BaseDirectory::AppData),
+    );
+
+    #[cfg(not(debug_assertions))]
+    let path = resolve_path(
+        &_app.config(),
+        _app.package_info(),
+        &_app.env(),
+        "openchat.db",
+        Some(BaseDirectory::AppData),
+    );
+    return path.unwrap().into_os_string().into_string().unwrap();
+}
+
+pub async fn init_db(db_path: String) -> Result<PrismaClient, String> {
+    let client: Result<PrismaClient, NewClientError> = PrismaClient::_builder()
+        .with_url(format!("file://{}", db_path))
+        .build()
+        .await;
 
     match client {
         Ok(client) => {
             init_default_prompt(&client).await.ok();
             init_config_table_version(&client).await.ok();
-            return Ok(());
+            return Ok(client);
         }
         Err(error) => {
             return Err(error.to_string());
@@ -36,7 +67,10 @@ async fn init_default_prompt(client: &PrismaClient) -> Result<(), String> {
 
     match prompt {
         Ok(prompt_data) => {
-            println!("prompt init record inserted success, id: {}", prompt_data.id);
+            println!(
+                "prompt init record inserted success, id: {}",
+                prompt_data.id
+            );
             return Ok(());
         }
         Err(error) => {
@@ -49,13 +83,15 @@ async fn init_default_prompt(client: &PrismaClient) -> Result<(), String> {
 async fn init_config_table_version(client: &PrismaClient) -> Result<(), String> {
     let version: &str = env!("CARGO_PKG_VERSION");
 
-    let result = client.settings()
+    let result = client
+        .settings()
         .create(
             "version".to_string(),
             version.to_string(),
             vec![settings::id::set(1)],
         )
-        .exec().await;
+        .exec()
+        .await;
 
     match result {
         Ok(data) => {

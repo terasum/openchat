@@ -10,36 +10,32 @@ generator client {
 }
 
 model Prompt {
-    id        Int      @id @default(autoincrement())
-    title     String
-    descript  String
-    prompt    String
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    id       Int    @id @default(autoincrement())
+    title    String
+    descript String
+    prompt   String
 }
 
 model SessionData {
-    id        Int      @id @default(autoincrement())
-    sessionId Int
-    role      String
-    message   String
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
-    Session   Session  @relation(fields: [sessionId], references: [id])
+    id           Int     @id @default(autoincrement())
+    sessionId    String
+    role         String
+    message      String
+    is_ask       Boolean
+    is_memory    Boolean
+    message_type String
+    model        String
 }
 
 model Session {
-    id        Int           @id @default(autoincrement())
-    title     String
-    messages  SessionData[]
-    createdAt DateTime      @default(now()) @map(name: "created_at")
-    updatedAt DateTime      @updatedAt @map(name: "updated_at")
+    id          String @id
+    title       String
+    role_id     Int
+    type        String
 }
 
 model Settings {
-    id        Int      @id @default(autoincrement())
-    key       String
-    value     String
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    id    Int    @id @default(autoincrement())
+    key   String
+    value String
 }

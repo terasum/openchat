@@ -1,0 +1,7 @@
+.changes
+.devcontainer
+.docker
+.github
+.scripts
+.vscode
+src-tauri/prisma/*

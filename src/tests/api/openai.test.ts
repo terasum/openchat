@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { retrieveOpenAIStream, OpenAIReqOpts } from "@/api/openai";
+import { chatCompletionStream, OpenAIReqOpts } from "@/api/openai";
 import { SessionData } from "@/model/session-data-model";
 
 test("adds 1 + 2 to equal 3", () => {
@@ -12,8 +12,8 @@ test("adds 1 + 2 to equal 3", () => {
 
 test("test openai stream api", async () => {
   const opts: OpenAIReqOpts = {
-    // api_base: "https://proxy.openchat.dev",
-    api_base: "http://localhost:8000",
+    api_base: "https://proxy.openchat.dev",
+    // api_base: "http://localhost:8000",
     api_path: "/v1/chat/completions",
     api_key: "SK-sc26ff22b40dbb408cbd43c00900e83650",
     api_model: "gpt-4o-mini",
@@ -40,7 +40,7 @@ test("test openai stream api", async () => {
   ];
 
   const decoder = new TextDecoder();
-  const iter = await retrieveOpenAIStream(sessionData, opts);
+  const iter = await chatCompletionStream(sessionData, opts);
   console.log("--------------------")
   let line = "";
   await iter.toReadableStream().pipeTo(new WritableStream({

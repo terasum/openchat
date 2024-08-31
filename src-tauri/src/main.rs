@@ -1,43 +1,47 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
 use futures::executor;
-// use log::info;
-use tauri::api::path::{resolve_path, BaseDirectory};
+use std::sync::Arc;
 use tauri::Manager; // 0.3.1
 
 mod commands;
 mod db;
 mod tray;
 
+
+#[cfg(all(debug_assertions, not(target_os = "windows")))]
+use specta::functions::collect_types;
+
+#[cfg(all(debug_assertions, not(target_os = "windows")))]
+use tauri_specta::ts;
+
+fn generate_bindings() {
+    println!("cargo:rerun-if-changed=../src/bindings.ts");
+    ts::export(
+        collect_types![commands::wrap_get_session_list],
+        "../src/bindings.ts",
+    )
+    .unwrap();
+}
+
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    #[cfg(debug_assertions)]
+    #[cfg(all(debug_assertions, not(target_os = "windows")))]
+    generate_bindings();
     tauri::Builder::default()
         .setup(|_app| {
             #[cfg(target_os = "windows")]
             set_shadow(&_app.get_window("main").unwrap(), true).expect("Unsupported platform!");
 
-            #[cfg(debug_assertions)]
-            let path = resolve_path(
-                &_app.config(),
-                _app.package_info(),
-                &_app.env(),
-                "openchat-dev.db",
-                Some(BaseDirectory::AppData),
-            )?;
-            #[cfg(not(debug_assertions))]
-            let path = resolve_path(
-                &_app.config(),
-                _app.package_info(),
-                &_app.env(),
-                "openchat.db",
-                Some(BaseDirectory::AppData),
-            )?;
+            let path_string = db::get_db_path(&_app);
+            println!("[init] database path {}", path_string);
 
-            // init databases
-
-            let init_result = executor::block_on(db::init_db());
+            let init_result = executor::block_on(db::init_db(path_string));
             match init_result {
-                Ok(_) => {
+                Ok(prisma_client) => {
+                    _app.manage(Arc::new(prisma_client));
                     println!("[init] database init ok");
                 }
                 Err(err) => {
@@ -48,7 +52,6 @@ async fn main() -> std::io::Result<()> {
             Ok(())
         })
         .system_tray(tray::main_menu())
-        // .plugin(tauri_plugin_sql::Builder::default().build())
         .plugin(tauri_plugin_system_info::init())
         .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
             let window = app.get_window("main").unwrap();
@@ -60,6 +63,7 @@ async fn main() -> std::io::Result<()> {
             commands::show_in_folder,
             commands::open_url,
             commands::open_devtools,
+            commands::wrap_get_session_list,
         ])
         .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())
@@ -67,15 +71,3 @@ async fn main() -> std::io::Result<()> {
 
     Ok(())
 }
-
-// fn main() {
-
-//     let init_result = db::init_db().await;
-//     match init_result {
-//         Ok(result) => {}
-//         Err(err) => {
-//             println!("{}", err);
-//         }
-//     }
-
-// }

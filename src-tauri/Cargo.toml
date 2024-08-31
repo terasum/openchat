@@ -26,10 +26,12 @@ tauri-plugin-log = { git = "https://github.com/tauri-apps/plugins-workspace", br
 tauri-plugin-system-info = { git = "https://github.com/HuakunShen/tauri-plugin-system-info", branch = "v1" } # use v2 branch for Tauri v2 plugin
 # rusqlite = { version = "0.29.0", features = ["bundled"] }
 
-prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.11", features=["sqlite"], default-features = false }
-prisma-client-rust-cli = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.11", features=["sqlite"], default-features = false }
+prisma-client-rust = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.11", features= ["sqlite"], default-features = false }
+prisma-client-rust-cli = { git = "https://github.com/Brendonovich/prisma-client-rust", tag = "0.6.11", features= ["sqlite"], default-features = false }
 tokio = "1.40.0"
 futures = "0.3.30"
+specta = "1.0.5"
+tauri-specta = { version = "1.0.2", features = ["javascript", "typescript"] }
 
 
 

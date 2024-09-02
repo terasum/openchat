@@ -3578,7 +3578,7 @@ dependencies = [
 
 [[package]]
 name = "openchat"
-version = "0.1.28"
+version = "0.2.1"
 dependencies = [
  "current_locale",
  "futures",

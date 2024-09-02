@@ -58,13 +58,9 @@ export interface OpenAIReqOpts {
   }));
  */
 export async function chatCompletionStream(
-  session_data: SessionData[],
+  messages: { role: string; content: string }[],
   opts: OpenAIReqOpts
 ) {
-  const messages = session_data.map(({ role, message }) => ({
-    role,
-    content: message,
-  }));
   const { response, controller } = await makeRequest({
     method: "post",
     url: opts.api_base + opts.api_path,

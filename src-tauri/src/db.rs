@@ -10,7 +10,6 @@ use tauri::api::path::{resolve_path, BaseDirectory};
 use tauri::App;
 use tauri::Manager;
 
-use std::sync::{Mutex, OnceLock};
 
 pub mod command_session;
 

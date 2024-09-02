@@ -7,14 +7,13 @@ import {
   ScrollArea,
   BoxIcon,
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui";
 
-import "./PromptsPage.scss";
+import "./TabPrompt.scss";
 
 interface PromptCard {
   title: string;

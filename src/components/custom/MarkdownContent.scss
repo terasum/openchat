@@ -317,57 +317,83 @@
     color: #636c76;
     border-left: 0.25em solid #d0d7de;
   }
- 
 
-  ul,
+  // ol ol,
+  // ul ol {
+  //   list-style-type: lower-roman;
+  // }
+
+  // ul ul ol,
+  // ul ol ol,
+  // ol ul ol,
+  // ol ol ol {
+  //   list-style-type: lower-alpha;
+  // }
+
+  // unordered list
+  // ul {
+  //   padding: 0;
+  //   margin: 0;
+  //   li {
+  //     margin: 0 0 0 0.75em;
+  //     padding: 0;
+  //     margin: 0;
+  //     p {
+  //       margin-top: 0;
+  //       margin-bottom: 0;
+  //     }
+  //   }
+  // }
+  ul {
+    padding: 0;
+    margin: 0 0 0 1em;
+    margin-bottom: 8px;
+    li {
+      padding: 0;
+      margin: 0;
+    }
+  }
+  
+  ul { list-style: disc inside;}
+  ul>li>ul { list-style: circle inside;}
+  ul>li>ol { list-style: circle inside;}
+  ul>li>ul>li>ul { list-style: square inside;}
+  ul>li>ul>li>ol { list-style: square inside;}
+  ul>li>ol>li>ul { list-style: square inside;}
+  ul>li>ol>li>ol { list-style: square inside;}
+
+
   ol {
+    margin: 0 0 0 1em;
+    padding:0;
+    margin-bottom: 8px;
+    li {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  ol>li {list-style: decimal inside;}
+  ol>li>ol{  counter-reset: list;  }
+  ol>li>ul{  counter-reset: list;  }
+  ol>li>ol>li { list-style: none;}
+  ol>li>ul>li { list-style: none;}
+  ol>li>ol>li:before { content: counter(list, lower-alpha) ") "; counter-increment: list; }
+  ol>li>ul>li:before { content: counter(list, lower-alpha) ") "; counter-increment: list; }
+  ol>li>ol>li>ol>li { list-style: lower-roman inside;}
+  ol>li>ol>li>ul>li { list-style: lower-roman  inside;}
+  ol>li>ul>li>ol>li { list-style: lower-roman  inside;}
+  ol>li>ul>li>ul>li { list-style: lower-roman  inside;}
+
+  ol>li>ol>li>ol>li:before { content : "" }
+  ol>li>ol>li>ul>li:before { content : "" }
+  ol>li>ul>li>ol>li:before { content : "" }
+  ol>li>ul>li>ul>li:before { content : "" }
+
+
+  ol>li>p{
     margin-top: 0;
     margin-bottom: 0;
-    padding-left: 2em;
-  }
-
-  ul{
-    list-style: inside;
-    ul {
-        list-style: circle;
-        ul {
-            list-style: square;
-        }
-        ol {
-            list-style: square;
-        }
-    }
-    ol {
-        list-style: circle;
-        ul {
-            list-style: square;
-        }
-        ol {
-            list-style: square;
-        }
-    }
-  }
-
-  ol{
-    list-style: decimal;
-    ul {
-        list-style: lower-alpha;
-        ul {
-            list-style: lower-roman;
-        }
-        ol {
-            list-style:lower-roman;
-        }
-    }
-    ol {
-        list-style: lower-alpha;
-        ul {
-            list-style: lower-roman;
-        }
-        ol {
-            list-style: lower-roman;
-        }
-    }
   }
 
   dd {
@@ -439,14 +465,12 @@
 
   p,
   blockquote,
-  ul,
-  ol,
   dl,
   table,
   pre,
   details {
     margin-top: 0;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
   }
 
   blockquote > :first-child {
@@ -554,22 +578,6 @@
 
   div > ol:not([type]) {
     list-style-type: decimal;
-  }
-
-  ul ul,
-  ul ol,
-  ol ol,
-  ol ul {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  li > p {
-    margin-top: 16px;
-  }
-
-  li + li {
-    margin-top: 0.25em;
   }
 
   dl {

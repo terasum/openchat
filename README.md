@@ -1,5 +1,5 @@
-<div style="text-align: center">
-<img src='/docs/images/icon.png' width='80'>
+<div align="center">
+<img src='./docs/images/icon.png' width='80'>
 </div>
 
 <h1 style="text-align: center">
@@ -21,11 +21,10 @@
 <!-- <img alt="Downloads" src="https://img.shields.io/github/downloads/terasum/openchat/total.svg?style=flat" /> -->
 </div>
 
-<img src="/docs/images/ui-index.png" width="800"/>
+<div align="center">
+<img src="./docs/images/ui-index.png" width="680"/>
+</div>
 
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=terasum/openchat&type=Date)](https://star-history.com/#terasum/openchat&Date)
 
 ## License
 

@@ -1,60 +1,52 @@
-import React from "react";
-import { Icon } from "@phosphor-icons/react";
+import React, { SVGAttributes } from "react";
 import "./TabNavigation.scss";
+import { cn } from "@/lib/utils";
 
 interface TabNavigationProps {
-  tabs: { id: number; label: string; icon?: Icon }[];
-  settingsTabs: { id: number; label: string; icon?: Icon }[];
-  selectedTab: number;
-  onSelectTab: (id: number) => void;
+  functionTabs: { id: string; label: string; icon?: React.FunctionComponent }[];
+  settingsTabs: { id: string; label: string; icon?: React.FunctionComponent }[];
+
+  selectedTab: string;
+  onSelectTab: (id: string) => void;
 }
 
 const TabNavigation: React.FC<TabNavigationProps> = ({
-  tabs,
+  functionTabs,
   settingsTabs,
   selectedTab,
   onSelectTab,
 }) => {
   return (
-    <div className="tab-navigation h-full bg-gray-800 text-white flex flex-col items-center">
+    <div className="tab-navigation h-full bg-[#E9E9E9] text-gray-700 flex flex-col items-center">
       <div className="nav-func">
-        {tabs.map((tab) => (
-          <button
+        {functionTabs.map((tab) => (
+          <div
             key={tab.id}
             onClick={() => onSelectTab(tab.id)}
-            className={`w-full flex flex-col items-center justify-center ${
-              selectedTab === tab.id ? "bg-gray-700" : "bg-gray-800"
-            } hover:bg-blue-700`}
-          >
-            {tab.icon ? (
-              React.createElement(tab.icon, {
-                size: 24,
-                weight: "fill",
-              })
-            ) : (
-              <span>{tab.label}</span>
+            className={cn(
+              `w-full flex flex-col items-center justify-center rounded-lg p-1  mb-2 cursor-pointer `,
+              selectedTab === tab.id ? "bg-gray-300" : "",
+              "hover:bg-gray-300"
             )}
-          </button>
+          >
+            {tab.icon ? <tab.icon /> : <span>{tab.label}</span>}
+          </div>
         ))}
       </div>
+
       <div className="nav-settings">
         {settingsTabs.map((tab) => (
-          <button
+          <div
             key={tab.id}
             onClick={() => onSelectTab(tab.id)}
-            className={`w-full flex flex-col items-center justify-center text-white ${
-              selectedTab === tab.id ? "bg-gray-700" : "bg-gray-800"
-            } hover:bg-blue-700`}
-          >
-            {tab.icon ? (
-              React.createElement(tab.icon, {
-                size: 24,
-                weight: "fill",
-              })
-            ) : (
-              <span>{tab.label}</span>
+            className={cn(
+              `w-full flex flex-col items-center justify-center rounded-lg p-1  mb-2 cursor-pointer `,
+              selectedTab === tab.id ? "bg-gray-300" : "",
+              "hover:bg-gray-300"
             )}
-          </button>
+          >
+            {tab.icon ? <tab.icon /> : <span>{tab.label}</span>}
+          </div>
         ))}
       </div>
     </div>

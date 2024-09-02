@@ -1,21 +1,32 @@
-# Tauri Example
+<div align="center">
+<img src='/docs/images/icon.png' width='30'>
+<div>
+<h1 align="center">
+<span>OpenChat</span>
+</h1>
 
-This example demonstrates how to combine Prisma Client Rust and Tauri,
-with [`tauri-specta`](https://github.com/oscartbeaumont/tauri-specta) being used to provide end-to-end typesafety.
+<h3 align="center">
+    A lightweight and elegant AI chat client for ChatGPT, Claude and other LLMs.
+</h3>
+<p align="center">
+    <em>OpenChat 主打 Propmt 分享功能，解决当前用户 ”能用“、”用好“ AI软件的问题。用户可以轻松上手，快速创建个性化的 AI 助手，并通过分享功能与他人交流经验。</em>
+</p>
 
-[SolidJS](https://www.solidjs.com/) is being used to render the UI,
-and [`pnpm`](https://pnpm.io/) is being used as a package manager (but using npm/yarn should work too).
+<div align=center>
+  <div>
+      <img alt="MacOS" src="https://img.shields.io/badge/-MacOS-black?style=flat&logo=apple&logoColor=white" />
+      <img alt="Windows" src="https://img.shields.io/badge/-Windows-blue?style=flat&logo=tauri&logoColor=white" />
+      <img alt="Linux" src="https://img.shields.io/badge/-Linux-gray?style=flat&logo=linux&logoColor=white" />
+<!-- <img alt="Downloads" src="https://img.shields.io/github/downloads/terasum/openchat/total.svg?style=flat" /> -->
+  </div>
+</div>
 
-## Runing
+<img src="/docs/images/ui-index.png" width="400"/>
 
-Generate the client:
+## Star History
 
-```bash
-cd src-tauri && cargo prisma generate
-```
+[![Star History Chart](https://api.star-history.com/svg?repos=terasum/openchat&type=Date)](https://star-history.com/#terasum/openchat&Date)
 
-Then run the app:
+## License
 
-```bash
-pnpm tauri dev
-```
+[LICENSE](./LICENSE)

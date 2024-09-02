@@ -1,5 +1,5 @@
 <div align="center">
-<img src='/docs/images/icon.png' width='30'>
+<img src='/docs/images/icon.png' width='80'>
 <div>
 <h1 align="center">
 <span>OpenChat</span>
@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<img src="/docs/images/ui-index.png" width="400"/>
+<img src="/docs/images/ui-index.png" width="800"/>
 
 ## Star History
 

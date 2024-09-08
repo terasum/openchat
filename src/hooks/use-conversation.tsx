@@ -8,6 +8,7 @@ import {
   wrapGetSessionList,
   Session,
   wrapGetSessionDataById,
+  wrapSaveSessionData,
   SessionData,
 } from "@/rust-bindings";
 
@@ -16,7 +17,6 @@ export interface Conversation {
   title: string;
   messages: { role: string; content: string }[];
 }
-
 
 export const debounce = <T extends (...args: any[]) => any>(
   callback: T,
@@ -227,7 +227,6 @@ export function useConversation() {
     );
     console.log("---------- OPENAI END ----------");
     return line;
-
   }
 
   function handleSendMessage(message: string) {
@@ -239,23 +238,50 @@ export function useConversation() {
     // 插入消息
     updateCurrentConversation("user", message);
     // 请求AI
-    handleOpenAIRequst({
+    const assistant_message = handleOpenAIRequst({
       role: "user",
       content: message,
-    }).then((assistant_message) => {
+    }).then(async (assistant_message) => {
       setIsResponsing(false);
-      // TODO save the session data
-      const user_record = {role: "user", content: message}
-      const assistant_record = {role: "assistant", content: assistant_message}
-      console.log("tobe saved: ", user_record);
-      console.log("tobe saved", assistant_record)
-      // wrapSaveSessionData(selectedConversation, assistant_record).then((res) => {
-      //   console.log(`save session data: ${res}`);
-      // });
+      const user_record = { role: "user", content: message };
+      const assistant_record = {
+        role: "assistant",
+        content: assistant_message,
+      };
 
-      // wrapSaveSessionData(selectedConversation, user_record).then((res) => {
-      //   console.log(`save session data: ${res}`);
-      // });
+      console.log("to saved: ", user_record);
+      console.log("to saved", assistant_record);
+
+      // 需要保持顺序，这个和显示顺序有关
+      await wrapSaveSessionData(selectedConversation, {
+        id: 0,
+        sessionId: selectedConversation,
+        message: JSON.stringify(user_record),
+        role: "1",
+        is_ask: true,
+        is_memory: false,
+        message_type: "text",
+        model: "gpt-4o-mini",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+      console.log(`save session data: ${user_record}`);
+
+      // 需要保持顺序，这个和显示顺序有关
+      await wrapSaveSessionData(selectedConversation, {
+        id: 0,
+        sessionId: selectedConversation,
+        message: JSON.stringify(assistant_record),
+        role: "1",
+        is_ask: false,
+        is_memory: false,
+        message_type: "text",
+        model: "gpt-4o-mini",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+
+      console.log(`save session data: ${assistant_record}`);
       console.log(`use-openai.tsx handle the message done: ${message}`);
     });
   }

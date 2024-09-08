@@ -34,6 +34,31 @@ pub async fn wrap_get_session_data_by_id(
 }
 
 #[tauri::command]
+#[specta::specta]
+pub async fn wrap_save_session_data(
+    state: State<'_, Arc<PrismaClient>>,
+    session_id: String,
+    data: session_data::Data,
+) -> Result<(), String> {
+    let db_client = Arc::clone(&state);
+    let result = db::command_session::save_session_data(&db_client, session_id, data).await;
+    return result;
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_update_session_data(
+    state: State<'_, Arc<PrismaClient>>,
+    data: session_data::Data,
+) -> Result<(), String> {
+    let db_client = Arc::clone(&state);
+    let result = db::command_session::update_session_data(&db_client, data).await;
+    return result;
+}
+
+//------------ app commands -----------
+
+#[tauri::command]
 pub async fn show_in_folder(path: String) {
     #[cfg(target_os = "windows")]
     {

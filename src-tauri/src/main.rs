@@ -18,14 +18,19 @@ use tauri_specta::ts;
 
 fn generate_bindings() {
     println!("cargo:rerun-if-changed=../src/rust-bindings.ts");
-    ts::export(
+    let result = ts::export(
         collect_types![
             commands::wrap_get_session_list,
-            commands::wrap_get_session_data_by_id
+            commands::wrap_get_session_data_by_id,
+            commands::wrap_save_session_data,
+            commands::wrap_update_session_data
         ],
         "../src/rust-bindings.ts",
-    )
-    .unwrap();
+    );
+    match result {
+        Ok(_) => {println!("Generated bindings ok")}
+        Err(err) => panic!("{}", err),
+    }
 }
 
 #[tokio::main]
@@ -33,6 +38,7 @@ async fn main() -> std::io::Result<()> {
     #[cfg(debug_assertions)]
     #[cfg(all(debug_assertions, not(target_os = "windows")))]
     generate_bindings();
+
     tauri::Builder::default()
         .setup(|_app| {
             #[cfg(target_os = "windows")]
@@ -68,6 +74,8 @@ async fn main() -> std::io::Result<()> {
             commands::open_devtools,
             commands::wrap_get_session_list,
             commands::wrap_get_session_data_by_id,
+            commands::wrap_save_session_data,
+            commands::wrap_update_session_data
         ])
         .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())

@@ -15,7 +15,7 @@ model Prompt {
     descript  String
     prompt    String
     createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("prompt")
 }
@@ -31,7 +31,7 @@ model SessionData {
     model        String
     session      Session? @relation(fields: [sessionId], references: [id], name: "SessionData")
     createdAt    DateTime @default(now()) @map(name: "created_at")
-    updatedAt    DateTime @updatedAt @map(name: "updated_at")
+    updatedAt    DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("session_data")
 }
@@ -43,7 +43,7 @@ model Session {
     type        String
     SessionData SessionData[] @relation(name: "SessionData")
     createdAt   DateTime      @default(now()) @map(name: "created_at")
-    updatedAt   DateTime      @updatedAt @map(name: "updated_at")
+    updatedAt   DateTime      @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("session")
 }
@@ -53,7 +53,7 @@ model Settings {
     key       String
     value     String
     createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("settings")
 }

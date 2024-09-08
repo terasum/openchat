@@ -1,8 +1,5 @@
 import { SessionData } from "./session-data-model";
-
-export interface Session {
-  id: number;
-  title: string;
+import type { Session as S } from "@/rust-bindings";
+export interface Session extends S {
   messages: SessionData[];
-  createdAt: Date;
 }

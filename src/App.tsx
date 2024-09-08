@@ -4,9 +4,9 @@ import "@/styles/components.css";
 import React from "react";
 import TabNavigation from "@/components/custom/TabNavigation";
 
-import TabPrompts from "@/TabPrompts";
+import TabPrompt from "@/TabPrompt";
+import SettingsProfilePage from "@/components/custom/settings/settings";
 import TabChat from "@/TabChat";
-import GearPage from "@/TabSettings";
 
 import { useNavigator } from "@/hooks/use-navigator";
 const ChatInterface: React.FC = () => {
@@ -25,10 +25,10 @@ const ChatInterface: React.FC = () => {
         />
       </div>
 
-      <div className="main-area flex flex-row w-[calc(100%-40px)] h-screen">
+      <div className="main-area flex flex-row w-[calc(100%-40px)] h-full">
         {selectedTab === "chat" && <TabChat />}
-        {selectedTab === "prompt" && <TabPrompts />}
-        {selectedTab === "settings" && <GearPage />}
+        {selectedTab === "prompt" && <TabPrompt />}
+        {selectedTab === "settings" && <SettingsProfilePage defaultLayout={[15,75]} />}
       </div>
     </div>
   );

@@ -21,5 +21,13 @@ export function wrapGetSessionDataById(id: string) {
     return invoke()<SessionData[]>("wrap_get_session_data_by_id", { id })
 }
 
+export function wrapSaveSessionData(sessionId: string, data: SessionData) {
+    return invoke()<null>("wrap_save_session_data", { sessionId,data })
+}
+
+export function wrapUpdateSessionData(data: SessionData) {
+    return invoke()<null>("wrap_update_session_data", { data })
+}
+
 export type Session = { id: string; title: string; role_id: number; type: string; createdAt: string; updatedAt: string }
 export type SessionData = { id: number; sessionId: string; role: string; message: string; is_ask: boolean; is_memory: boolean; message_type: string; model: string; createdAt: string; updatedAt: string }

@@ -30,9 +30,9 @@ const Sidebar: React.FC<SidebarProps> = ({
               <button
                 key={conversation.id}
                 onClick={() => onSelectConversation(conversation.id)}
-                className={`text-left p-2 pl-4 pr-4 truncate overflow-hidden rounded-lg mb-2 shadow-md hover:bg-gray-200 ${
+                className={`text-left mt-1 mb-1 p-2 pl-4 pr-4 truncate overflow-hidden flex flex-col items-start gap-2 rounded-lg border text-sm transition-all hover:bg-accent ${
                   selectedConversation === conversation.id
-                    ? "bg-gray-200"
+                    ? "bg-muted"
                     : "bg-white"
                 }`}
               >

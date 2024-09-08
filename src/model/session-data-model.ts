@@ -1,7 +1,4 @@
-export interface SessionData {
-  id: number;
-  role: "user" | "assistant"| "system";
-  sessionId: number;
-  message: string;
-  createdAt: Date;
+import type { SessionData as SD } from "@/rust-bindings";
+export interface SessionData extends SD {
+  role: "user" | "assistant" | "system";
 }

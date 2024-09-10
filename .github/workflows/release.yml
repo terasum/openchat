@@ -1,7 +1,7 @@
-name: 'release'
+name: "release"
 
 on:
-  push: 
+  push:
     tags:
       - "v*"
   workflow_dispatch:
@@ -53,8 +53,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
-            args: '--target aarch64-apple-darwin'
+          - platform: "macos-latest" # for Arm based macs (M1 and above).
+            args: "--target aarch64-apple-darwin"
           - platform: "macos-latest" # for Intel based macs.
             args: "--target x86_64-apple-darwin"
           # - platform: "ubuntu-22.04" # for Tauri v1 you could replace this with ubuntu-20.04.
@@ -75,8 +75,8 @@ jobs:
       - name: Sync node version and setup cache
         uses: actions/setup-node@v3
         with:
-          node-version: '20.10.0'
-          cache: 'pnpm'
+          node-version: "20.10.0"
+          cache: "pnpm"
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
@@ -87,8 +87,14 @@ jobs:
       - name: Rust cache
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: './src-tauri -> target'
+          workspaces: "./src-tauri -> target"
           key: ${{ matrix.target }}
+
+      - name: fix prisma (macos)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          sed -i '' -E "s|\"(.*)schema.prisma\"|\"/Users/runner/work/openchat/openchat/src-tauri/prisma/schema.prisma\"|g" src-tauri/src/db/prisma_client.rs
+          sed -i '' -E "s|\"(.*)/prisma/migrations\"|\"/Users/runner/work/openchat/openchat/src-tauri/prisma/migrations\"|g" src-tauri/src/db/prisma_client.rs
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
@@ -106,7 +112,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ''
+          TAURI_KEY_PASSWORD: ""
         with:
           releaseId: ${{ needs.create-release.outputs.release_id }}
           args: ${{ matrix.args }}
@@ -124,13 +130,12 @@ jobs:
       - name: Post Handle Copy Aliyun OSS (aarch64-apple-darwin)
         if: matrix.args == '--target aarch64-apple-darwin'
         run: |
-          cp src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat.app.tar.gz src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat_aarch64.app.tar.gz 
-
+          cp src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat.app.tar.gz src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat_aarch64.app.tar.gz
 
       - name: Post Handle Copy Aliyun OSS (x86_64-apple-darwin)
         if: matrix.args == '--target x86_64-apple-darwin'
         run: |
-          cp src-tauri/target/x86_64-apple-darwin/release/bundle/macos/OpenChat.app.tar.gz src-tauri/target/x86_64-apple-darwin/release/bundle/macos/OpenChat_x64.app.tar.gz 
+          cp src-tauri/target/x86_64-apple-darwin/release/bundle/macos/OpenChat.app.tar.gz src-tauri/target/x86_64-apple-darwin/release/bundle/macos/OpenChat_x64.app.tar.gz
 
       - name: Upload Aliyun OSS (aarch64-apple-darwin)
         if: matrix.args == '--target aarch64-apple-darwin'

@@ -239,7 +239,7 @@ export function useConversation() {
   // 是否增在输出
   const [isResponsing, setIsResponsing] = useState(false);
   // 是否忽略
-  const [isIgnoreResponse, setIsIgnoreResponse] = useState(false);
+  const [_, setIsIgnoreResponse] = useState(false);
 
   async function handleOpenAIRequst(user_message: {
     role: string;

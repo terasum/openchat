@@ -11,7 +11,6 @@ const BoxIcon: React.FC<BoxIconProps> = ({
   iconName,
   size = 24,
   color = "#000",
-  className = "",
 }) => {
   return (
     <i

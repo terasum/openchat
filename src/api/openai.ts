@@ -1,4 +1,3 @@
-import { SessionData } from "@/model/session-data-model";
 import { makeRequest } from "@/lib/request";
 import { Stream } from "@/lib/streaming";
 

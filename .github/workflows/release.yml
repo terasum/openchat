@@ -57,10 +57,10 @@ jobs:
             args: '--target aarch64-apple-darwin'
           - platform: "macos-latest" # for Intel based macs.
             args: "--target x86_64-apple-darwin"
-          - platform: "ubuntu-22.04" # for Tauri v1 you could replace this with ubuntu-20.04.
-            args: ""
-          - platform: "windows-latest"
-            args: ""
+          # - platform: "ubuntu-22.04" # for Tauri v1 you could replace this with ubuntu-20.04.
+          #   args: ""
+          # - platform: "windows-latest"
+          #   args: ""
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -120,6 +120,39 @@ jobs:
           bucket: openchat-oss
           assets: |
             ${{ steps.tauri-action.outputs.artifactPaths }}@/openchat-oss/release-v${{ needs.create-release.outputs.release_version }}/
+
+      - name: Post Handle Copy Aliyun OSS (aarch64-apple-darwin)
+        if: matrix.args == '--target aarch64-apple-darwin'
+        run |
+          cp src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat.app.tar.gz src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat_aarch64.app.tar.gz 
+
+
+      - name: Post Handle Copy Aliyun OSS (x86_64-apple-darwin)
+        if: matrix.args == '--target x86_64-apple-darwin'
+        run: |
+          cp src-tauri/target/x86_64-apple-darwin/release/bundle/macos/OpenChat.app.tar.gz src-tauri/target/x86_64-apple-darwin/release/bundle/macos/OpenChat_x64.app.tar.gz 
+
+      - name: Upload Aliyun OSS (aarch64-apple-darwin)
+        if: matrix.args == '--target aarch64-apple-darwin'
+        uses: terasum/oss-action@master
+        with:
+          key-id: ${{ secrets.OSS_KEY_ID }}
+          key-secret: ${{ secrets.OSS_KEY_SECRET }}
+          region: oss-cn-hangzhou
+          bucket: openchat-oss
+          assets: |
+            src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat_aarch64.app.tar.gz@/openchat-oss/release-v${{ needs.create-release.outputs.release_version }}/
+
+      - name: Upload Aliyun OSS (x86_64-apple-darwin)
+        if: matrix.args == '--target x86_64-apple-darwin'
+        uses: terasum/oss-action@master
+        with:
+          key-id: ${{ secrets.OSS_KEY_ID }}
+          key-secret: ${{ secrets.OSS_KEY_SECRET }}
+          region: oss-cn-hangzhou
+          bucket: openchat-oss
+          assets: |
+            src-tauri/target/x86_64-apple-darwin/release/bundle/macos/OpenChat_x64.app.tar.gz@/openchat-oss/release-v${{ needs.create-release.outputs.release_version }}/
 
     outputs:
       releaseUploadUrl: ${{ steps.tauri-action.outputs.releaseUploadUrl }}

@@ -11,7 +11,8 @@ use tauri::App;
 use tauri::Manager;
 
 
-pub mod command_session;
+pub mod db_session;
+pub mod db_config;
 
 pub fn get_db_path(_app: &App) -> String {
     #[cfg(debug_assertions)]
@@ -99,7 +100,7 @@ async fn init_config_table_version(client: &PrismaClient) -> Result<(), String> 
         .create(
             "version".to_string(),
             version.to_string(),
-            vec![settings::id::set(1)],
+            vec![settings::id::set(2)],
         )
         .exec()
         .await;
@@ -110,7 +111,7 @@ async fn init_config_table_version(client: &PrismaClient) -> Result<(), String> 
             return Ok(());
         }
         Err(error) => {
-            println!("settings not created");
+            println!("settings version not created");
             return Err(error.to_string());
         }
     }

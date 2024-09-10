@@ -8,6 +8,10 @@ use crate::db::{self, prisma_client::PrismaClient};
 
 use crate::db::prisma_client::session;
 use crate::db::prisma_client::session_data;
+use crate::db::prisma_client::settings;
+
+use crate::db::db_config;
+use crate::db::db_session;
 
 /// 定义一个包装器函数来处理异步调用
 #[tauri::command]
@@ -18,9 +22,48 @@ pub async fn wrap_get_session_list(
     end: i32,
 ) -> Result<Vec<session::Data>, String> {
     let db_client = Arc::clone(&state);
-    let result = db::command_session::get_session_list(&db_client, start.into(), end.into()).await;
+    let result = db_session::get_session_list(&db_client, start.into(), end.into()).await;
     return result;
 }
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_new_session(
+    state: State<'_, Arc<PrismaClient>>,
+    title: String,
+    role_id: i32,
+) -> Result<session::Data, String> {
+    let db_client = Arc::clone(&state);
+    let result = db_session::new_session(&db_client, title, role_id).await;
+    return result;
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_update_session(
+    state: State<'_, Arc<PrismaClient>>,
+    id: String,
+    title: String,
+    role_id: i32,
+) -> Result<session::Data, String> {
+    let db_client = Arc::clone(&state);
+    let result = db_session::update_session(&db_client, id, title, role_id).await;
+    return result;
+}
+
+
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_delete_session(
+    state: State<'_, Arc<PrismaClient>>,
+    id: String,
+) -> Result<session::Data, String> {
+    let db_client = Arc::clone(&state);
+    let result = db_session::delete_session(&db_client, id).await;
+    return result;
+}
+
 
 #[tauri::command]
 #[specta::specta]
@@ -29,7 +72,7 @@ pub async fn wrap_get_session_data_by_id(
     id: String,
 ) -> Result<Vec<session_data::Data>, String> {
     let db_client = Arc::clone(&state);
-    let result = db::command_session::get_session_data_by_id(&db_client, id.into()).await;
+    let result = db_session::get_session_data_by_id(&db_client, id.into()).await;
     return result;
 }
 
@@ -41,7 +84,7 @@ pub async fn wrap_save_session_data(
     data: session_data::Data,
 ) -> Result<(), String> {
     let db_client = Arc::clone(&state);
-    let result = db::command_session::save_session_data(&db_client, session_id, data).await;
+    let result = db_session::save_session_data(&db_client, session_id, data).await;
     return result;
 }
 
@@ -52,7 +95,40 @@ pub async fn wrap_update_session_data(
     data: session_data::Data,
 ) -> Result<(), String> {
     let db_client = Arc::clone(&state);
-    let result = db::command_session::update_session_data(&db_client, data).await;
+    let result = db_session::update_session_data(&db_client, data).await;
+    return result;
+}
+
+// ----------- config db commands --------
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_get_app_config(
+    state: State<'_, Arc<PrismaClient>>,
+) -> Result<settings::Data, String> {
+    let db_client = Arc::clone(&state);
+    let result = db_config::get_app_config(&db_client).await;
+    match result {
+        Ok(data) => {
+            if data.is_none() {
+                return Err("No config found".to_string());
+            } else {
+                return Ok(data.unwrap());
+            }
+        }
+        Err(err) => {
+            return Err(err.to_string());
+        }
+    }
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_update_app_config(
+    state: State<'_, Arc<PrismaClient>>,
+    config: settings::Data,
+) -> Result<(), String> {
+    let db_client = Arc::clone(&state);
+    let result = db_config::update_app_config(&db_client, config).await;
     return result;
 }
 

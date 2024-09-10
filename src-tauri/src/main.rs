@@ -21,9 +21,14 @@ fn generate_bindings() {
     let result = ts::export(
         collect_types![
             commands::wrap_get_session_list,
+            commands::wrap_new_session,
+            commands::wrap_delete_session,
+            commands::wrap_update_session,
             commands::wrap_get_session_data_by_id,
             commands::wrap_save_session_data,
-            commands::wrap_update_session_data
+            commands::wrap_update_session_data,
+            commands::wrap_get_app_config,
+            commands::wrap_update_app_config,
         ],
         "../src/rust-bindings.ts",
     );
@@ -73,9 +78,14 @@ async fn main() -> std::io::Result<()> {
             commands::open_url,
             commands::open_devtools,
             commands::wrap_get_session_list,
+            commands::wrap_new_session,
+            commands::wrap_update_session,
+            commands::wrap_delete_session,
             commands::wrap_get_session_data_by_id,
             commands::wrap_save_session_data,
-            commands::wrap_update_session_data
+            commands::wrap_update_session_data,
+            commands::wrap_get_app_config,
+            commands::wrap_update_app_config,
         ])
         .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())

@@ -28,7 +28,7 @@ const ChatInterface: React.FC = () => {
       <div className="main-area flex flex-row w-[calc(100%-40px)] h-full">
         {selectedTab === "chat" && <TabChat />}
         {selectedTab === "prompt" && <TabPrompt />}
-        {selectedTab === "settings" && <SettingsProfilePage defaultLayout={[15,75]} />}
+        {selectedTab === "settings" && <SettingsProfilePage />}
       </div>
     </div>
   );

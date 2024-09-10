@@ -65,7 +65,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         <Textarea
           value={inputValue}
           onChange={handleInputValueChange}
-          placeholder="有什么问题尽管问我"
+          placeholder="有什么问题尽管问我 [control/cmd+回车 发送]"
           className="flex-1 p-2 border rounded-md min-h-[32px] text-[12px] resize-none overflow-y-scroll"
           rows={1}
           onKeyDown={handleKeyEnterDown}
@@ -86,7 +86,12 @@ const MessageInput: React.FC<MessageInputProps> = ({
           onClick={stopResponsing}
           className="flex flex-row justify-center items-center w-[36px] h-[32px] ml-2 p-0 rounded-full text-[32px] bg-gray-700"
         >
-          <StopIcon className="animate-pulse animate-infinite" fill="#fff" width={20} height={20} />
+          <StopIcon
+            className="animate-pulse animate-infinite"
+            fill="#fff"
+            width={20}
+            height={20}
+          />
         </Button>
       )}
     </div>

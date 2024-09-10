@@ -3,38 +3,27 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
   Switch,
   Label,
-  Button,
   Card,
   CardHeader,
   CardDescription,
   CardContent,
   CardFooter,
   CardTitle,
-  Input,
   Slider,
-  RadioGroup,
-  RadioGroupItem,
 } from "@/components/ui";
 import { cn } from "@/lib/utils";
-import {
-  HelpCircle,
-  AppWindow,
-  Shield,
-  ScrollText,
-  Copyright,
-} from "lucide-react";
-import { useState } from "react";
+import { MessageSquareCode, Sparkles, HelpCircle, Brain } from "lucide-react";
 
 import { SettingsItem } from "../components/settings-item";
 
-export function DisplayForm() {
-  const [sliderValue, setSliderValue] = useState([50]);
+import { useAppSettings } from "@/hooks/use-app-settings";
 
+export function DisplayForm() {
+  const appSettings = useAppSettings();
   return (
     <Card className="rounded-none border-none shadow-none h-full overflow-y-auto">
       <CardHeader>
@@ -42,68 +31,88 @@ export function DisplayForm() {
         <CardDescription>Models</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
-        <SettingsItem title="OpenChat" icon={AppWindow}>
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a fruit" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </SettingsItem>
-
-        <SettingsItem title="帮助文档" icon={HelpCircle}>
-          <Label htmlFor="airplane-mode">Airplane Mode</Label>
-          <Switch id="airplane-mode" />
-        </SettingsItem>
-
-        <SettingsItem title="隐私政策" icon={Shield}>
+        <SettingsItem title="默认模型" icon={Brain}>
           <div className="flex flex-col justify-center items-center w-[200px]">
-            <Input type="email" placeholder="Email" />
+            <Select
+              value={appSettings.model.default_model}
+              onValueChange={(value) => {
+                appSettings.model.default_model = value;
+              }}
+            >
+              <SelectTrigger className="w-[100%]">
+                <SelectValue placeholder="Select a model" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="gpt-4o-mini">GPT-4o-mini</SelectItem>
+                  <SelectItem value="gpt-3.5-turbo">GPT-3.5-turbo</SelectItem>
+                  <SelectItem value="wenxin-3.5">文心一言3.5</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </SettingsItem>
 
-        <SettingsItem title="终端用户协议" icon={ScrollText}>
-          <div className="flex flex-row justify-center items-center w-[200px]">
-            <Label htmlFor="slider-input">{sliderValue[0]}</Label>
+        <SettingsItem
+          title="上下文记忆"
+          description="启用上下文记忆可以实现多轮对话"
+          icon={HelpCircle}
+        >
+          <Switch
+            checked={appSettings.model.enable_memory}
+            onCheckedChange={(checked) => {
+              appSettings.model.enable_memory = checked;
+            }}
+          />
+        </SettingsItem>
+
+        <SettingsItem
+          title="最大Token长度"
+          description="包括输入输出的 Token 长度"
+          icon={MessageSquareCode}
+        >
+          <div className="flex flex-row justify-between items-center w-[200px]">
+            <Label htmlFor="slider-input">
+              {appSettings.model.max_token_length[0]}
+            </Label>
 
             <Slider
               id="slider-input"
-              defaultValue={sliderValue}
-              max={100}
-              step={1}
-              className={cn("w-[100%]")}
-              onValueChange={(value) => setSliderValue(value)}
+              defaultValue={appSettings.model.max_token_length}
+              max={2000}
+              step={50}
+              className={cn("w-[160px]")}
+              onValueChange={(value) => {
+                appSettings.model.max_token_length = value;
+              }}
             />
           </div>
         </SettingsItem>
 
-        <SettingsItem title="开源协议" icon={Copyright}>
-          <RadioGroup defaultValue="comfortable" className="flex flex-row">
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="default" id="r1" />
-              <Label htmlFor="r1">Default</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="comfortable" id="r2" />
-              <Label htmlFor="r2">Comfortable</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="compact" id="r3" />
-              <Label htmlFor="r3">Compact</Label>
-            </div>
-          </RadioGroup>
+        <SettingsItem
+          title="思维发散程度"
+          description="即 temperature, 取值范围 0-2"
+          icon={Sparkles}
+        >
+          <div className="flex flex-row justify-between items-center w-[200px]">
+            <Label htmlFor="slider-input">
+              {appSettings.model.temperature[0]}
+            </Label>
+
+            <Slider
+              id="slider-input"
+              defaultValue={appSettings.model.temperature}
+              max={2}
+              step={0.1}
+              className={cn("w-[160px]")}
+              onValueChange={(value) => {
+                appSettings.model.temperature = value;
+              }}
+            />
+          </div>
         </SettingsItem>
       </CardContent>
-      <CardFooter>{/* <Button>保存设置</Button> */}</CardFooter>
+      <CardFooter className="justify-end"></CardFooter>
     </Card>
   );
 }

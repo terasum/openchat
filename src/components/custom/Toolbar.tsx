@@ -1,38 +1,31 @@
 import React from "react";
-import { Button,
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
- } from "@/components/ui";
-import SidebarIcon from "@/assets/images/side-bar-fill.svg"
+import { Button, Badge } from "@/components/ui";
+import SidebarIcon from "@/assets/images/side-bar-fill.svg";
+import { useAppSettings } from "@/hooks/use-app-settings";
 
 import "./Toolbar.scss";
+
 
 interface ToolbarProps {
   onToggleSidebar: () => void;
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ onToggleSidebar }) => {
-  return (
-    <div className="toolbar w-full text-white flex flex-row justify-start items-center px-4 pt-1 pb-1">
-      <Button className="h-[20px] pl-2 pr-2 shadow-none mr-3"  size="sm" variant="outline" onClick={onToggleSidebar}>
-        <img className="w-[14px] h-[14px]" src={SidebarIcon}/>
-      </Button>
+  const appSettings = useAppSettings();
 
-      <Select>
-      <SelectTrigger className="w-[120px] h-[20px] pl-2 pr-2 shadown-none text-black text-[12px]">
-        <SelectValue className="shadown-none" placeholder="gpt-4o-mini" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem className="text-black text-[12px]" value="gpt-4o-mini">gpt-4o-mini</SelectItem>
-          <SelectItem disabled className="text-black text-[12px]" value="gpt-3.5-turbo">gpt-3.5-turbo</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+  return (
+    <div className="toolbar w-full text-white flex flex-row justify-start items-center px-4 pt-1 pb-1 select-none">
+      <Button
+        className="h-[20px] pl-2 pr-2 shadow-none mr-3"
+        size="sm"
+        variant="outline"
+        onClick={onToggleSidebar}
+      >
+        <img className="w-[14px] h-[14px]" src={SidebarIcon} />
+      </Button>
+      <div className="flex flex-row items-center cursor-default">
+        <Badge variant="outline">{appSettings.model.default_model}</Badge>
+      </div>
 
       <div />
     </div>

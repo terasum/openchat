@@ -147,11 +147,11 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.10)
       tauri-plugin-autostart-api:
-        specifier: github:tauri-apps/tauri-plugin-autostart
-        version: https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/1e02acce1b4bb5ee461f7670012d7d105a13be4c
+        specifier: https://github.com/tauri-apps/tauri-plugin-autostart
+        version: https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/6e4666fe3462f0534e90ed6bc075394dff1a1bde
       tauri-plugin-log-api:
-        specifier: github:tauri-apps/tauri-plugin-log
-        version: git+https://git@github.com:tauri-apps/tauri-plugin-log.git#2bb26e22f7f7b4f164bad02f0ae4085796f77fff
+        specifier: https://github.com/tauri-apps/tauri-plugin-log
+        version: https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f
       tauri-plugin-sql-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-sql
         version: https://codeload.github.com/tauri-apps/tauri-plugin-sql/tar.gz/7ae8847ab1f2252e8b6f0fe44af215ac40664fd6
@@ -162,8 +162,8 @@ importers:
         specifier: ^2.0.2
         version: 2.0.3
       tauri-plugin-window-state-api:
-        specifier: github:tauri-apps/tauri-plugin-window-state
-        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a
+        specifier: https://github.com/tauri-apps/tauri-plugin-window-state
+        version: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd
       vaul:
         specifier: ^0.9.1
         version: 0.9.1(@types/react-dom@18.3.0)(@types/react@18.3.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4189,12 +4189,12 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  tauri-plugin-autostart-api@https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/1e02acce1b4bb5ee461f7670012d7d105a13be4c:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/1e02acce1b4bb5ee461f7670012d7d105a13be4c}
+  tauri-plugin-autostart-api@https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/6e4666fe3462f0534e90ed6bc075394dff1a1bde:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/6e4666fe3462f0534e90ed6bc075394dff1a1bde}
     version: 0.0.0
 
-  tauri-plugin-log-api@git+https://git@github.com:tauri-apps/tauri-plugin-log.git#2bb26e22f7f7b4f164bad02f0ae4085796f77fff:
-    resolution: {commit: 2bb26e22f7f7b4f164bad02f0ae4085796f77fff, repo: git@github.com:tauri-apps/tauri-plugin-log.git, type: git}
+  tauri-plugin-log-api@https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f}
     version: 0.0.0
 
   tauri-plugin-sql-api@https://codeload.github.com/tauri-apps/tauri-plugin-sql/tar.gz/7ae8847ab1f2252e8b6f0fe44af215ac40664fd6:
@@ -4208,8 +4208,8 @@ packages:
   tauri-plugin-system-info-api@2.0.3:
     resolution: {integrity: sha512-0aedG6Csp7lDdTWWEW2BkVnUG4PyYSqwOjPHc7p+GhgSeQ5TPo/WSl1UgR8lWNXVCvMGs0WmrPDtKrfq5y+Yig==}
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a}
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd}
     version: 0.0.0
 
   text-extensions@1.9.0:
@@ -8761,11 +8761,11 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tauri-plugin-autostart-api@https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/1e02acce1b4bb5ee461f7670012d7d105a13be4c:
+  tauri-plugin-autostart-api@https://codeload.github.com/tauri-apps/tauri-plugin-autostart/tar.gz/6e4666fe3462f0534e90ed6bc075394dff1a1bde:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
-  tauri-plugin-log-api@git+https://git@github.com:tauri-apps/tauri-plugin-log.git#2bb26e22f7f7b4f164bad02f0ae4085796f77fff:
+  tauri-plugin-log-api@https://codeload.github.com/tauri-apps/tauri-plugin-log/tar.gz/cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
@@ -8782,7 +8782,7 @@ snapshots:
       '@tauri-apps/api': 2.0.0-rc.4
       valibot: 0.36.0
 
-  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/1abc39dce68e3da8377230b83b7792cd4c86c50a:
+  tauri-plugin-window-state-api@https://codeload.github.com/tauri-apps/tauri-plugin-window-state/tar.gz/aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
     dependencies:
       '@tauri-apps/api': 1.6.0
 

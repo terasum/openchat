@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useSettingsNavigator } from "@/hooks/use-settings-navigator";
+import { useSettingsNavigator } from "@/hooks/use-app-settings-navigator";
 
 export function SettingsNav() {
   const [settingsLinkConfig, setSettingsLinkConfig] = useSettingsNavigator();
@@ -13,15 +13,15 @@ export function SettingsNav() {
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
         {settingsLinkConfig.links.map((link, index) => (
           <Button
-            key={index}
+            key={link.id}
             size={"sm"}
-            variant={ settingsLinkConfig.selected === index? "outline" : "ghost"}
+            variant={ settingsLinkConfig.selected === link.id? "outline" : "ghost"}
             className={cn(
               "text-left justify-start text-gray-500",
-              settingsLinkConfig.selected === index && "text-accent-foreground"
+              settingsLinkConfig.selected === link.id && "text-accent-foreground"
             )}
             onClick={() =>
-              setSettingsLinkConfig({ ...settingsLinkConfig, selected: index })
+              setSettingsLinkConfig({ ...settingsLinkConfig, selected: link.id })
             }
           >
             <link.icon className="mr-2 h-4 w-4" />

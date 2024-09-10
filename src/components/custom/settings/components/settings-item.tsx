@@ -15,7 +15,7 @@ export function SettingsItem(props: SettingsItemProps) {
   return (
     <div
       className={cn(
-        "flex items-center space-x-4 rounded-md border p-4 h-[60px] cursor-default",
+        "flex items-center space-x-4 rounded-md border p-4 h-[60px] cursor-default select-none",
         props.disabled && "opacity-50 pointer-events-none",
         props.className
       )}
@@ -23,7 +23,7 @@ export function SettingsItem(props: SettingsItemProps) {
       <props.icon color="#505050" size={20}  />
       <div className="flex-1 space-y-1">
         <p className="text-sm font-medium leading-none">{props.title}</p>
-        <p className="text-sm text-muted-foreground">{props.description}</p>
+        <p className="text-[13px] font-light text-muted-foreground">{props.description}</p>
       </div>
       {props.children}
     </div>

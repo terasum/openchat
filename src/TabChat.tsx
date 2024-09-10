@@ -14,6 +14,8 @@ const Chat: React.FC = () => {
     conversations,
     selectedConversation,
     handleSelectConversation,
+    handleCreateNewConversation,
+    handleDeleteConversation,
     getConvMessage,
     handleSendMessage, stopResponsing, isResponsing 
   } = useConversation();
@@ -27,6 +29,8 @@ const Chat: React.FC = () => {
           conversations={conversations}
           selectedConversation={selectedConversation}
           onSelectConversation={handleSelectConversation}
+          onCreateNewConversation={handleCreateNewConversation}
+          onDeleteConversation={handleDeleteConversation}
         />
       )}
 

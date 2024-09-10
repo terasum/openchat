@@ -9,13 +9,18 @@ import {
   Session,
   wrapGetSessionDataById,
   wrapSaveSessionData,
+  wrapNewSession,
+  wrapDeleteSession,
+  wrapUpdateSession,
   SessionData,
 } from "@/rust-bindings";
 
 export interface Conversation {
   id: string;
   title: string;
+  role_id: number;
   messages: { role: string; content: string }[];
+  updatedAt: number;
 }
 
 export const debounce = <T extends (...args: any[]) => any>(
@@ -89,28 +94,44 @@ export function useConversation() {
     }
   };
 
+  const handleCreateNewConversation = async () => {
+    let promptId = 1;
+    await newConversation(promptId);
+  };
+
+  const handleDeleteConversation = async (id: string) => {
+    await deleteConversation(id);
+  };
+
   useEffect(() => {
     wrapGetSessionList(0, 10).then((res) => {
       console.log("============ wrapGetSessionList ======== ");
       if (res && res instanceof Array) {
         const sessionList = res as unknown as Session[];
-        const conversationList = sessionList.map((session) => {
-          console.log("session: ", session);
-          console.log("session id", session.id);
-          return {
-            id: session.id,
-            title: session.title,
-            messages: [] as { role: string; content: string }[],
-          };
-        });
+        const conversationList = sessionList
+          .map((session) => {
+            console.log("session: ", session);
+            console.log("session id", session.id);
+            return {
+              id: session.id,
+              role_id: 1,
+              title: session.title,
+              messages: [] as { role: string; content: string }[],
+              updatedAt: Date.parse(session.updatedAt),
+            };
+          })
+          .sort((a, b) => b.updatedAt - a.updatedAt);
+
         conversationList.push({
           id: "Markdown-Format",
           title: "Mardown-Format",
+          role_id: 1,
           messages: [
             { role: "assistant", content: "请问有什么可以帮您的吗？?" },
             { role: "user", content: "请问如何处理MDX文档?" },
             { role: "assistant", content: MarkdownDemoData() },
           ],
+          updatedAt: Date.parse("2024-01-01T10:00:00.000Z"),
         });
         setConversations(conversationList);
         handleSelectConversation(conversationList[0].id);
@@ -140,6 +161,14 @@ export function useConversation() {
               };
             }
           }
+          // 更新 session title
+          if (conversation.messages.length === 0 && role === "user") {
+            // 用户的第一条消息，需要把当前conversation的title修改为用户消息（取前20个字）
+            conversation.title = message.substring(0, 20);
+            updateConversation(conversation.id, conversation);
+            // 异步更新数据库的 session title
+          }
+
           // 当前消息列表为空，或者最后一条消息不是当前角色
           return {
             ...conversation,
@@ -152,6 +181,57 @@ export function useConversation() {
         return conversation;
       });
     });
+  }
+
+  async function deleteConversation(id: string) {
+    const result = await wrapDeleteSession(id);
+    console.log("delete session id:", result);
+    setConversations((conversations) => {
+      return conversations.filter((conversation) => conversation.id !== id);
+    });
+  }
+
+  async function updateConversation(id: string, conv: Conversation) {
+    const updatedConv = await wrapUpdateSession(
+      conv.id,
+      conv.title,
+      conv.role_id
+    );
+
+    setConversations((conversations) => {
+      return conversations.map((conversation) => {
+        if (conversation.id === id) {
+          return {
+            ...conversation,
+            ...updatedConv,
+            // TODO should use updatedConv.updateAt
+            updatedAt: conversation.updatedAt,
+          };
+        }
+        return conversation;
+      });
+    });
+  }
+
+  async function newConversation(promptId: number) {
+    const result = await wrapNewSession("新会话", promptId);
+    console.log("new session result", result);
+    if (result) {
+      setConversations((conversations) => {
+        return [
+          {
+            id: result.id,
+            title: "新会话",
+            role_id: 1,
+            messages: [],
+            roleId: promptId,
+            updatedAt: Date.parse(result.updatedAt),
+          },
+          ...conversations,
+        ].sort((a, b) => b.updatedAt - a.updatedAt);
+      });
+      handleSelectConversation(result.id);
+    }
   }
 
   // ----------------- openAI part -------------------
@@ -238,7 +318,7 @@ export function useConversation() {
     // 插入消息
     updateCurrentConversation("user", message);
     // 请求AI
-    const assistant_message = handleOpenAIRequst({
+    handleOpenAIRequst({
       role: "user",
       content: message,
     }).then(async (assistant_message) => {
@@ -298,6 +378,8 @@ export function useConversation() {
     setSelectedConversation,
     selectedConversation,
     handleSelectConversation,
+    handleCreateNewConversation,
+    handleDeleteConversation,
     getConvMessage,
     handleSendMessage,
     stopResponsing,

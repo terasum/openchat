@@ -3,7 +3,7 @@ import {
   Brain,
   AppWindow,
   CircleHelp,
-  SquareUserRound,
+  Key,
 } from "lucide-react";
 
 import { atom, useAtom } from "jotai";
@@ -22,14 +22,13 @@ const links: LinkItem[] = [
   },
   {
     id: 1,
-    title: "外观设置",
-    icon: AppWindow,
+    title: "API Key",
+    icon: Key,
   },
-
   {
     id: 2,
-    title: "账户设置",
-    icon: SquareUserRound,
+    title: "外观设置",
+    icon: AppWindow,
   },
   {
     id: 3,

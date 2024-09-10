@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-checkbox": "^1.1.1",
     "@radix-ui/react-collapsible": "^1.1.0",
@@ -46,6 +47,7 @@
     "gpt-tokenizer": "^2.2.1",
     "highlight.js": "^11.10.0",
     "jotai": "^2.9.3",
+    "jotai-immer": "^0.4.1",
     "lucide-react": "^0.436.0",
     "markdown-it": "^14.1.0",
     "markdown-it-highlightjs": "^4.1.0",

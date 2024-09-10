@@ -123,7 +123,7 @@ jobs:
 
       - name: Post Handle Copy Aliyun OSS (aarch64-apple-darwin)
         if: matrix.args == '--target aarch64-apple-darwin'
-        run |
+        run: |
           cp src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat.app.tar.gz src-tauri/target/aarch64-apple-darwin/release/bundle/macos/OpenChat_aarch64.app.tar.gz 
 
 

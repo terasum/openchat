@@ -17,16 +17,16 @@ export function wrapGetSessionList(start: number, end: number) {
     return invoke()<Session[]>("wrap_get_session_list", { start,end })
 }
 
-export function wrapNewSession(title: string, roleId: number) {
-    return invoke()<Session>("wrap_new_session", { title,roleId })
+export function wrapNewSession(data: Session) {
+    return invoke()<Session>("wrap_new_session", { data })
 }
 
 export function wrapDeleteSession(id: string) {
     return invoke()<Session>("wrap_delete_session", { id })
 }
 
-export function wrapUpdateSession(id: string, title: string, roleId: number) {
-    return invoke()<Session>("wrap_update_session", { id,title,roleId })
+export function wrapUpdateSession(data: Session) {
+    return invoke()<Session>("wrap_update_session", { data })
 }
 
 export function wrapGetSessionDataById(id: string) {
@@ -49,6 +49,6 @@ export function wrapUpdateAppConfig(config: Settings) {
     return invoke()<null>("wrap_update_app_config", { config })
 }
 
-export type Session = { id: string; title: string; role_id: number; type: string; createdAt: string; updatedAt: string }
-export type SessionData = { id: number; sessionId: string; role: string; message: string; is_ask: boolean; is_memory: boolean; message_type: string; model: string; createdAt: string; updatedAt: string }
-export type Settings = { id: number; key: string; value: string; createdAt: string; updatedAt: string }
+export type Settings = { id: number; key: string; value: string; created_at: string; updated_at: string }
+export type Session = { id: string; title: string; prompt_id: number; with_context: boolean; with_context_size: number; session_model: string; created_at: string; updated_at: string }
+export type SessionData = { id: number; session_id: string; role: string; message: string; message_type: string; created_at: string; updated_at: string }

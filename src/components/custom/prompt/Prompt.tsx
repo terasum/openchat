@@ -17,25 +17,18 @@ import { usePrompt } from "@/hooks/use-prompts";
 
 interface PromptProps {
   prompt: Prompt[];
-  defaultLayout: number[] | undefined;
 }
 
-export function Prompt({ prompt, defaultLayout = [25, 75] }: PromptProps) {
-
+export function Prompt({ prompt }: PromptProps) {
   const [prompt_select] = usePrompt();
 
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup
         direction="horizontal"
-        onLayout={(sizes: number[]) => {
-          document.cookie = `openchat:layout:prompt=${JSON.stringify(
-            sizes
-          )}`;
-        }}
         className="h-full items-stretch"
       >
-        <ResizablePanel defaultSize={defaultLayout[0]} minSize={40}>
+        <ResizablePanel defaultSize={40} minSize={30}>
           <Tabs defaultValue="all" className="h-full">
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Prompts</h1>
@@ -72,7 +65,7 @@ export function Prompt({ prompt, defaultLayout = [25, 75] }: PromptProps) {
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
+        <ResizablePanel defaultSize={60} minSize={60}>
           <PromptDisplay
             prompt={
               prompt.find((item) => item.id === prompt_select.selected) || null

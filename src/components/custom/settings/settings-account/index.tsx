@@ -1,4 +1,3 @@
-import { Separator } from "@/components/ui/separator"
 import { AccountSettings } from "./apikey-settings"
 
 export default function SettingsAccountPage() {

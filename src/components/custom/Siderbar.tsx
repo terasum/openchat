@@ -1,5 +1,5 @@
 import React from "react";
-import { PlusCircledIcon, TrashIcon, Pencil2Icon } from "@radix-ui/react-icons";
+import { PlusCircledIcon, TrashIcon } from "@radix-ui/react-icons";
 import "./Siderbar.scss";
 import {
   Dialog,

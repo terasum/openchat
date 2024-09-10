@@ -16,7 +16,7 @@ import AccountSettings from "@/components/custom/settings/settings-account";
 
 
 export default function Prompt() {
-  const [settingsLinkConfig, setSettingsLinkConfig] = useSettingsNavigator();
+  const [settingsLinkConfig, _] = useSettingsNavigator();
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup

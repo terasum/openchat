@@ -1,6 +1,4 @@
 import { useAtom, atom } from "jotai";
-import { atomWithImmer } from "jotai-immer";
-import { loadable, createJSONStorage } from "jotai/utils";
 
 import {
   SettingsRaw,

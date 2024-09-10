@@ -1,4 +1,4 @@
-import React, { SVGAttributes } from "react";
+import React from "react";
 import "./TabNavigation.scss";
 import { cn } from "@/lib/utils";
 

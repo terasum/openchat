@@ -16,6 +16,7 @@ use specta::functions::collect_types;
 #[cfg(all(debug_assertions, not(target_os = "windows")))]
 use tauri_specta::ts;
 
+#[cfg(all(debug_assertions, not(target_os = "windows")))]
 fn generate_bindings() {
     println!("cargo:rerun-if-changed=../src/rust-bindings.ts");
     let result = ts::export(
@@ -38,9 +39,10 @@ fn generate_bindings() {
     }
 }
 
+
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    #[cfg(debug_assertions)]
+
     #[cfg(all(debug_assertions, not(target_os = "windows")))]
     generate_bindings();
 

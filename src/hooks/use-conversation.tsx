@@ -6,21 +6,17 @@ const decoder = new TextDecoder();
 
 import {
   wrapGetSessionList,
-  Session,
   wrapGetSessionDataById,
   wrapSaveSessionData,
   wrapNewSession,
   wrapDeleteSession,
   wrapUpdateSession,
+  Session,
   SessionData,
 } from "@/rust-bindings";
 
-export interface Conversation {
-  id: string;
-  title: string;
-  role_id: number;
+export interface Conversation extends Session {
   messages: { role: string; content: string }[];
-  updatedAt: number;
 }
 
 export const debounce = <T extends (...args: any[]) => any>(
@@ -100,7 +96,11 @@ export function useConversation() {
   };
 
   const handleDeleteConversation = async (id: string) => {
-    await deleteConversation(id);
+    try{
+      deleteConversation(id);
+    } catch(e){
+      console.error("delete convsation error", e);
+    }
   };
 
   useEffect(() => {
@@ -110,28 +110,28 @@ export function useConversation() {
         const sessionList = res as unknown as Session[];
         const conversationList = sessionList
           .map((session) => {
-            console.log("session: ", session);
-            console.log("session id", session.id);
+            console.log("db data session: ", session);
             return {
-              id: session.id,
-              role_id: 1,
-              title: session.title,
+              ...session,
               messages: [] as { role: string; content: string }[],
-              updatedAt: Date.parse(session.updatedAt),
             };
           })
-          .sort((a, b) => b.updatedAt - a.updatedAt);
+          .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at));
 
         conversationList.push({
-          id: "Markdown-Format",
-          title: "Mardown-Format",
-          role_id: 1,
+          id: "markdown-format",
+          title: "Markdown formatter",
+          prompt_id: 1,
+          with_context: false,
+          with_context_size: 0,
+          session_model: "gpt-4o-mini",
           messages: [
             { role: "assistant", content: "请问有什么可以帮您的吗？?" },
             { role: "user", content: "请问如何处理MDX文档?" },
             { role: "assistant", content: MarkdownDemoData() },
           ],
-          updatedAt: Date.parse("2024-01-01T10:00:00.000Z"),
+          updated_at: "2024-01-01T10:00:00.000Z",
+          created_at: "2024-01-01T10:00:00.000Z",
         });
         setConversations(conversationList);
         handleSelectConversation(conversationList[0].id);
@@ -165,8 +165,12 @@ export function useConversation() {
           if (conversation.messages.length === 0 && role === "user") {
             // 用户的第一条消息，需要把当前conversation的title修改为用户消息（取前20个字）
             conversation.title = message.substring(0, 20);
-            updateConversation(conversation.id, conversation);
-            // 异步更新数据库的 session title
+            try {
+              // 异步更新数据库的 session title
+              updateConversation(conversation.id, conversation);
+            } catch (e) {
+              console.error("updateConversation error", e);
+            }
           }
 
           // 当前消息列表为空，或者最后一条消息不是当前角色
@@ -187,16 +191,21 @@ export function useConversation() {
     const result = await wrapDeleteSession(id);
     console.log("delete session id:", result);
     setConversations((conversations) => {
-      return conversations.filter((conversation) => conversation.id !== id);
+      const newConvs = conversations.filter(
+        (conversation) => conversation.id !== id
+      );
+      if (newConvs.length > 0) {
+        // update selected conv, if delete id === current selected id
+        if (id === selectedConversation) {
+          handleSelectConversation(newConvs[0].id);
+        }
+      }
+      return newConvs;
     });
   }
 
   async function updateConversation(id: string, conv: Conversation) {
-    const updatedConv = await wrapUpdateSession(
-      conv.id,
-      conv.title,
-      conv.role_id
-    );
+    const updatedConv = await wrapUpdateSession(conv);
 
     setConversations((conversations) => {
       return conversations.map((conversation) => {
@@ -205,7 +214,7 @@ export function useConversation() {
             ...conversation,
             ...updatedConv,
             // TODO should use updatedConv.updateAt
-            updatedAt: conversation.updatedAt,
+            updatedAt: conversation.updated_at,
           };
         }
         return conversation;
@@ -213,8 +222,17 @@ export function useConversation() {
     });
   }
 
-  async function newConversation(promptId: number) {
-    const result = await wrapNewSession("新会话", promptId);
+  async function newConversation(prompt_id: number) {
+    const result = await wrapNewSession({
+      id: "",
+      title: "新会话",
+      prompt_id: prompt_id,
+      with_context: false,
+      with_context_size: 10,
+      session_model: "gpt-4o-mini",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    });
     console.log("new session result", result);
     if (result) {
       setConversations((conversations) => {
@@ -222,13 +240,16 @@ export function useConversation() {
           {
             id: result.id,
             title: "新会话",
-            role_id: 1,
+            prompt_id: 1,
             messages: [],
-            roleId: promptId,
-            updatedAt: Date.parse(result.updatedAt),
+            with_context: false,
+            with_context_size: 10,
+            session_model: "gpt-4o-mini",
+            created_at: result.created_at,
+            updated_at: result.updated_at,
           },
           ...conversations,
-        ].sort((a, b) => b.updatedAt - a.updatedAt);
+        ].sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at));
       });
       handleSelectConversation(result.id);
     }
@@ -335,30 +356,24 @@ export function useConversation() {
       // 需要保持顺序，这个和显示顺序有关
       await wrapSaveSessionData(selectedConversation, {
         id: 0,
-        sessionId: selectedConversation,
+        session_id: selectedConversation,
         message: JSON.stringify(user_record),
-        role: "1",
-        is_ask: true,
-        is_memory: false,
+        role: "user",
         message_type: "text",
-        model: "gpt-4o-mini",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
       console.log(`save session data: ${user_record}`);
 
       // 需要保持顺序，这个和显示顺序有关
       await wrapSaveSessionData(selectedConversation, {
         id: 0,
-        sessionId: selectedConversation,
+        session_id: selectedConversation,
         message: JSON.stringify(assistant_record),
-        role: "1",
-        is_ask: false,
-        is_memory: false,
+        role: "assistant",
         message_type: "text",
-        model: "gpt-4o-mini",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
 
       console.log(`save session data: ${assistant_record}`);

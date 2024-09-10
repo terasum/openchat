@@ -26,8 +26,8 @@ async function updateAppSettings(settings: SettingsModel) {
     id: 1,
     key: "app_settings",
     value: JSON.stringify(settings),
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
   } as Settings);
   console.log("updateAppSettings finished", data);
   return data;
@@ -103,16 +103,16 @@ export function useAppSettings() {
             };
           });
         },
-        get useragent() {
-          return getter.apikey.useragent;
+        get user_agent() {
+          return getter.apikey.user_agent;
         },
-        set useragent(useragent: string) {
+        set user_agent(user_agent: string) {
           setter((state) => {
             return {
               ...state,
               apikey: {
                 ...state.apikey,
-                useragent: useragent,
+                user_agent: user_agent,
               },
             };
           });

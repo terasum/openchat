@@ -10,50 +10,49 @@ generator client {
 }
 
 model Prompt {
-    id        Int      @id @default(autoincrement())
-    title     String
-    descript  String
-    prompt    String
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at")
+    id          Int      @id @default(autoincrement())
+    title       String
+    description String
+    prompt      String
+    created_at  DateTime @default(now()) @map(name: "created_at")
+    updated_at  DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("prompt")
 }
 
 model SessionData {
     id           Int      @id @default(autoincrement())
-    sessionId    String
-    role         String
+    session_id   String
+    role         String // system/assistant/user
     message      String
-    is_ask       Boolean
-    is_memory    Boolean
     message_type String
-    model        String
-    session      Session? @relation(fields: [sessionId], references: [id], name: "SessionData")
-    createdAt    DateTime @default(now()) @map(name: "created_at")
-    updatedAt    DateTime @default(now()) @updatedAt @map(name: "updated_at")
+    session      Session? @relation(fields: [session_id], references: [id], name: "SessionData")
+    created_at   DateTime @default(now()) @map(name: "created_at")
+    updated_at   DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("session_data")
 }
 
 model Session {
-    id          String        @id @default(cuid())
-    title       String
-    role_id     Int
-    type        String
-    SessionData SessionData[] @relation(name: "SessionData")
-    createdAt   DateTime      @default(now()) @map(name: "created_at")
-    updatedAt   DateTime      @default(now()) @updatedAt @map(name: "updated_at")
+    id                String        @id @default(cuid())
+    title             String
+    prompt_id         Int
+    with_context      Boolean
+    with_context_size Int
+    session_model     String
+    session_data      SessionData[] @relation(name: "SessionData")
+    created_at        DateTime      @default(now()) @map(name: "created_at")
+    updated_at        DateTime      @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("session")
 }
 
 model Settings {
-    id        Int      @id @default(autoincrement())
-    key       String
-    value     String
-    createdAt DateTime @default(now()) @map(name: "created_at")
-    updatedAt DateTime @default(now()) @updatedAt @map(name: "updated_at")
+    id         Int      @id @default(autoincrement())
+    key        String
+    value      String
+    created_at DateTime @default(now()) @map(name: "created_at")
+    updated_at DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
     @@map("settings")
 }

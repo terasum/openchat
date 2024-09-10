@@ -20,17 +20,15 @@ pub async fn get_session_list(
         .map_err(|e| e.to_string());
 }
 
-pub async fn new_session(
-    db: &PrismaClient,
-    title: String,
-    role_id: i32,
-) -> Result<session::Data, String> {
+pub async fn new_session(db: &PrismaClient, data: session::Data) -> Result<session::Data, String> {
     let result = db
         .session()
         .create(
-            title,
-            role_id,
-            "text".to_string(),
+            data.title,
+            data.prompt_id,
+            data.with_context,
+            data.with_context_size,
+            data.session_model,
             vec![
                 session::updated_at::set(chrono::DateTime::from(chrono::Utc::now())),
                 session::created_at::set(chrono::DateTime::from(chrono::Utc::now())),
@@ -44,17 +42,18 @@ pub async fn new_session(
 
 pub async fn update_session(
     db: &PrismaClient,
-    id: String,
-    title: String,
-    role_id: i32,
+    data: session::Data,
 ) -> Result<session::Data, String> {
     return db
         .session()
         .update(
-            session::id::equals(id),
+            session::id::equals(data.id),
             vec![
-                session::title::set(title),
-                session::role_id::set(role_id),
+                session::title::set(data.title),
+                session::prompt_id::set(data.prompt_id),
+                session::with_context::set(data.with_context),
+                session::with_context_size::set(data.with_context_size),
+                session::session_model::set(data.session_model),
                 session::updated_at::set(chrono::DateTime::from(chrono::Utc::now())),
             ],
         )
@@ -119,10 +118,7 @@ pub async fn save_session_data(
             data.session_id,
             data.role,
             data.message,
-            data.is_ask,
-            data.is_memory,
             data.message_type,
-            data.model,
             vec![session_data::updated_at::set(chrono::DateTime::from(
                 chrono::Utc::now(),
             ))],

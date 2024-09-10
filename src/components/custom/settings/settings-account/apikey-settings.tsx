@@ -63,9 +63,9 @@ export function AccountSettings() {
                 className="w-[100%]"
                 type="text"
                 placeholder="Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1"
-                value={appSettings.apikey.useragent}
+                value={appSettings.apikey.user_agent}
                 onChange={(e) => {
-                  appSettings.apikey.useragent = e.target.value;
+                  appSettings.apikey.user_agent = e.target.value;
                 }}
               />
             </div>

@@ -4,7 +4,7 @@ use std::process::Command;
 use tauri::State;
 use webbrowser::{open_browser, Browser};
 
-use crate::db::{self, prisma_client::PrismaClient};
+use crate::db::prisma_client::PrismaClient;
 
 use crate::db::prisma_client::session;
 use crate::db::prisma_client::session_data;
@@ -30,11 +30,10 @@ pub async fn wrap_get_session_list(
 #[specta::specta]
 pub async fn wrap_new_session(
     state: State<'_, Arc<PrismaClient>>,
-    title: String,
-    role_id: i32,
+    data: session::Data,
 ) -> Result<session::Data, String> {
     let db_client = Arc::clone(&state);
-    let result = db_session::new_session(&db_client, title, role_id).await;
+    let result = db_session::new_session(&db_client, data).await;
     return result;
 }
 
@@ -42,16 +41,12 @@ pub async fn wrap_new_session(
 #[specta::specta]
 pub async fn wrap_update_session(
     state: State<'_, Arc<PrismaClient>>,
-    id: String,
-    title: String,
-    role_id: i32,
+    data: session::Data,
 ) -> Result<session::Data, String> {
     let db_client = Arc::clone(&state);
-    let result = db_session::update_session(&db_client, id, title, role_id).await;
+    let result = db_session::update_session(&db_client, data).await;
     return result;
 }
-
-
 
 #[tauri::command]
 #[specta::specta]
@@ -63,7 +58,6 @@ pub async fn wrap_delete_session(
     let result = db_session::delete_session(&db_client, id).await;
     return result;
 }
-
 
 #[tauri::command]
 #[specta::specta]

@@ -13,15 +13,10 @@ import {
 } from "@/components/ui";
 
 import { useState } from "react";
-
-interface IConversation {
-  id: string;
-  title: string;
-  messages: { role: string; content: string }[];
-}
+import { Conversation } from "@/model";
 
 interface SidebarProps {
-  conversations: IConversation[];
+  conversations: Conversation[];
   selectedConversation: string;
   onSelectConversation: (id: string) => void;
   onCreateNewConversation: () => void;
@@ -37,7 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [pendingDeleteConv, setPendingDeleteConv] =
-    useState<IConversation | null>(null);
+    useState<Conversation | null>(null);
 
   return (
     <div className="sidebar flex flex-col bg-gray-100 justify-between w-[200px] p-2 pb-4">
@@ -51,7 +46,10 @@ const Sidebar: React.FC<SidebarProps> = ({
             <div key={conversation.id} className="flex flex-col w-full">
               <div
                 key={conversation.id}
-                onClick={() => onSelectConversation(conversation.id)}
+                onClick={() => {
+                  console.log(`Siderbar.tsx on-click ${conversation.id}`)
+                  onSelectConversation(conversation.id)
+                }}
                 className={`text-left mt-1 mb-1 p-2 pl-4 pr-4 truncate overflow-hidden flex flex-row  justify-between gap-2 rounded-lg border text-sm transition-all hover:bg-accent cursor-default ${
                   selectedConversation === conversation.id
                     ? "bg-muted"

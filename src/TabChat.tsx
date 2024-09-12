@@ -5,7 +5,7 @@ import MessageInput from "@/components/custom/MessageInput";
 import Toolbar from "@/components/custom/Toolbar";
 
 import { useSidebar } from "@/hooks/use-sidebar";
-import { useConversation } from "@/hooks/use-conversation";
+import { useConversation } from "@/hooks/use-conversation-pending";
 
 const Chat: React.FC = () => {
   const { showSidebar, handleToggleSidebar } = useSidebar();
@@ -13,13 +13,15 @@ const Chat: React.FC = () => {
   const {
     conversations,
     selectedConversation,
-    handleSelectConversation,
-    handleCreateNewConversation,
-    handleDeleteConversation,
-    getConvMessage,
-    handleSendMessage, stopResponsing, isResponsing 
-  } = useConversation();
+    isResponsing,
 
+    handleSelectConversation,
+    handleCreateConversation,
+    handleDeleteConversation,
+    handleSendMessage,
+    handleStopResponsing,
+    getConvMessage,
+  } = useConversation();
 
   return (
     <div className="flex flex-row justify-between w-full h-full overflow-hidden">
@@ -29,7 +31,7 @@ const Chat: React.FC = () => {
           conversations={conversations}
           selectedConversation={selectedConversation}
           onSelectConversation={handleSelectConversation}
-          onCreateNewConversation={handleCreateNewConversation}
+          onCreateNewConversation={handleCreateConversation}
           onDeleteConversation={handleDeleteConversation}
         />
       )}
@@ -41,13 +43,10 @@ const Chat: React.FC = () => {
             handleToggleSidebar();
           }}
         ></Toolbar>
-        <ChatContainer
-          className="h-[calc(100vh-110px)]"
-          messages={getConvMessage()}
-        />
+        <ChatContainer className="h-[calc(100vh-110px)]" messages={getConvMessage()} />
         <MessageInput
           onSend={handleSendMessage}
-          stopResponsing={stopResponsing}
+          stopResponsing={handleStopResponsing}
           isResponsing={isResponsing}
         />
       </div>

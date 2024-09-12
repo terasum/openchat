@@ -19,21 +19,6 @@ export interface Conversation extends Session {
   messages: { role: string; content: string }[];
 }
 
-export const debounce = <T extends (...args: any[]) => any>(
-  callback: T,
-  waitFor: number
-) => {
-  let timeout: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<T>): ReturnType<T> => {
-    let result: any;
-    timeout && clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      result = callback(...args);
-    }, waitFor);
-    return result;
-  };
-};
-
 export function useConversation() {
   const [selectedConversation, setSelectedConversation] = useState<string>("");
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -67,38 +52,40 @@ export function useConversation() {
       "[debug/App.tsx](handleSelectConversation): session_data: ",
       session_data
     );
-    if (session_data && session_data instanceof Array) {
+    if (!session_data || session_data instanceof Array) {
+      return;
+    }
+
       console.log(
         "[debug/App.tsx](handleSelectConversation): session_data(instance of Array): ",
         session_data
       );
 
       const session_data_list = session_data as unknown as SessionData[];
-      const messages = session_data_list.map((session_data) =>
-        JSON.parse(session_data.message)
-      );
+      const messages = session_data_list.map((session_data) => {
+        return { role: session_data.role, content: session_data.message };
+      });
 
       setConversations((prevConversations) => {
         console.log("prevConversations: ", prevConversations);
         return prevConversations.map((conversation) =>
           conversation.id === id && messages.length > 0
-            ? { ...conversation, messages: messages }
+            ? { ...conversation, messages }
             : conversation
         );
       });
       console.log(`after setConversations`, conversations);
-    }
   };
 
-  const handleCreateNewConversation = async () => {
+  const handleCreateConversation = async () => {
     let promptId = 1;
     await newConversation(promptId);
   };
 
   const handleDeleteConversation = async (id: string) => {
-    try{
+    try {
       deleteConversation(id);
-    } catch(e){
+    } catch (e) {
       console.error("delete convsation error", e);
     }
   };
@@ -144,8 +131,11 @@ export function useConversation() {
   function updateCurrentConversation(role: string, message: string) {
     setConversations((prevConversations) => {
       return prevConversations.map((conversation) => {
+        if (conversation.id !== selectedConversation){
+          return conversation;
+        }
+
         // 是当前对话
-        if (conversation.id === selectedConversation) {
           if (conversation.messages.length > 0) {
             const latest_message =
               conversation.messages[conversation.messages.length - 1];
@@ -161,6 +151,8 @@ export function useConversation() {
               };
             }
           }
+
+          
           // 更新 session title
           if (conversation.messages.length === 0 && role === "user") {
             // 用户的第一条消息，需要把当前conversation的title修改为用户消息（取前20个字）
@@ -181,8 +173,6 @@ export function useConversation() {
               { role: role, content: message },
             ],
           };
-        }
-        return conversation;
       });
     });
   }
@@ -344,45 +334,37 @@ export function useConversation() {
       content: message,
     }).then(async (assistant_message) => {
       setIsResponsing(false);
-      const user_record = { role: "user", content: message };
-      const assistant_record = {
-        role: "assistant",
-        content: assistant_message,
-      };
-
-      console.log("to saved: ", user_record);
-      console.log("to saved", assistant_record);
+      console.log("to saved user message:", message);
 
       // 需要保持顺序，这个和显示顺序有关
       await wrapSaveSessionData(selectedConversation, {
         id: 0,
         session_id: selectedConversation,
-        message: JSON.stringify(user_record),
+        message: message,
         role: "user",
         message_type: "text",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       });
-      console.log(`save session data: ${user_record}`);
 
       // 需要保持顺序，这个和显示顺序有关
       await wrapSaveSessionData(selectedConversation, {
         id: 0,
         session_id: selectedConversation,
-        message: JSON.stringify(assistant_record),
+        message: assistant_message|| "<not-responsed>",
         role: "assistant",
         message_type: "text",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       });
 
-      console.log(`save session data: ${assistant_record}`);
+      console.log(`save session data: ${assistant_message}`);
       console.log(`use-openai.tsx handle the message done: ${message}`);
     });
   }
 
   // 立即停止
-  function stopResponsing() {
+  function handleStopResponsing() {
     setIsIgnoreResponse(true);
     setIsResponsing(false);
   }
@@ -393,11 +375,11 @@ export function useConversation() {
     setSelectedConversation,
     selectedConversation,
     handleSelectConversation,
-    handleCreateNewConversation,
+    handleCreateConversation,
     handleDeleteConversation,
     getConvMessage,
     handleSendMessage,
-    stopResponsing,
+    handleStopResponsing,
     isResponsing,
   };
 }

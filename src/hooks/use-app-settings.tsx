@@ -4,7 +4,7 @@ import {
   SettingsRaw,
   SettingsModel,
   defaultSettings,
-} from "@/model/settings-model";
+} from "@/model";
 
 import {
   wrapGetAppConfig,

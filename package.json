@@ -47,6 +47,7 @@
     "date-fns": "^3.6.0",
     "gpt-tokenizer": "^2.2.1",
     "highlight.js": "^11.10.0",
+    "immer": "^10.1.1",
     "jotai": "^2.9.3",
     "jotai-immer": "^0.4.1",
     "lucide-react": "^0.436.0",

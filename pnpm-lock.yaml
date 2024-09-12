@@ -104,6 +104,9 @@ importers:
       highlight.js:
         specifier: ^11.10.0
         version: 11.10.0
+      immer:
+        specifier: ^10.1.1
+        version: 10.1.1
       jotai:
         specifier: ^2.9.3
         version: 2.9.3(@types/react@18.3.4)(react@18.3.1)

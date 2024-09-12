@@ -90,7 +90,13 @@ pub async fn wrap_update_session_data(
 ) -> Result<(), String> {
     let db_client = Arc::clone(&state);
     let result = db_session::update_session_data(&db_client, data).await;
-    return result;
+    match result {
+        Ok(result) => return Ok(result),
+        Err(err) =>{
+            println!("[rs.sql] Exec wrap_update_session_data error: {}", err);
+            return Err(err);
+        },
+    }
 }
 
 // ----------- config db commands --------

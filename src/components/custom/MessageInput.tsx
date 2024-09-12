@@ -53,10 +53,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   };
 
   const handleKeyEnterDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && e.altKey) {
-      e.preventDefault();
-      setInputValue(inputValue + "\n");
-    } else if (e.key === "Enter") {
+    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -68,7 +65,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         <Textarea
           value={inputValue}
           onChange={handleInputValueChange}
-          placeholder="有什么问题尽管问我 [alt+回车 换行]"
+          placeholder="有什么问题尽管问我 [Ctl/Cmd+Enter 发送]"
           className="flex-1 p-2 border rounded-md min-h-[32px] text-[12px] resize-none overflow-y-scroll"
           rows={1}
           onKeyDown={handleKeyEnterDown}

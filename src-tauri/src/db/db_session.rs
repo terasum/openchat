@@ -119,9 +119,10 @@ pub async fn save_session_data(
             data.role,
             data.message,
             data.message_type,
-            vec![session_data::updated_at::set(chrono::DateTime::from(
-                chrono::Utc::now(),
-            ))],
+            vec![
+                session_data::updated_at::set(data.updated_at),
+                session_data::created_at::set(data.created_at),
+            ],
         )
         .exec()
         .await

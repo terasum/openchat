@@ -1,5 +1,6 @@
 import { makeRequest } from "@/lib/request";
 import { Stream } from "@/lib/streaming";
+const decoder = new TextDecoder();
 
 export interface OpenAIReqOpts {
   api_key: string;
@@ -10,52 +11,6 @@ export interface OpenAIReqOpts {
   api_path: string;
 }
 
-/**
- * 
- * @param session_data session data
- * @param opts request data
- * @returns 
- * 
- * example:
- * ```ts
- * const opts: OpenAIReqOpts = {
-    api_base: "https://proxy.openchat.dev",
-    api_path: "/v1/chat/completions",
-    api_key: "SK-sc26ff22b40dbb408cbd43c00900e83650",
-    api_model: "gpt-4o-mini",
-    api_temprature: 0.8,
-    api_max_tokens: 2000,
-  };
-
-  const sessionData: SessionData[] = [
-    {
-      role: "system",
-      message:
-        "你是一名通用人工智能助手，你将用尽量专业的知识回答用户的问题，所有问题简洁易懂，字数不超过100字，以纯文本格式输出，不要以 Markdown 格式输出。",
-      createdAt: new Date(),
-      id: 1,
-      sessionId: 1,
-    },
-    {
-      role: "user",
-      message: "你好，请问 OpenAI 是由谁创建的?",
-      createdAt: new Date(),
-      id: 2,
-      sessionId: 1,
-    },
-  ];
-
-  const decoder = new TextDecoder();
-  const iter = await chatCompletionStream(sessionData, opts);
-  let line = "";
-  await iter.toReadableStream().pipeTo(new WritableStream({
-    write(chunk) {
-      const temp_json = JSON.parse(decoder.decode(chunk));
-      line+=temp_json.data.choices[0].delta.content
-      console.log(line)
-    },
-  }));
- */
 export async function chatCompletionStream(
   messages: { role: string; content: string }[],
   opts: OpenAIReqOpts
@@ -76,4 +31,62 @@ export async function chatCompletionStream(
     timeout: 600000,
   });
   return Stream.fromSSEResponse(response, controller);
+}
+
+/**
+ * 流式请求 openai chat complemention 接口
+ * @param contexts 对话上下文
+ * @param onUpdate 流式更新回调
+ * @param onDone 完成回调
+ * @param onError 错误回调
+ * @param opts 请求参数
+ * @param abortSignal abort信号量
+ * @returns void
+ */
+export async function chatWithOpenAI(
+  contexts: { role: string; content: string }[],
+  onUpdate: (chunk: string) => void,
+  onDone: (response: string) => void,
+  onError: (error: Error) => void,
+  opts?: OpenAIReqOpts,
+  abortSignal?: AbortSignal
+) {
+  const defaultOpts = {
+    api_base: "https://proxy.openchat.dev",
+    api_path: "/v1/chat/completions",
+    api_key: "SK-sc26ff22b40dbb408cbd43c00900e83650",
+    api_model: "gpt-4o-mini",
+    api_temprature: 0.8,
+    api_max_tokens: 2000,
+  };
+  opts = opts ?? defaultOpts;
+  abortSignal = abortSignal ?? new AbortController().signal;
+  if (contexts.length <= 0) {
+    onError(new Error("contexts is empty"));
+    return;
+  }
+
+  console.log("--------- OPENAI START -----------");
+  console.log(`current_context: ${JSON.stringify(contexts)}`);
+  const iter = await chatCompletionStream(contexts, opts);
+  let line = "";
+  await iter.toReadableStream().pipeTo(
+    new WritableStream({
+      write(chunk) {
+        try {
+          const temp_json = JSON.parse(decoder.decode(chunk));
+          const temp_tokens = temp_json.data.choices[0].delta.content;
+          if (temp_tokens && !abortSignal.aborted) {
+            onUpdate(temp_tokens);
+            line += temp_tokens;
+          }
+        } catch (e: any) {
+          console.error("writable stream write error,", e);
+          onError(e);
+        }
+      },
+    })
+  );
+  onDone(line);
+  console.log("---------- OPENAI END ----------");
 }

@@ -1,4 +1,4 @@
-import { Separator, Textarea } from "@/components/ui";
+import { Separator, Textarea, Badge } from "@/components/ui";
 import { useState, useEffect } from "react";
 
 import { usePrompt } from "@/hooks/use-prompts";
@@ -13,6 +13,7 @@ export function PromptContent() {
   const prompts = data;
   const prompt =
     prompts?.find((p) => p.id === selected) || prompts ? prompts[0] : undefined;
+  const labels = prompt?.labels ? prompt.labels.split(",") : [];
 
   const [state, setState] = useState({
     system: "",
@@ -46,19 +47,37 @@ export function PromptContent() {
             <h3 className="text-md mb-1 text-gray-400">SYSTEM:</h3>
             <Textarea
               value={state.system}
-              className="min-h-[200px] max-h-[260px]"
+              className="h-[360px]"
               onChange={(e) => {
                 console.log(e.target.value);
                 setState((draft) => {
-                    updateDebounceFn(e.target.value);
-                    return {
-                      ...draft,
-                      system: e.target.value,
-                    };
+                  updateDebounceFn(e.target.value);
+                  return {
+                    ...draft,
+                    system: e.target.value,
+                  };
                 });
               }}
             />
+            <div className="flex items-center gap-2 mt-3">
+            {labels.length ? (
+              <div className="flex items-center gap-2">
+                {prompt?.actived ? (
+                  <Badge variant={"default"}>{"active"}</Badge>
+                ) : (
+                  <Badge variant={"outline"}>{"unused"}</Badge>
+                )}
+
+                {labels.map((label) => (
+                  <Badge key={label} variant={"outline"}>
+                    {label}
+                  </Badge>
+                ))}
+              </div>
+            ) : null}
           </div>
+          </div>
+          
           <Separator orientation="vertical" />
 
           <PromptSettings />

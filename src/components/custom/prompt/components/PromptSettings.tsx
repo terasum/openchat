@@ -1,4 +1,4 @@
-import { Button, Label, Switch, Slider } from "@/components/ui";
+import { Label, Switch, Slider } from "@/components/ui";
 
 import { usePrompt } from "@/hooks/use-prompts";
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { debounce } from "@/lib/utils";
 
 export function PromptSettings() {
-  const { query, selected, actived, mutation } = usePrompt();
+  const { query, selected, mutation } = usePrompt();
   const { data } = query;
   const prompts = data;
   const prompt =

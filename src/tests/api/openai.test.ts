@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 import { chatCompletionStream, OpenAIReqOpts } from "@/api/openai";
-import { SessionData } from "@/model/session-data-model";
+import { SessionData } from "@/rust-bindings";
 
 test("adds 1 + 2 to equal 3", () => {
   expect(

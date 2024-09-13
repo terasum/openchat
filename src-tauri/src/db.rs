@@ -13,6 +13,7 @@ use tauri::Manager;
 
 pub mod db_config;
 pub mod db_session;
+pub mod db_prompt;
 
 pub fn get_db_path(_app: &App) -> String {
     #[cfg(debug_assertions)]
@@ -62,8 +63,18 @@ async fn init_tables(client: &PrismaClient) -> Result<(), Box<dyn std::error::Er
 CREATE TABLE IF NOT EXISTS "prompt" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "prompt" TEXT NOT NULL,
+    "desc" TEXT NOT NULL,
+    "system" TEXT NOT NULL,
+    "favorite" BOOLEAN NOT NULL,
+    "actived" BOOLEAN NOT NULL,
+    "with_context" BOOLEAN NOT NULL,
+    "with_context_size" INTEGER NOT NULL,
+    "max_tokens" INTEGER NOT NULL,
+    "top_p" TEXT NOT NULL,
+    "temperature" TEXT NOT NULL,
+    "opts" TEXT NOT NULL,
+    "prehandle_script" TEXT NOT NULL,
+    "labels" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -136,8 +147,18 @@ async fn init_default_prompt(client: &PrismaClient) -> Result<(), String> {
         .prompt()
         .create(
             "ChatGPT".to_string(),
-            "通用AI智能助理".to_string(),
-            "prompt".to_string(),
+            "通用人工智能助理".to_string(),
+            "你需要作为通用人工智能助理帮助用户解决问题，你的回答专业真实，且以markdown格式输出".to_string(),
+            true,
+            true,
+            true,
+            32,
+            2500,
+            "1".to_string(),
+            "0.8".to_string(),
+            "{}".to_string(),
+            "".to_string(),
+            "general".to_string(),
             vec![prompt::id::set(1)],
         )
         .exec()

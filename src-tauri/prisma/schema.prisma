@@ -1,58 +1,68 @@
 datasource db {
-    provider = "sqlite"
-    url      = "file:/Users/chenquan/Library/Application\\ Support/OpenChat/openchat-data-dev.db"
+  provider = "sqlite"
+  url      = "file:/Users/chenquan/Library/Application\\ Support/OpenChat/openchat-data-dev.db"
 }
 
 generator client {
-    provider    = "cargo prisma"
-    output      = "../src/db/prisma_client.rs"
-    module_path = "crate::db::prisma_client"
+  provider    = "cargo prisma"
+  output      = "../src/db/prisma_client.rs"
+  module_path = "crate::db::prisma_client"
 }
 
 model Prompt {
-    id          Int      @id @default(autoincrement())
-    title       String
-    description String
-    prompt      String
-    created_at  DateTime @default(now()) @map(name: "created_at")
-    updated_at  DateTime @default(now()) @updatedAt @map(name: "updated_at")
+  id                Int      @id @default(autoincrement())
+  title             String
+  desc              String
+  system            String
+  favorite          Boolean
+  actived           Boolean
+  with_context      Boolean
+  with_context_size Int
+  max_tokens        Int
+  top_p             String
+  temperature       String
+  opts              String
+  prehandle_script  String
+  labels            String
+  created_at        DateTime @default(now()) @map(name: "created_at")
+  updated_at        DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
-    @@map("prompt")
+  @@map("prompt")
 }
 
 model SessionData {
-    id           Int      @id @default(autoincrement())
-    session_id   String
-    role         String // system/assistant/user
-    message      String
-    message_type String
-    session      Session? @relation(fields: [session_id], references: [id], name: "SessionData")
-    created_at   DateTime @default(now()) @map(name: "created_at")
-    updated_at   DateTime @default(now()) @updatedAt @map(name: "updated_at")
+  id           Int      @id @default(autoincrement())
+  session_id   String
+  role         String // system/assistant/user
+  message      String
+  message_type String
+  session      Session? @relation(fields: [session_id], references: [id], name: "SessionData")
+  created_at   DateTime @default(now()) @map(name: "created_at")
+  updated_at   DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
-    @@map("session_data")
+  @@map("session_data")
 }
 
 model Session {
-    id                String        @id @default(cuid())
-    title             String
-    prompt_id         Int
-    with_context      Boolean
-    with_context_size Int
-    session_model     String
-    session_data      SessionData[] @relation(name: "SessionData")
-    created_at        DateTime      @default(now()) @map(name: "created_at")
-    updated_at        DateTime      @default(now()) @updatedAt @map(name: "updated_at")
+  id                String        @id @default(cuid())
+  title             String
+  prompt_id         Int
+  with_context      Boolean
+  with_context_size Int
+  session_model     String
+  session_data      SessionData[] @relation(name: "SessionData")
+  created_at        DateTime      @default(now()) @map(name: "created_at")
+  updated_at        DateTime      @default(now()) @updatedAt @map(name: "updated_at")
 
-    @@map("session")
+  @@map("session")
 }
 
 model Settings {
-    id         Int      @id @default(autoincrement())
-    key        String
-    value      String
-    created_at DateTime @default(now()) @map(name: "created_at")
-    updated_at DateTime @default(now()) @updatedAt @map(name: "updated_at")
+  id         Int      @id @default(autoincrement())
+  key        String
+  value      String
+  created_at DateTime @default(now()) @map(name: "created_at")
+  updated_at DateTime @default(now()) @updatedAt @map(name: "updated_at")
 
-    @@map("settings")
+  @@map("settings")
 }

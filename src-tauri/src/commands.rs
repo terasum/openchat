@@ -6,12 +6,14 @@ use webbrowser::{open_browser, Browser};
 
 use crate::db::prisma_client::PrismaClient;
 
+use crate::db::prisma_client::prompt;
 use crate::db::prisma_client::session;
 use crate::db::prisma_client::session_data;
 use crate::db::prisma_client::settings;
 
 use crate::db::db_config;
 use crate::db::db_session;
+use crate::db::db_prompt;
 
 /// 定义一个包装器函数来处理异步调用
 #[tauri::command]
@@ -76,10 +78,9 @@ pub async fn wrap_save_session_data(
     state: State<'_, Arc<PrismaClient>>,
     session_id: String,
     data: session_data::Data,
-) -> Result<(), String> {
+) -> Result<session_data::Data, String> {
     let db_client = Arc::clone(&state);
-    let result = db_session::save_session_data(&db_client, session_id, data).await;
-    return result;
+    return db_session::save_session_data(&db_client, session_id, data).await
 }
 
 #[tauri::command]
@@ -87,16 +88,40 @@ pub async fn wrap_save_session_data(
 pub async fn wrap_update_session_data(
     state: State<'_, Arc<PrismaClient>>,
     data: session_data::Data,
-) -> Result<(), String> {
+) -> Result<session_data::Data, String> {
     let db_client = Arc::clone(&state);
     let result = db_session::update_session_data(&db_client, data).await;
     match result {
-        Ok(result) => return Ok(result),
-        Err(err) =>{
+        Ok(result) => Ok(result),
+        Err(err) => {
             println!("[rs.sql] Exec wrap_update_session_data error: {}", err);
-            return Err(err);
-        },
+            Err(err)
+        }
     }
+}
+
+// -----------  db prompts  --------
+
+/// 定义一个包装器函数来处理异步调用
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_get_prompt_list(
+    state: State<'_, Arc<PrismaClient>>,
+    start: i32,
+    end: i32,
+) -> Result<Vec<prompt::Data>, String> {
+    let db_client = Arc::clone(&state);
+    db_prompt::get_prompt_list(&db_client, start.into(), end.into()).await
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_update_prompt(
+    state: State<'_, Arc<PrismaClient>>,
+    data: prompt::Data,
+) -> Result<prompt::Data, String> {
+    let db_client = Arc::clone(&state);
+    db_prompt::update_prompt(&db_client, data).await
 }
 
 // ----------- config db commands --------

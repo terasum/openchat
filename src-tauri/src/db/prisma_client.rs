@@ -159,53 +159,49 @@ pub mod prompt {
             }
         }
     }
-    pub mod description {
+    pub mod desc {
         use super::super::*;
         use super::_prisma::*;
         use super::{
             OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
         };
-        pub const NAME: &str = "description";
+        pub const NAME: &str = "desc";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
             fn from(Set(v): Set) -> Self {
-                Self::SetDescription(v)
+                Self::SetDesc(v)
             }
         }
         impl From<Set> for UncheckedSetParam {
             fn from(Set(v): Set) -> Self {
-                Self::Description(v)
+                Self::Desc(v)
             }
         }
         pub fn set<T: From<Set>>(value: String) -> T {
             Set(value).into()
         }
         pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::Description(direction)
+            OrderByParam::Desc(direction)
         }
         pub fn equals(value: String) -> WhereParam {
-            WhereParam::Description(_prisma::read_filters::StringFilter::Equals(value))
+            WhereParam::Desc(_prisma::read_filters::StringFilter::Equals(value))
         }
-        ::prisma_client_rust::scalar_where_param_fns!(
-            _prisma::read_filters::StringFilter,
-            Description,
-            {
-                fn in_vec(_: Vec<String>) -> InVec;
-                fn not_in_vec(_: Vec<String>) -> NotInVec;
-                fn lt(_: String) -> Lt;
-                fn lte(_: String) -> Lte;
-                fn gt(_: String) -> Gt;
-                fn gte(_: String) -> Gte;
-                fn contains(_: String) -> Contains;
-                fn starts_with(_: String) -> StartsWith;
-                fn ends_with(_: String) -> EndsWith;
-                fn not(_: String) -> Not;
-            }
-        );
+        ::prisma_client_rust::scalar_where_param_fns!(_prisma::read_filters::StringFilter, Desc, {
+            fn in_vec(_: Vec<String>) -> InVec;
+            fn not_in_vec(_: Vec<String>) -> NotInVec;
+            fn lt(_: String) -> Lt;
+            fn lte(_: String) -> Lte;
+            fn gt(_: String) -> Gt;
+            fn gte(_: String) -> Gte;
+            fn contains(_: String) -> Contains;
+            fn starts_with(_: String) -> StartsWith;
+            fn ends_with(_: String) -> EndsWith;
+            fn not(_: String) -> Not;
+        });
         pub struct Include;
         impl Into<super::IncludeParam> for Include {
             fn into(self) -> super::IncludeParam {
-                super::IncludeParam::Description(self)
+                super::IncludeParam::Desc(self)
             }
         }
         impl Include {
@@ -216,7 +212,7 @@ pub mod prompt {
         pub struct Select;
         impl Into<super::SelectParam> for Select {
             fn into(self) -> super::SelectParam {
-                super::SelectParam::Description(self)
+                super::SelectParam::Desc(self)
             }
         }
         impl Select {
@@ -225,36 +221,36 @@ pub mod prompt {
             }
         }
     }
-    pub mod prompt {
+    pub mod system {
         use super::super::*;
         use super::_prisma::*;
         use super::{
             OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
         };
-        pub const NAME: &str = "prompt";
+        pub const NAME: &str = "system";
         pub struct Set(pub String);
         impl From<Set> for SetParam {
             fn from(Set(v): Set) -> Self {
-                Self::SetPrompt(v)
+                Self::SetSystem(v)
             }
         }
         impl From<Set> for UncheckedSetParam {
             fn from(Set(v): Set) -> Self {
-                Self::Prompt(v)
+                Self::System(v)
             }
         }
         pub fn set<T: From<Set>>(value: String) -> T {
             Set(value).into()
         }
         pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
-            OrderByParam::Prompt(direction)
+            OrderByParam::System(direction)
         }
         pub fn equals(value: String) -> WhereParam {
-            WhereParam::Prompt(_prisma::read_filters::StringFilter::Equals(value))
+            WhereParam::System(_prisma::read_filters::StringFilter::Equals(value))
         }
         ::prisma_client_rust::scalar_where_param_fns!(
             _prisma::read_filters::StringFilter,
-            Prompt,
+            System,
             {
                 fn in_vec(_: Vec<String>) -> InVec;
                 fn not_in_vec(_: Vec<String>) -> NotInVec;
@@ -271,7 +267,7 @@ pub mod prompt {
         pub struct Include;
         impl Into<super::IncludeParam> for Include {
             fn into(self) -> super::IncludeParam {
-                super::IncludeParam::Prompt(self)
+                super::IncludeParam::System(self)
             }
         }
         impl Include {
@@ -282,7 +278,650 @@ pub mod prompt {
         pub struct Select;
         impl Into<super::SelectParam> for Select {
             fn into(self) -> super::SelectParam {
-                super::SelectParam::Prompt(self)
+                super::SelectParam::System(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod favorite {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "favorite";
+        pub struct Set(pub bool);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetFavorite(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Favorite(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: bool) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Favorite(direction)
+        }
+        pub fn equals(value: bool) -> WhereParam {
+            WhereParam::Favorite(_prisma::read_filters::BoolFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::BoolFilter,
+            Favorite,
+            {
+                fn not(_: bool) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Favorite(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Favorite(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod actived {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "actived";
+        pub struct Set(pub bool);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetActived(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Actived(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: bool) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Actived(direction)
+        }
+        pub fn equals(value: bool) -> WhereParam {
+            WhereParam::Actived(_prisma::read_filters::BoolFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::BoolFilter,
+            Actived,
+            {
+                fn not(_: bool) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Actived(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Actived(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod with_context {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "with_context";
+        pub struct Set(pub bool);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetWithContext(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::WithContext(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: bool) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::WithContext(direction)
+        }
+        pub fn equals(value: bool) -> WhereParam {
+            WhereParam::WithContext(_prisma::read_filters::BoolFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::BoolFilter,
+            WithContext,
+            {
+                fn not(_: bool) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::WithContext(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::WithContext(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod with_context_size {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "with_context_size";
+        pub struct Set(pub i32);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetWithContextSize(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::WithContextSize(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: i32) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::WithContextSize(direction)
+        }
+        pub fn equals(value: i32) -> WhereParam {
+            WhereParam::WithContextSize(_prisma::read_filters::IntFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::IntFilter,
+            WithContextSize,
+            {
+                fn in_vec(_: Vec<i32>) -> InVec;
+                fn not_in_vec(_: Vec<i32>) -> NotInVec;
+                fn lt(_: i32) -> Lt;
+                fn lte(_: i32) -> Lte;
+                fn gt(_: i32) -> Gt;
+                fn gte(_: i32) -> Gte;
+                fn not(_: i32) -> Not;
+            }
+        );
+        pub fn increment(value: i32) -> SetParam {
+            SetParam::IncrementWithContextSize(value)
+        }
+        pub fn decrement(value: i32) -> SetParam {
+            SetParam::DecrementWithContextSize(value)
+        }
+        pub fn multiply(value: i32) -> SetParam {
+            SetParam::MultiplyWithContextSize(value)
+        }
+        pub fn divide(value: i32) -> SetParam {
+            SetParam::DivideWithContextSize(value)
+        }
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::WithContextSize(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::WithContextSize(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod max_tokens {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "max_tokens";
+        pub struct Set(pub i32);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetMaxTokens(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::MaxTokens(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: i32) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::MaxTokens(direction)
+        }
+        pub fn equals(value: i32) -> WhereParam {
+            WhereParam::MaxTokens(_prisma::read_filters::IntFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::IntFilter,
+            MaxTokens,
+            {
+                fn in_vec(_: Vec<i32>) -> InVec;
+                fn not_in_vec(_: Vec<i32>) -> NotInVec;
+                fn lt(_: i32) -> Lt;
+                fn lte(_: i32) -> Lte;
+                fn gt(_: i32) -> Gt;
+                fn gte(_: i32) -> Gte;
+                fn not(_: i32) -> Not;
+            }
+        );
+        pub fn increment(value: i32) -> SetParam {
+            SetParam::IncrementMaxTokens(value)
+        }
+        pub fn decrement(value: i32) -> SetParam {
+            SetParam::DecrementMaxTokens(value)
+        }
+        pub fn multiply(value: i32) -> SetParam {
+            SetParam::MultiplyMaxTokens(value)
+        }
+        pub fn divide(value: i32) -> SetParam {
+            SetParam::DivideMaxTokens(value)
+        }
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::MaxTokens(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::MaxTokens(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod top_p {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "top_p";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetTopP(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::TopP(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::TopP(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::TopP(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(_prisma::read_filters::StringFilter, TopP, {
+            fn in_vec(_: Vec<String>) -> InVec;
+            fn not_in_vec(_: Vec<String>) -> NotInVec;
+            fn lt(_: String) -> Lt;
+            fn lte(_: String) -> Lte;
+            fn gt(_: String) -> Gt;
+            fn gte(_: String) -> Gte;
+            fn contains(_: String) -> Contains;
+            fn starts_with(_: String) -> StartsWith;
+            fn ends_with(_: String) -> EndsWith;
+            fn not(_: String) -> Not;
+        });
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::TopP(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::TopP(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod temperature {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "temperature";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetTemperature(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Temperature(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Temperature(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::Temperature(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            Temperature,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Temperature(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Temperature(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod opts {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "opts";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetOpts(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Opts(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Opts(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::Opts(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(_prisma::read_filters::StringFilter, Opts, {
+            fn in_vec(_: Vec<String>) -> InVec;
+            fn not_in_vec(_: Vec<String>) -> NotInVec;
+            fn lt(_: String) -> Lt;
+            fn lte(_: String) -> Lte;
+            fn gt(_: String) -> Gt;
+            fn gte(_: String) -> Gte;
+            fn contains(_: String) -> Contains;
+            fn starts_with(_: String) -> StartsWith;
+            fn ends_with(_: String) -> EndsWith;
+            fn not(_: String) -> Not;
+        });
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Opts(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Opts(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod prehandle_script {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "prehandle_script";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetPrehandleScript(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::PrehandleScript(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::PrehandleScript(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::PrehandleScript(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            PrehandleScript,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::PrehandleScript(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::PrehandleScript(self)
+            }
+        }
+        impl Select {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+    }
+    pub mod labels {
+        use super::super::*;
+        use super::_prisma::*;
+        use super::{
+            OrderByParam, SetParam, UncheckedSetParam, UniqueWhereParam, WhereParam, WithParam,
+        };
+        pub const NAME: &str = "labels";
+        pub struct Set(pub String);
+        impl From<Set> for SetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::SetLabels(v)
+            }
+        }
+        impl From<Set> for UncheckedSetParam {
+            fn from(Set(v): Set) -> Self {
+                Self::Labels(v)
+            }
+        }
+        pub fn set<T: From<Set>>(value: String) -> T {
+            Set(value).into()
+        }
+        pub fn order(direction: ::prisma_client_rust::Direction) -> OrderByParam {
+            OrderByParam::Labels(direction)
+        }
+        pub fn equals(value: String) -> WhereParam {
+            WhereParam::Labels(_prisma::read_filters::StringFilter::Equals(value))
+        }
+        ::prisma_client_rust::scalar_where_param_fns!(
+            _prisma::read_filters::StringFilter,
+            Labels,
+            {
+                fn in_vec(_: Vec<String>) -> InVec;
+                fn not_in_vec(_: Vec<String>) -> NotInVec;
+                fn lt(_: String) -> Lt;
+                fn lte(_: String) -> Lte;
+                fn gt(_: String) -> Gt;
+                fn gte(_: String) -> Gte;
+                fn contains(_: String) -> Contains;
+                fn starts_with(_: String) -> StartsWith;
+                fn ends_with(_: String) -> EndsWith;
+                fn not(_: String) -> Not;
+            }
+        );
+        pub struct Include;
+        impl Into<super::IncludeParam> for Include {
+            fn into(self) -> super::IncludeParam {
+                super::IncludeParam::Labels(self)
+            }
+        }
+        impl Include {
+            pub fn to_selection(self) -> ::prisma_client_rust::Selection {
+                ::prisma_client_rust::sel(NAME)
+            }
+        }
+        pub struct Select;
+        impl Into<super::SelectParam> for Select {
+            fn into(self) -> super::SelectParam {
+                super::SelectParam::Labels(self)
             }
         }
         impl Select {
@@ -503,28 +1142,118 @@ pub mod prompt {
     }
     pub fn create(
         title: String,
-        description: String,
-        prompt: String,
+        desc: String,
+        system: String,
+        favorite: bool,
+        actived: bool,
+        with_context: bool,
+        with_context_size: i32,
+        max_tokens: i32,
+        top_p: String,
+        temperature: String,
+        opts: String,
+        prehandle_script: String,
+        labels: String,
         _params: Vec<SetParam>,
-    ) -> (String, String, String, Vec<SetParam>) {
-        (title, description, prompt, _params)
+    ) -> (
+        String,
+        String,
+        String,
+        bool,
+        bool,
+        bool,
+        i32,
+        i32,
+        String,
+        String,
+        String,
+        String,
+        String,
+        Vec<SetParam>,
+    ) {
+        (
+            title,
+            desc,
+            system,
+            favorite,
+            actived,
+            with_context,
+            with_context_size,
+            max_tokens,
+            top_p,
+            temperature,
+            opts,
+            prehandle_script,
+            labels,
+            _params,
+        )
     }
     pub fn create_unchecked(
         title: String,
-        description: String,
-        prompt: String,
+        desc: String,
+        system: String,
+        favorite: bool,
+        actived: bool,
+        with_context: bool,
+        with_context_size: i32,
+        max_tokens: i32,
+        top_p: String,
+        temperature: String,
+        opts: String,
+        prehandle_script: String,
+        labels: String,
         _params: Vec<SetParam>,
-    ) -> (String, String, String, Vec<SetParam>) {
-        (title, description, prompt, _params)
+    ) -> (
+        String,
+        String,
+        String,
+        bool,
+        bool,
+        bool,
+        i32,
+        i32,
+        String,
+        String,
+        String,
+        String,
+        String,
+        Vec<SetParam>,
+    ) {
+        (
+            title,
+            desc,
+            system,
+            favorite,
+            actived,
+            with_context,
+            with_context_size,
+            max_tokens,
+            top_p,
+            temperature,
+            opts,
+            prehandle_script,
+            labels,
+            _params,
+        )
     }
     #[macro_export]
-    macro_rules ! _select_prompt { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: crate :: db :: prisma_client :: prompt :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: crate :: db :: prisma_client :: prompt :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: crate :: db :: prisma_client :: prompt :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: crate :: db :: prisma_client :: prompt :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , title , description , prompt , created_at , updated_at } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } const SPECTA_TYPE_NAME : & 'static str = prisma_client_rust :: macros :: to_pascal_case ! ($ ($ module_name) ?) ; crate :: crate :: db :: prisma_client :: prompt :: select ! (@ specta_data_struct ; pub struct Data { $ (# [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)] pub $ field : crate :: crate :: db :: prisma_client :: prompt :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } ; $ ($ module_name) ?) ; impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "title" , "description" , "prompt" , "created_at" , "updated_at"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: crate :: db :: prisma_client :: prompt :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { i32 } ; (@ field_type ; title) => { String } ; (@ field_type ; description) => { String } ; (@ field_type ; prompt) => { String } ; (@ field_type ; created_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; updated_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Prompt" , available relations are "id, title, description, prompt, created_at, updated_at")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: id :: Select) } ; (@ selection_field_to_selection_param ; title) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: title :: Select) } ; (@ selection_field_to_selection_param ; description) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: description :: Select) } ; (@ selection_field_to_selection_param ; prompt) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: prompt :: Select) } ; (@ selection_field_to_selection_param ; created_at) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: created_at :: Select) } ; (@ selection_field_to_selection_param ; updated_at) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: crate :: db :: prisma_client :: prompt :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; title) => { "title" } ; (@ field_serde_name ; description) => { "description" } ; (@ field_serde_name ; prompt) => { "prompt" } ; (@ field_serde_name ; created_at) => { "created_at" } ; (@ field_serde_name ; updated_at) => { "updated_at" } ; (@ specta_data_struct ; $ struct : item ;) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] # [specta (inline)] $ struct } ; (@ specta_data_struct ; $ struct : item ; $ name : ident) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] $ struct } ; }
+    macro_rules ! _select_prompt { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: crate :: db :: prisma_client :: prompt :: select ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn select ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: crate :: db :: prisma_client :: prompt :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: crate :: db :: prisma_client :: prompt :: select ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: SelectType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: crate :: db :: prisma_client :: prompt :: select ! (@ selections_to_params ; : select { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () ,] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { id , title , desc , system , favorite , actived , with_context , with_context_size , max_tokens , top_p , temperature , opts , prehandle_script , labels , created_at , updated_at } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } const SPECTA_TYPE_NAME : & 'static str = prisma_client_rust :: macros :: to_pascal_case ! ($ ($ module_name) ?) ; crate :: crate :: db :: prisma_client :: prompt :: select ! (@ specta_data_struct ; pub struct Data { $ (# [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)] pub $ field : crate :: crate :: db :: prisma_client :: prompt :: select ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } ; $ ($ module_name) ?) ; impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) +] . len ()) ? ; $ (state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME , & self . $ field) ? ;) * state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME) , + ,] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME => Ok (Field :: $ field)) , * , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * while let Some (key) = map . next_key () ? { match key { $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ? ;) * Ok (Data { $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "title" , "desc" , "system" , "favorite" , "actived" , "with_context" , "with_context_size" , "max_tokens" , "top_p" , "temperature" , "opts" , "prehandle_script" , "labels" , "created_at" , "updated_at"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: crate :: db :: prisma_client :: prompt :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; id) => { i32 } ; (@ field_type ; title) => { String } ; (@ field_type ; desc) => { String } ; (@ field_type ; system) => { String } ; (@ field_type ; favorite) => { bool } ; (@ field_type ; actived) => { bool } ; (@ field_type ; with_context) => { bool } ; (@ field_type ; with_context_size) => { i32 } ; (@ field_type ; max_tokens) => { i32 } ; (@ field_type ; top_p) => { String } ; (@ field_type ; temperature) => { String } ; (@ field_type ; opts) => { String } ; (@ field_type ; prehandle_script) => { String } ; (@ field_type ; labels) => { String } ; (@ field_type ; created_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; updated_at) => { :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Prompt" , available relations are "id, title, desc, system, favorite, actived, with_context, with_context_size, max_tokens, top_p, temperature, opts, prehandle_script, labels, created_at, updated_at")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; id) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: id :: Select) } ; (@ selection_field_to_selection_param ; title) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: title :: Select) } ; (@ selection_field_to_selection_param ; desc) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: desc :: Select) } ; (@ selection_field_to_selection_param ; system) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: system :: Select) } ; (@ selection_field_to_selection_param ; favorite) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: favorite :: Select) } ; (@ selection_field_to_selection_param ; actived) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: actived :: Select) } ; (@ selection_field_to_selection_param ; with_context) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: with_context :: Select) } ; (@ selection_field_to_selection_param ; with_context_size) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: with_context_size :: Select) } ; (@ selection_field_to_selection_param ; max_tokens) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: max_tokens :: Select) } ; (@ selection_field_to_selection_param ; top_p) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: top_p :: Select) } ; (@ selection_field_to_selection_param ; temperature) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: temperature :: Select) } ; (@ selection_field_to_selection_param ; opts) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: opts :: Select) } ; (@ selection_field_to_selection_param ; prehandle_script) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: prehandle_script :: Select) } ; (@ selection_field_to_selection_param ; labels) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: labels :: Select) } ; (@ selection_field_to_selection_param ; created_at) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: created_at :: Select) } ; (@ selection_field_to_selection_param ; updated_at) => { Into :: < crate :: crate :: db :: prisma_client :: prompt :: SelectParam > :: into (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: Select) } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: crate :: db :: prisma_client :: prompt :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; title) => { "title" } ; (@ field_serde_name ; desc) => { "desc" } ; (@ field_serde_name ; system) => { "system" } ; (@ field_serde_name ; favorite) => { "favorite" } ; (@ field_serde_name ; actived) => { "actived" } ; (@ field_serde_name ; with_context) => { "with_context" } ; (@ field_serde_name ; with_context_size) => { "with_context_size" } ; (@ field_serde_name ; max_tokens) => { "max_tokens" } ; (@ field_serde_name ; top_p) => { "top_p" } ; (@ field_serde_name ; temperature) => { "temperature" } ; (@ field_serde_name ; opts) => { "opts" } ; (@ field_serde_name ; prehandle_script) => { "prehandle_script" } ; (@ field_serde_name ; labels) => { "labels" } ; (@ field_serde_name ; created_at) => { "created_at" } ; (@ field_serde_name ; updated_at) => { "updated_at" } ; (@ specta_data_struct ; $ struct : item ;) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] # [specta (inline)] $ struct } ; (@ specta_data_struct ; $ struct : item ; $ name : ident) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] $ struct } ; }
     pub use _select_prompt as select;
     pub enum SelectParam {
         Id(id::Select),
         Title(title::Select),
-        Description(description::Select),
-        Prompt(prompt::Select),
+        Desc(desc::Select),
+        System(system::Select),
+        Favorite(favorite::Select),
+        Actived(actived::Select),
+        WithContext(with_context::Select),
+        WithContextSize(with_context_size::Select),
+        MaxTokens(max_tokens::Select),
+        TopP(top_p::Select),
+        Temperature(temperature::Select),
+        Opts(opts::Select),
+        PrehandleScript(prehandle_script::Select),
+        Labels(labels::Select),
         CreatedAt(created_at::Select),
         UpdatedAt(updated_at::Select),
     }
@@ -533,21 +1262,41 @@ pub mod prompt {
             match self {
                 Self::Id(data) => data.to_selection(),
                 Self::Title(data) => data.to_selection(),
-                Self::Description(data) => data.to_selection(),
-                Self::Prompt(data) => data.to_selection(),
+                Self::Desc(data) => data.to_selection(),
+                Self::System(data) => data.to_selection(),
+                Self::Favorite(data) => data.to_selection(),
+                Self::Actived(data) => data.to_selection(),
+                Self::WithContext(data) => data.to_selection(),
+                Self::WithContextSize(data) => data.to_selection(),
+                Self::MaxTokens(data) => data.to_selection(),
+                Self::TopP(data) => data.to_selection(),
+                Self::Temperature(data) => data.to_selection(),
+                Self::Opts(data) => data.to_selection(),
+                Self::PrehandleScript(data) => data.to_selection(),
+                Self::Labels(data) => data.to_selection(),
                 Self::CreatedAt(data) => data.to_selection(),
                 Self::UpdatedAt(data) => data.to_selection(),
             }
         }
     }
     #[macro_export]
-    macro_rules ! _include_prompt { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: crate :: db :: prisma_client :: prompt :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: crate :: db :: prisma_client :: prompt :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: crate :: db :: prisma_client :: prompt :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: crate :: db :: prisma_client :: prompt :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: crate :: db :: prisma_client :: prompt :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: crate :: db :: prisma_client :: prompt :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } const SPECTA_TYPE_NAME : & 'static str = prisma_client_rust :: macros :: to_pascal_case ! ($ ($ module_name) ?) ; crate :: crate :: db :: prisma_client :: prompt :: include ! (@ specta_data_struct ; pub struct Data { # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: id :: NAME)] pub id : i32 , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: title :: NAME)] pub title : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: description :: NAME)] pub description : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: prompt :: NAME)] pub prompt : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME)] pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME)] pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , $ (# [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)] pub $ field : crate :: crate :: db :: prisma_client :: prompt :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } ; $ ($ module_name) ?) ; impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (title) , stringify ! (description) , stringify ! (prompt) , stringify ! (created_at) , stringify ! (updated_at)] . len ()) ? ; $ (state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: title :: NAME , & self . title) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: description :: NAME , & self . description) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: prompt :: NAME , & self . prompt) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME , & self . created_at) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME , & self . updated_at) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , title , description , prompt , created_at , updated_at } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME) , + , crate :: crate :: db :: prisma_client :: prompt :: id :: NAME , crate :: crate :: db :: prisma_client :: prompt :: title :: NAME , crate :: crate :: db :: prisma_client :: prompt :: description :: NAME , crate :: crate :: db :: prisma_client :: prompt :: prompt :: NAME , crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME , crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: crate :: db :: prisma_client :: prompt :: id :: NAME => Ok (Field :: id) , crate :: crate :: db :: prisma_client :: prompt :: title :: NAME => Ok (Field :: title) , crate :: crate :: db :: prisma_client :: prompt :: description :: NAME => Ok (Field :: description) , crate :: crate :: db :: prisma_client :: prompt :: prompt :: NAME => Ok (Field :: prompt) , crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME => Ok (Field :: created_at) , crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME => Ok (Field :: updated_at) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut title = None ; let mut description = None ; let mut prompt = None ; let mut created_at = None ; let mut updated_at = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: title => { if title . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: title :: NAME)) ; } title = Some (map . next_value () ?) ; } Field :: description => { if description . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: description :: NAME)) ; } description = Some (map . next_value () ?) ; } Field :: prompt => { if prompt . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: prompt :: NAME)) ; } prompt = Some (map . next_value () ?) ; } Field :: created_at => { if created_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME)) ; } created_at = Some (map . next_value () ?) ; } Field :: updated_at => { if updated_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME)) ; } updated_at = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: id :: NAME)) ? ; let title = title . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: title :: NAME)) ? ; let description = description . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: description :: NAME)) ? ; let prompt = prompt . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: prompt :: NAME)) ? ; let created_at = created_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME)) ? ; let updated_at = updated_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME)) ? ; Ok (Data { id , title , description , prompt , created_at , updated_at , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "title" , "description" , "prompt" , "created_at" , "updated_at"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: crate :: db :: prisma_client :: prompt :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Prompt" , available relations are "")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: crate :: db :: prisma_client :: prompt :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; title) => { "title" } ; (@ field_serde_name ; description) => { "description" } ; (@ field_serde_name ; prompt) => { "prompt" } ; (@ field_serde_name ; created_at) => { "created_at" } ; (@ field_serde_name ; updated_at) => { "updated_at" } ; (@ specta_data_struct ; $ struct : item ;) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] # [specta (inline)] $ struct } ; (@ specta_data_struct ; $ struct : item ; $ name : ident) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] $ struct } ; }
+    macro_rules ! _include_prompt { ($ (($ ($ func_arg : ident : $ func_arg_ty : ty) , +) =>) ? $ module_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { # [allow (warnings)] pub mod $ module_name { crate :: crate :: db :: prisma_client :: prompt :: include ! (@ definitions ; $ module_name ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; use super :: * ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } pub fn include ($ ($ ($ func_arg : $ func_arg_ty) , +) ?) -> Selection { Selection ([crate :: crate :: db :: prisma_client :: prompt :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: crate :: db :: prisma_client :: prompt :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } } ; ({ $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { { crate :: crate :: db :: prisma_client :: prompt :: include ! (@ definitions ; ; $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) +) ; pub struct Selection (Vec < :: prisma_client_rust :: Selection >) ; impl :: prisma_client_rust :: IncludeType for Selection { type Data = Data ; type ModelData = crate :: crate :: db :: prisma_client :: prompt :: Data ; fn to_selections (self) -> Vec < :: prisma_client_rust :: Selection > { self . 0 } } Selection ([crate :: crate :: db :: prisma_client :: prompt :: include ! (@ selections_to_params ; : include { $ ($ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) + }) . into_iter () . map (| p | p . to_selection ()) . collect :: < Vec < _ >> () , < crate :: crate :: db :: prisma_client :: prompt :: Types as :: prisma_client_rust :: ModelTypes > :: scalar_selections ()] . into_iter () . flatten () . collect :: < Vec < _ >> ()) } } ; (@ definitions ; $ ($ module_name : ident) ? ; $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) +) => { # [allow (warnings)] enum Fields { } # [allow (warnings)] impl Fields { fn selections () { $ (let _ = Fields :: $ field ;) + } } const SPECTA_TYPE_NAME : & 'static str = prisma_client_rust :: macros :: to_pascal_case ! ($ ($ module_name) ?) ; crate :: crate :: db :: prisma_client :: prompt :: include ! (@ specta_data_struct ; pub struct Data { # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: id :: NAME)] pub id : i32 , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: title :: NAME)] pub title : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: desc :: NAME)] pub desc : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: system :: NAME)] pub system : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: favorite :: NAME)] pub favorite : bool , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: actived :: NAME)] pub actived : bool , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: with_context :: NAME)] pub with_context : bool , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: with_context_size :: NAME)] pub with_context_size : i32 , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: max_tokens :: NAME)] pub max_tokens : i32 , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: top_p :: NAME)] pub top_p : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: temperature :: NAME)] pub temperature : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: opts :: NAME)] pub opts : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: prehandle_script :: NAME)] pub prehandle_script : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: labels :: NAME)] pub labels : String , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME)] pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME)] pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , $ (# [specta (rename_from_path = crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)] pub $ field : crate :: crate :: db :: prisma_client :: prompt :: include ! (@ field_type ; $ field $ (: $ selection_mode { $ ($ selections) + }) ?) ,) + } ; $ ($ module_name) ?) ; impl :: serde :: Serialize for Data { fn serialize < S > (& self , serializer : S) -> Result < S :: Ok , S :: Error > where S : :: serde :: Serializer , { use :: serde :: ser :: SerializeStruct ; let mut state = serializer . serialize_struct ("Data" , [$ (stringify ! ($ field) ,) + stringify ! (id) , stringify ! (title) , stringify ! (desc) , stringify ! (system) , stringify ! (favorite) , stringify ! (actived) , stringify ! (with_context) , stringify ! (with_context_size) , stringify ! (max_tokens) , stringify ! (top_p) , stringify ! (temperature) , stringify ! (opts) , stringify ! (prehandle_script) , stringify ! (labels) , stringify ! (created_at) , stringify ! (updated_at)] . len ()) ? ; $ (state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME , & self . $ field) ? ;) * state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: id :: NAME , & self . id) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: title :: NAME , & self . title) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: desc :: NAME , & self . desc) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: system :: NAME , & self . system) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: favorite :: NAME , & self . favorite) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: actived :: NAME , & self . actived) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: with_context :: NAME , & self . with_context) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: with_context_size :: NAME , & self . with_context_size) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: max_tokens :: NAME , & self . max_tokens) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: top_p :: NAME , & self . top_p) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: temperature :: NAME , & self . temperature) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: opts :: NAME , & self . opts) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: prehandle_script :: NAME , & self . prehandle_script) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: labels :: NAME , & self . labels) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME , & self . created_at) ? ; state . serialize_field (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME , & self . updated_at) ? ; state . end () } } impl < 'de > :: serde :: Deserialize < 'de > for Data { fn deserialize < D > (deserializer : D) -> Result < Self , D :: Error > where D : :: serde :: Deserializer < 'de > , { # [allow (warnings)] enum Field { $ ($ field) , + , id , title , desc , system , favorite , actived , with_context , with_context_size , max_tokens , top_p , temperature , opts , prehandle_script , labels , created_at , updated_at } impl < 'de > :: serde :: Deserialize < 'de > for Field { fn deserialize < D > (deserializer : D) -> Result < Field , D :: Error > where D : :: serde :: Deserializer < 'de > , { struct FieldVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for FieldVisitor { type Value = Field ; fn expecting (& self , formatter : & mut :: std :: fmt :: Formatter) -> :: std :: fmt :: Result { formatter . write_str (& [$ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME) , + , crate :: crate :: db :: prisma_client :: prompt :: id :: NAME , crate :: crate :: db :: prisma_client :: prompt :: title :: NAME , crate :: crate :: db :: prisma_client :: prompt :: desc :: NAME , crate :: crate :: db :: prisma_client :: prompt :: system :: NAME , crate :: crate :: db :: prisma_client :: prompt :: favorite :: NAME , crate :: crate :: db :: prisma_client :: prompt :: actived :: NAME , crate :: crate :: db :: prisma_client :: prompt :: with_context :: NAME , crate :: crate :: db :: prisma_client :: prompt :: with_context_size :: NAME , crate :: crate :: db :: prisma_client :: prompt :: max_tokens :: NAME , crate :: crate :: db :: prisma_client :: prompt :: top_p :: NAME , crate :: crate :: db :: prisma_client :: prompt :: temperature :: NAME , crate :: crate :: db :: prisma_client :: prompt :: opts :: NAME , crate :: crate :: db :: prisma_client :: prompt :: prehandle_script :: NAME , crate :: crate :: db :: prisma_client :: prompt :: labels :: NAME , crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME , crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME] . into_iter () . collect :: < Vec < _ >> () . join (", ")) } fn visit_str < E > (self , value : & str) -> Result < Field , E > where E : :: serde :: de :: Error , { match value { $ (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME => Ok (Field :: $ field)) , * , crate :: crate :: db :: prisma_client :: prompt :: id :: NAME => Ok (Field :: id) , crate :: crate :: db :: prisma_client :: prompt :: title :: NAME => Ok (Field :: title) , crate :: crate :: db :: prisma_client :: prompt :: desc :: NAME => Ok (Field :: desc) , crate :: crate :: db :: prisma_client :: prompt :: system :: NAME => Ok (Field :: system) , crate :: crate :: db :: prisma_client :: prompt :: favorite :: NAME => Ok (Field :: favorite) , crate :: crate :: db :: prisma_client :: prompt :: actived :: NAME => Ok (Field :: actived) , crate :: crate :: db :: prisma_client :: prompt :: with_context :: NAME => Ok (Field :: with_context) , crate :: crate :: db :: prisma_client :: prompt :: with_context_size :: NAME => Ok (Field :: with_context_size) , crate :: crate :: db :: prisma_client :: prompt :: max_tokens :: NAME => Ok (Field :: max_tokens) , crate :: crate :: db :: prisma_client :: prompt :: top_p :: NAME => Ok (Field :: top_p) , crate :: crate :: db :: prisma_client :: prompt :: temperature :: NAME => Ok (Field :: temperature) , crate :: crate :: db :: prisma_client :: prompt :: opts :: NAME => Ok (Field :: opts) , crate :: crate :: db :: prisma_client :: prompt :: prehandle_script :: NAME => Ok (Field :: prehandle_script) , crate :: crate :: db :: prisma_client :: prompt :: labels :: NAME => Ok (Field :: labels) , crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME => Ok (Field :: created_at) , crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME => Ok (Field :: updated_at) , _ => Err (:: serde :: de :: Error :: unknown_field (value , FIELDS)) , } } } deserializer . deserialize_identifier (FieldVisitor) } } struct DataVisitor ; impl < 'de > :: serde :: de :: Visitor < 'de > for DataVisitor { type Value = Data ; fn expecting (& self , formatter : & mut std :: fmt :: Formatter) -> std :: fmt :: Result { formatter . write_str ("struct Data") } fn visit_map < V > (self , mut map : V) -> Result < Data , V :: Error > where V : :: serde :: de :: MapAccess < 'de > , { $ (let mut $ field = None ;) * let mut id = None ; let mut title = None ; let mut desc = None ; let mut system = None ; let mut favorite = None ; let mut actived = None ; let mut with_context = None ; let mut with_context_size = None ; let mut max_tokens = None ; let mut top_p = None ; let mut temperature = None ; let mut opts = None ; let mut prehandle_script = None ; let mut labels = None ; let mut created_at = None ; let mut updated_at = None ; while let Some (key) = map . next_key () ? { match key { Field :: id => { if id . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: id :: NAME)) ; } id = Some (map . next_value () ?) ; } Field :: title => { if title . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: title :: NAME)) ; } title = Some (map . next_value () ?) ; } Field :: desc => { if desc . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: desc :: NAME)) ; } desc = Some (map . next_value () ?) ; } Field :: system => { if system . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: system :: NAME)) ; } system = Some (map . next_value () ?) ; } Field :: favorite => { if favorite . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: favorite :: NAME)) ; } favorite = Some (map . next_value () ?) ; } Field :: actived => { if actived . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: actived :: NAME)) ; } actived = Some (map . next_value () ?) ; } Field :: with_context => { if with_context . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: with_context :: NAME)) ; } with_context = Some (map . next_value () ?) ; } Field :: with_context_size => { if with_context_size . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: with_context_size :: NAME)) ; } with_context_size = Some (map . next_value () ?) ; } Field :: max_tokens => { if max_tokens . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: max_tokens :: NAME)) ; } max_tokens = Some (map . next_value () ?) ; } Field :: top_p => { if top_p . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: top_p :: NAME)) ; } top_p = Some (map . next_value () ?) ; } Field :: temperature => { if temperature . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: temperature :: NAME)) ; } temperature = Some (map . next_value () ?) ; } Field :: opts => { if opts . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: opts :: NAME)) ; } opts = Some (map . next_value () ?) ; } Field :: prehandle_script => { if prehandle_script . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: prehandle_script :: NAME)) ; } prehandle_script = Some (map . next_value () ?) ; } Field :: labels => { if labels . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: labels :: NAME)) ; } labels = Some (map . next_value () ?) ; } Field :: created_at => { if created_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME)) ; } created_at = Some (map . next_value () ?) ; } Field :: updated_at => { if updated_at . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME)) ; } updated_at = Some (map . next_value () ?) ; } $ (Field :: $ field => { if $ field . is_some () { return Err (:: serde :: de :: Error :: duplicate_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ; } $ field = Some (map . next_value () ?) ; }) * } } $ (let $ field = $ field . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: $ field :: NAME)) ? ;) * let id = id . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: id :: NAME)) ? ; let title = title . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: title :: NAME)) ? ; let desc = desc . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: desc :: NAME)) ? ; let system = system . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: system :: NAME)) ? ; let favorite = favorite . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: favorite :: NAME)) ? ; let actived = actived . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: actived :: NAME)) ? ; let with_context = with_context . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: with_context :: NAME)) ? ; let with_context_size = with_context_size . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: with_context_size :: NAME)) ? ; let max_tokens = max_tokens . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: max_tokens :: NAME)) ? ; let top_p = top_p . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: top_p :: NAME)) ? ; let temperature = temperature . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: temperature :: NAME)) ? ; let opts = opts . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: opts :: NAME)) ? ; let prehandle_script = prehandle_script . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: prehandle_script :: NAME)) ? ; let labels = labels . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: labels :: NAME)) ? ; let created_at = created_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: created_at :: NAME)) ? ; let updated_at = updated_at . ok_or_else (|| serde :: de :: Error :: missing_field (crate :: crate :: db :: prisma_client :: prompt :: updated_at :: NAME)) ? ; Ok (Data { id , title , desc , system , favorite , actived , with_context , with_context_size , max_tokens , top_p , temperature , opts , prehandle_script , labels , created_at , updated_at , $ ($ field) , * }) } } const FIELDS : & 'static [& 'static str] = & ["id" , "title" , "desc" , "system" , "favorite" , "actived" , "with_context" , "with_context_size" , "max_tokens" , "top_p" , "temperature" , "opts" , "prehandle_script" , "labels" , "created_at" , "updated_at"] ; deserializer . deserialize_struct ("Data" , FIELDS , DataVisitor) } } $ ($ (pub mod $ field { crate :: crate :: db :: prisma_client :: prompt :: $ selection_mode ! (@ field_module ; $ field : $ selection_mode { $ ($ selections) + }) ; }) ?) + } ; (@ field_type ; $ field : ident $ ($ tokens : tt) *) => { compile_error ! (stringify ! (Cannot include nonexistent relation $ field on model "Prompt" , available relations are "")) } ; (@ field_module ; $ ($ tokens : tt) *) => { } ; (@ selection_field_to_selection_param ; $ ($ tokens : tt) *) => { compile_error ! (stringify ! ($ ($ tokens) *)) } ; (@ selections_to_params ; : $ macro_name : ident { $ ($ field : ident $ (($ ($ filters : tt) +) $ (. $ arg : ident ($ ($ arg_params : tt) *)) *) ? $ (: $ selection_mode : ident { $ ($ selections : tt) + }) ?) + }) => { [$ (crate :: crate :: db :: prisma_client :: prompt :: $ macro_name ! (@ selection_field_to_selection_param ; $ field $ (($ ($ filters) +) $ (. $ arg ($ ($ arg_params) *)) *) ? $ (: $ selection_mode { $ ($ selections) + }) ?) ,) +] } ; (@ filters_to_args ;) => { vec ! [] } ; (@ filters_to_args ; $ ($ t : tt) *) => { $ ($ t) * } ; (@ field_serde_name ; id) => { "id" } ; (@ field_serde_name ; title) => { "title" } ; (@ field_serde_name ; desc) => { "desc" } ; (@ field_serde_name ; system) => { "system" } ; (@ field_serde_name ; favorite) => { "favorite" } ; (@ field_serde_name ; actived) => { "actived" } ; (@ field_serde_name ; with_context) => { "with_context" } ; (@ field_serde_name ; with_context_size) => { "with_context_size" } ; (@ field_serde_name ; max_tokens) => { "max_tokens" } ; (@ field_serde_name ; top_p) => { "top_p" } ; (@ field_serde_name ; temperature) => { "temperature" } ; (@ field_serde_name ; opts) => { "opts" } ; (@ field_serde_name ; prehandle_script) => { "prehandle_script" } ; (@ field_serde_name ; labels) => { "labels" } ; (@ field_serde_name ; created_at) => { "created_at" } ; (@ field_serde_name ; updated_at) => { "updated_at" } ; (@ specta_data_struct ; $ struct : item ;) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] # [specta (inline)] $ struct } ; (@ specta_data_struct ; $ struct : item ; $ name : ident) => { # [allow (warnings)] # [derive (std :: fmt :: Debug , Clone)] # [derive (:: prisma_client_rust :: specta :: Type)] # [specta (rename_from_path = SPECTA_TYPE_NAME , crate = "prisma_client_rust::specta")] $ struct } ; }
     pub use _include_prompt as include;
     pub enum IncludeParam {
         Id(id::Include),
         Title(title::Include),
-        Description(description::Include),
-        Prompt(prompt::Include),
+        Desc(desc::Include),
+        System(system::Include),
+        Favorite(favorite::Include),
+        Actived(actived::Include),
+        WithContext(with_context::Include),
+        WithContextSize(with_context_size::Include),
+        MaxTokens(max_tokens::Include),
+        TopP(top_p::Include),
+        Temperature(temperature::Include),
+        Opts(opts::Include),
+        PrehandleScript(prehandle_script::Include),
+        Labels(labels::Include),
         CreatedAt(created_at::Include),
         UpdatedAt(updated_at::Include),
     }
@@ -556,15 +1305,25 @@ pub mod prompt {
             match self {
                 Self::Id(data) => data.to_selection(),
                 Self::Title(data) => data.to_selection(),
-                Self::Description(data) => data.to_selection(),
-                Self::Prompt(data) => data.to_selection(),
+                Self::Desc(data) => data.to_selection(),
+                Self::System(data) => data.to_selection(),
+                Self::Favorite(data) => data.to_selection(),
+                Self::Actived(data) => data.to_selection(),
+                Self::WithContext(data) => data.to_selection(),
+                Self::WithContextSize(data) => data.to_selection(),
+                Self::MaxTokens(data) => data.to_selection(),
+                Self::TopP(data) => data.to_selection(),
+                Self::Temperature(data) => data.to_selection(),
+                Self::Opts(data) => data.to_selection(),
+                Self::PrehandleScript(data) => data.to_selection(),
+                Self::Labels(data) => data.to_selection(),
                 Self::CreatedAt(data) => data.to_selection(),
                 Self::UpdatedAt(data) => data.to_selection(),
             }
         }
     }
     #[macro_export]
-    macro_rules ! _partial_unchecked_prompt { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: crate :: db :: prisma_client :: prompt struct $ struct_name { # [serde (rename = "id")] pub id : i32 , # [serde (rename = "title")] pub title : String , # [serde (rename = "description")] pub description : String , # [serde (rename = "prompt")] pub prompt : String , # [serde (rename = "created_at")] pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [serde (rename = "updated_at")] pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } [$ ($ scalar_field) , +] } } ; }
+    macro_rules ! _partial_unchecked_prompt { ($ struct_name : ident { $ ($ scalar_field : ident) + }) => { :: prisma_client_rust :: macros :: partial_unchecked ! { crate :: crate :: db :: prisma_client :: prompt struct $ struct_name { # [serde (rename = "id")] pub id : i32 , # [serde (rename = "title")] pub title : String , # [serde (rename = "desc")] pub desc : String , # [serde (rename = "system")] pub system : String , # [serde (rename = "favorite")] pub favorite : bool , # [serde (rename = "actived")] pub actived : bool , # [serde (rename = "with_context")] pub with_context : bool , # [serde (rename = "with_context_size")] pub with_context_size : i32 , # [serde (rename = "max_tokens")] pub max_tokens : i32 , # [serde (rename = "top_p")] pub top_p : String , # [serde (rename = "temperature")] pub temperature : String , # [serde (rename = "opts")] pub opts : String , # [serde (rename = "prehandle_script")] pub prehandle_script : String , # [serde (rename = "labels")] pub labels : String , # [serde (rename = "created_at")] pub created_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > , # [serde (rename = "updated_at")] pub updated_at : :: prisma_client_rust :: chrono :: DateTime < :: prisma_client_rust :: chrono :: FixedOffset , > } [$ ($ scalar_field) , +] } } ; }
     pub use _partial_unchecked_prompt as partial_unchecked;
     #[derive(
         Debug,
@@ -579,10 +1338,30 @@ pub mod prompt {
         pub id: i32,
         #[serde(rename = "title")]
         pub title: String,
-        #[serde(rename = "description")]
-        pub description: String,
-        #[serde(rename = "prompt")]
-        pub prompt: String,
+        #[serde(rename = "desc")]
+        pub desc: String,
+        #[serde(rename = "system")]
+        pub system: String,
+        #[serde(rename = "favorite")]
+        pub favorite: bool,
+        #[serde(rename = "actived")]
+        pub actived: bool,
+        #[serde(rename = "with_context")]
+        pub with_context: bool,
+        #[serde(rename = "with_context_size")]
+        pub with_context_size: i32,
+        #[serde(rename = "max_tokens")]
+        pub max_tokens: i32,
+        #[serde(rename = "top_p")]
+        pub top_p: String,
+        #[serde(rename = "temperature")]
+        pub temperature: String,
+        #[serde(rename = "opts")]
+        pub opts: String,
+        #[serde(rename = "prehandle_script")]
+        pub prehandle_script: String,
+        #[serde(rename = "labels")]
+        pub labels: String,
         #[serde(rename = "created_at")]
         pub created_at:
             ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -606,8 +1385,26 @@ pub mod prompt {
         MultiplyId(i32),
         DivideId(i32),
         SetTitle(String),
-        SetDescription(String),
-        SetPrompt(String),
+        SetDesc(String),
+        SetSystem(String),
+        SetFavorite(bool),
+        SetActived(bool),
+        SetWithContext(bool),
+        SetWithContextSize(i32),
+        IncrementWithContextSize(i32),
+        DecrementWithContextSize(i32),
+        MultiplyWithContextSize(i32),
+        DivideWithContextSize(i32),
+        SetMaxTokens(i32),
+        IncrementMaxTokens(i32),
+        DecrementMaxTokens(i32),
+        MultiplyMaxTokens(i32),
+        DivideMaxTokens(i32),
+        SetTopP(String),
+        SetTemperature(String),
+        SetOpts(String),
+        SetPrehandleScript(String),
+        SetLabels(String),
         SetCreatedAt(
             ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
         ),
@@ -654,12 +1451,108 @@ pub mod prompt {
                     title::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
-                SetParam::SetDescription(value) => (
-                    description::NAME.to_string(),
+                SetParam::SetDesc(value) => (
+                    desc::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
-                SetParam::SetPrompt(value) => (
-                    prompt::NAME.to_string(),
+                SetParam::SetSystem(value) => (
+                    system::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetFavorite(value) => (
+                    favorite::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Boolean(value),
+                ),
+                SetParam::SetActived(value) => (
+                    actived::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Boolean(value),
+                ),
+                SetParam::SetWithContext(value) => (
+                    with_context::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Boolean(value),
+                ),
+                SetParam::SetWithContextSize(value) => (
+                    with_context_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Int(value as i64),
+                ),
+                SetParam::IncrementWithContextSize(value) => (
+                    with_context_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "increment".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::DecrementWithContextSize(value) => (
+                    with_context_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "decrement".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::MultiplyWithContextSize(value) => (
+                    with_context_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "multiply".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::DivideWithContextSize(value) => (
+                    with_context_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "divide".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::SetMaxTokens(value) => (
+                    max_tokens::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Int(value as i64),
+                ),
+                SetParam::IncrementMaxTokens(value) => (
+                    max_tokens::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "increment".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::DecrementMaxTokens(value) => (
+                    max_tokens::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "decrement".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::MultiplyMaxTokens(value) => (
+                    max_tokens::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "multiply".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::DivideMaxTokens(value) => (
+                    max_tokens::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::Object(vec![(
+                        "divide".to_string(),
+                        ::prisma_client_rust::PrismaValue::Int(value as i64),
+                    )]),
+                ),
+                SetParam::SetTopP(value) => (
+                    top_p::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetTemperature(value) => (
+                    temperature::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetOpts(value) => (
+                    opts::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetPrehandleScript(value) => (
+                    prehandle_script::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(value),
+                ),
+                SetParam::SetLabels(value) => (
+                    labels::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(value),
                 ),
                 SetParam::SetCreatedAt(value) => (
@@ -677,8 +1570,18 @@ pub mod prompt {
     pub enum UncheckedSetParam {
         Id(i32),
         Title(String),
-        Description(String),
-        Prompt(String),
+        Desc(String),
+        System(String),
+        Favorite(bool),
+        Actived(bool),
+        WithContext(bool),
+        WithContextSize(i32),
+        MaxTokens(i32),
+        TopP(String),
+        Temperature(String),
+        Opts(String),
+        PrehandleScript(String),
+        Labels(String),
         CreatedAt(
             ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
         ),
@@ -691,8 +1594,18 @@ pub mod prompt {
             match param {
                 UncheckedSetParam::Id(value) => Self::SetId(value),
                 UncheckedSetParam::Title(value) => Self::SetTitle(value),
-                UncheckedSetParam::Description(value) => Self::SetDescription(value),
-                UncheckedSetParam::Prompt(value) => Self::SetPrompt(value),
+                UncheckedSetParam::Desc(value) => Self::SetDesc(value),
+                UncheckedSetParam::System(value) => Self::SetSystem(value),
+                UncheckedSetParam::Favorite(value) => Self::SetFavorite(value),
+                UncheckedSetParam::Actived(value) => Self::SetActived(value),
+                UncheckedSetParam::WithContext(value) => Self::SetWithContext(value),
+                UncheckedSetParam::WithContextSize(value) => Self::SetWithContextSize(value),
+                UncheckedSetParam::MaxTokens(value) => Self::SetMaxTokens(value),
+                UncheckedSetParam::TopP(value) => Self::SetTopP(value),
+                UncheckedSetParam::Temperature(value) => Self::SetTemperature(value),
+                UncheckedSetParam::Opts(value) => Self::SetOpts(value),
+                UncheckedSetParam::PrehandleScript(value) => Self::SetPrehandleScript(value),
+                UncheckedSetParam::Labels(value) => Self::SetLabels(value),
                 UncheckedSetParam::CreatedAt(value) => Self::SetCreatedAt(value),
                 UncheckedSetParam::UpdatedAt(value) => Self::SetUpdatedAt(value),
             }
@@ -702,8 +1615,18 @@ pub mod prompt {
     pub enum OrderByParam {
         Id(::prisma_client_rust::Direction),
         Title(::prisma_client_rust::Direction),
-        Description(::prisma_client_rust::Direction),
-        Prompt(::prisma_client_rust::Direction),
+        Desc(::prisma_client_rust::Direction),
+        System(::prisma_client_rust::Direction),
+        Favorite(::prisma_client_rust::Direction),
+        Actived(::prisma_client_rust::Direction),
+        WithContext(::prisma_client_rust::Direction),
+        WithContextSize(::prisma_client_rust::Direction),
+        MaxTokens(::prisma_client_rust::Direction),
+        TopP(::prisma_client_rust::Direction),
+        Temperature(::prisma_client_rust::Direction),
+        Opts(::prisma_client_rust::Direction),
+        PrehandleScript(::prisma_client_rust::Direction),
+        Labels(::prisma_client_rust::Direction),
         CreatedAt(::prisma_client_rust::Direction),
         UpdatedAt(::prisma_client_rust::Direction),
     }
@@ -718,12 +1641,52 @@ pub mod prompt {
                     title::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
-                Self::Description(direction) => (
-                    description::NAME.to_string(),
+                Self::Desc(direction) => (
+                    desc::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
-                Self::Prompt(direction) => (
-                    prompt::NAME.to_string(),
+                Self::System(direction) => (
+                    system::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Favorite(direction) => (
+                    favorite::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Actived(direction) => (
+                    actived::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::WithContext(direction) => (
+                    with_context::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::WithContextSize(direction) => (
+                    with_context_size::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::MaxTokens(direction) => (
+                    max_tokens::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::TopP(direction) => (
+                    top_p::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Temperature(direction) => (
+                    temperature::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Opts(direction) => (
+                    opts::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::PrehandleScript(direction) => (
+                    prehandle_script::NAME.to_string(),
+                    ::prisma_client_rust::PrismaValue::String(direction.to_string()),
+                ),
+                Self::Labels(direction) => (
+                    labels::NAME.to_string(),
                     ::prisma_client_rust::PrismaValue::String(direction.to_string()),
                 ),
                 Self::CreatedAt(direction) => (
@@ -744,8 +1707,18 @@ pub mod prompt {
         And(Vec<WhereParam>),
         Id(_prisma::read_filters::IntFilter),
         Title(_prisma::read_filters::StringFilter),
-        Description(_prisma::read_filters::StringFilter),
-        Prompt(_prisma::read_filters::StringFilter),
+        Desc(_prisma::read_filters::StringFilter),
+        System(_prisma::read_filters::StringFilter),
+        Favorite(_prisma::read_filters::BoolFilter),
+        Actived(_prisma::read_filters::BoolFilter),
+        WithContext(_prisma::read_filters::BoolFilter),
+        WithContextSize(_prisma::read_filters::IntFilter),
+        MaxTokens(_prisma::read_filters::IntFilter),
+        TopP(_prisma::read_filters::StringFilter),
+        Temperature(_prisma::read_filters::StringFilter),
+        Opts(_prisma::read_filters::StringFilter),
+        PrehandleScript(_prisma::read_filters::StringFilter),
+        Labels(_prisma::read_filters::StringFilter),
         CreatedAt(_prisma::read_filters::DateTimeFilter),
         UpdatedAt(_prisma::read_filters::DateTimeFilter),
     }
@@ -790,8 +1763,18 @@ pub mod prompt {
                 ),
                 Self::Id(value) => (id::NAME, value.into()),
                 Self::Title(value) => (title::NAME, value.into()),
-                Self::Description(value) => (description::NAME, value.into()),
-                Self::Prompt(value) => (prompt::NAME, value.into()),
+                Self::Desc(value) => (desc::NAME, value.into()),
+                Self::System(value) => (system::NAME, value.into()),
+                Self::Favorite(value) => (favorite::NAME, value.into()),
+                Self::Actived(value) => (actived::NAME, value.into()),
+                Self::WithContext(value) => (with_context::NAME, value.into()),
+                Self::WithContextSize(value) => (with_context_size::NAME, value.into()),
+                Self::MaxTokens(value) => (max_tokens::NAME, value.into()),
+                Self::TopP(value) => (top_p::NAME, value.into()),
+                Self::Temperature(value) => (temperature::NAME, value.into()),
+                Self::Opts(value) => (opts::NAME, value.into()),
+                Self::PrehandleScript(value) => (prehandle_script::NAME, value.into()),
+                Self::Labels(value) => (labels::NAME, value.into()),
                 Self::CreatedAt(value) => (created_at::NAME, value.into()),
                 Self::UpdatedAt(value) => (updated_at::NAME, value.into()),
             };
@@ -835,8 +1818,18 @@ pub mod prompt {
             vec![
                 ::prisma_client_rust::sel(id::NAME),
                 ::prisma_client_rust::sel(title::NAME),
-                ::prisma_client_rust::sel(description::NAME),
-                ::prisma_client_rust::sel(prompt::NAME),
+                ::prisma_client_rust::sel(desc::NAME),
+                ::prisma_client_rust::sel(system::NAME),
+                ::prisma_client_rust::sel(favorite::NAME),
+                ::prisma_client_rust::sel(actived::NAME),
+                ::prisma_client_rust::sel(with_context::NAME),
+                ::prisma_client_rust::sel(with_context_size::NAME),
+                ::prisma_client_rust::sel(max_tokens::NAME),
+                ::prisma_client_rust::sel(top_p::NAME),
+                ::prisma_client_rust::sel(temperature::NAME),
+                ::prisma_client_rust::sel(opts::NAME),
+                ::prisma_client_rust::sel(prehandle_script::NAME),
+                ::prisma_client_rust::sel(labels::NAME),
                 ::prisma_client_rust::sel(created_at::NAME),
                 ::prisma_client_rust::sel(updated_at::NAME),
             ]
@@ -872,28 +1865,68 @@ pub mod prompt {
         pub fn create(
             self,
             title: String,
-            description: String,
-            prompt: String,
+            desc: String,
+            system: String,
+            favorite: bool,
+            actived: bool,
+            with_context: bool,
+            with_context_size: i32,
+            max_tokens: i32,
+            top_p: String,
+            temperature: String,
+            opts: String,
+            prehandle_script: String,
+            labels: String,
             mut _params: Vec<SetParam>,
         ) -> Create<'a> {
             _params.extend([
                 title::set(title),
-                description::set(description),
-                prompt::set(prompt),
+                desc::set(desc),
+                system::set(system),
+                favorite::set(favorite),
+                actived::set(actived),
+                with_context::set(with_context),
+                with_context_size::set(with_context_size),
+                max_tokens::set(max_tokens),
+                top_p::set(top_p),
+                temperature::set(temperature),
+                opts::set(opts),
+                prehandle_script::set(prehandle_script),
+                labels::set(labels),
             ]);
             Create::new(self.client, _params)
         }
         pub fn create_unchecked(
             self,
             title: String,
-            description: String,
-            prompt: String,
+            desc: String,
+            system: String,
+            favorite: bool,
+            actived: bool,
+            with_context: bool,
+            with_context_size: i32,
+            max_tokens: i32,
+            top_p: String,
+            temperature: String,
+            opts: String,
+            prehandle_script: String,
+            labels: String,
             mut _params: Vec<UncheckedSetParam>,
         ) -> Create<'a> {
             _params.extend([
                 title::set(title),
-                description::set(description),
-                prompt::set(prompt),
+                desc::set(desc),
+                system::set(system),
+                favorite::set(favorite),
+                actived::set(actived),
+                with_context::set(with_context),
+                with_context_size::set(with_context_size),
+                max_tokens::set(max_tokens),
+                top_p::set(top_p),
+                temperature::set(temperature),
+                opts::set(opts),
+                prehandle_script::set(prehandle_script),
+                labels::set(labels),
             ]);
             Create::new(self.client, _params.into_iter().map(Into::into).collect())
         }
@@ -922,13 +1955,53 @@ pub mod prompt {
         pub fn upsert(
             self,
             _where: UniqueWhereParam,
-            (title, description, prompt, mut _params): (String, String, String, Vec<SetParam>),
+            (
+                title,
+                desc,
+                system,
+                favorite,
+                actived,
+                with_context,
+                with_context_size,
+                max_tokens,
+                top_p,
+                temperature,
+                opts,
+                prehandle_script,
+                labels,
+                mut _params,
+            ): (
+                String,
+                String,
+                String,
+                bool,
+                bool,
+                bool,
+                i32,
+                i32,
+                String,
+                String,
+                String,
+                String,
+                String,
+                Vec<SetParam>,
+            ),
             _update: Vec<SetParam>,
         ) -> Upsert<'a> {
             _params.extend([
                 title::set(title),
-                description::set(description),
-                prompt::set(prompt),
+                desc::set(desc),
+                system::set(system),
+                favorite::set(favorite),
+                actived::set(actived),
+                with_context::set(with_context),
+                with_context_size::set(with_context_size),
+                max_tokens::set(max_tokens),
+                top_p::set(top_p),
+                temperature::set(temperature),
+                opts::set(opts),
+                prehandle_script::set(prehandle_script),
+                labels::set(labels),
             ]);
             Upsert::new(self.client, _where.into(), _params, _update)
         }
@@ -4511,10 +5584,30 @@ pub mod _prisma {
         Id,
         #[serde(rename = "title")]
         Title,
-        #[serde(rename = "description")]
-        Description,
-        #[serde(rename = "prompt")]
-        Prompt,
+        #[serde(rename = "desc")]
+        Desc,
+        #[serde(rename = "system")]
+        System,
+        #[serde(rename = "favorite")]
+        Favorite,
+        #[serde(rename = "actived")]
+        Actived,
+        #[serde(rename = "with_context")]
+        WithContext,
+        #[serde(rename = "with_context_size")]
+        WithContextSize,
+        #[serde(rename = "max_tokens")]
+        MaxTokens,
+        #[serde(rename = "top_p")]
+        TopP,
+        #[serde(rename = "temperature")]
+        Temperature,
+        #[serde(rename = "opts")]
+        Opts,
+        #[serde(rename = "prehandle_script")]
+        PrehandleScript,
+        #[serde(rename = "labels")]
+        Labels,
         #[serde(rename = "created_at")]
         CreatedAt,
         #[serde(rename = "updated_at")]
@@ -4525,8 +5618,18 @@ pub mod _prisma {
             match self {
                 Self::Id => "id".to_string(),
                 Self::Title => "title".to_string(),
-                Self::Description => "description".to_string(),
-                Self::Prompt => "prompt".to_string(),
+                Self::Desc => "desc".to_string(),
+                Self::System => "system".to_string(),
+                Self::Favorite => "favorite".to_string(),
+                Self::Actived => "actived".to_string(),
+                Self::WithContext => "with_context".to_string(),
+                Self::WithContextSize => "with_context_size".to_string(),
+                Self::MaxTokens => "max_tokens".to_string(),
+                Self::TopP => "top_p".to_string(),
+                Self::Temperature => "temperature".to_string(),
+                Self::Opts => "opts".to_string(),
+                Self::PrehandleScript => "prehandle_script".to_string(),
+                Self::Labels => "labels".to_string(),
                 Self::CreatedAt => "created_at".to_string(),
                 Self::UpdatedAt => "updated_at".to_string(),
             }
@@ -4804,6 +5907,27 @@ pub mod _prisma {
             }
         }
         #[derive(Clone)]
+        pub enum BoolFilter {
+            Equals(bool),
+            Not(bool),
+        }
+        impl Into<::prisma_client_rust::SerializedWhereValue> for BoolFilter {
+            fn into(self) -> ::prisma_client_rust::SerializedWhereValue {
+                match self {
+                    Self::Equals(value) => {
+                        ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+                            "equals".to_string(),
+                            ::prisma_client_rust::PrismaValue::Boolean(value),
+                        )])
+                    }
+                    Self::Not(value) => ::prisma_client_rust::SerializedWhereValue::Object(vec![(
+                        "not".to_string(),
+                        ::prisma_client_rust::PrismaValue::Boolean(value),
+                    )]),
+                }
+            }
+        }
+        #[derive(Clone)]
         pub enum DateTimeFilter {
             Equals(
                 ::prisma_client_rust::chrono::DateTime<::prisma_client_rust::chrono::FixedOffset>,
@@ -4878,27 +6002,6 @@ pub mod _prisma {
                     Self::Not(value) => ::prisma_client_rust::SerializedWhereValue::Object(vec![(
                         "not".to_string(),
                         ::prisma_client_rust::PrismaValue::DateTime(value),
-                    )]),
-                }
-            }
-        }
-        #[derive(Clone)]
-        pub enum BoolFilter {
-            Equals(bool),
-            Not(bool),
-        }
-        impl Into<::prisma_client_rust::SerializedWhereValue> for BoolFilter {
-            fn into(self) -> ::prisma_client_rust::SerializedWhereValue {
-                match self {
-                    Self::Equals(value) => {
-                        ::prisma_client_rust::SerializedWhereValue::Object(vec![(
-                            "equals".to_string(),
-                            ::prisma_client_rust::PrismaValue::Boolean(value),
-                        )])
-                    }
-                    Self::Not(value) => ::prisma_client_rust::SerializedWhereValue::Object(vec![(
-                        "not".to_string(),
-                        ::prisma_client_rust::PrismaValue::Boolean(value),
                     )]),
                 }
             }

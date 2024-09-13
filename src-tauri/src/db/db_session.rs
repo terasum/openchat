@@ -9,7 +9,7 @@ pub async fn get_session_list(
     offset: i64,
     size: i64,
 ) -> Result<Vec<session::Data>, String> {
-    return db
+    db
         .session()
         .find_many(vec![])
         .skip(offset)
@@ -17,7 +17,7 @@ pub async fn get_session_list(
         .order_by(session::updated_at::order(Direction::Asc))
         .exec()
         .await
-        .map_err(|e| e.to_string());
+        .map_err(|e| e.to_string())
 }
 
 pub async fn new_session(db: &PrismaClient, data: session::Data) -> Result<session::Data, String> {
@@ -37,14 +37,14 @@ pub async fn new_session(db: &PrismaClient, data: session::Data) -> Result<sessi
         .exec()
         .await
         .map_err(|e| e.to_string());
-    return result;
+    result
 }
 
 pub async fn update_session(
     db: &PrismaClient,
     data: session::Data,
 ) -> Result<session::Data, String> {
-    return db
+    db
         .session()
         .update(
             session::id::equals(data.id),
@@ -59,7 +59,7 @@ pub async fn update_session(
         )
         .exec()
         .await
-        .map_err(|e| e.to_string());
+        .map_err(|e| e.to_string())
 }
 
 pub async fn delete_session(db: &PrismaClient, id: String) -> Result<session::Data, String> {
@@ -104,15 +104,15 @@ pub async fn get_session_data_by_id(
         .exec()
         .await
         .map_err(|e| e.to_string());
-    return result;
+    result
 }
 
 pub async fn save_session_data(
     db: &PrismaClient,
     _session_id: String,
     data: session_data::Data,
-) -> Result<(), String> {
-    return db
+) -> Result<session_data::Data, String> {
+    db
         .session_data()
         .create(
             data.session_id,
@@ -126,15 +126,14 @@ pub async fn save_session_data(
         )
         .exec()
         .await
-        .map(|_| ())
-        .map_err(|e| e.to_string());
+        .map_err(|e| e.to_string())
 }
 
 pub async fn update_session_data(
     db: &PrismaClient,
     data: session_data::Data,
-) -> Result<(), String> {
-    return db
+) -> Result<session_data::Data, String> {
+    db
         .session_data()
         .update(
             session_data::id::equals(data.id),
@@ -145,6 +144,5 @@ pub async fn update_session_data(
         )
         .exec()
         .await
-        .map(|_| ())
-        .map_err(|e| e.to_string());
+        .map_err(|e| e.to_string())
 }

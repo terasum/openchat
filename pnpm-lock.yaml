@@ -74,6 +74,12 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/query-core':
+        specifier: ^5.55.1
+        version: 5.56.1
+      '@tanstack/react-query':
+        specifier: ^5.56.1
+        version: 5.56.1(react@18.3.1)
       '@tauri-apps/api':
         specifier: ^1.2.0
         version: 1.6.0
@@ -113,6 +119,9 @@ importers:
       jotai-immer:
         specifier: ^0.4.1
         version: 0.4.1(immer@10.1.1)(jotai@2.9.3(@types/react@18.3.4)(react@18.3.1))
+      jotai-tanstack-query:
+        specifier: ^0.8.7
+        version: 0.8.7(@tanstack/query-core@5.56.1)(jotai@2.9.3(@types/react@18.3.4)(react@18.3.1))
       lucide-react:
         specifier: ^0.436.0
         version: 0.436.0(react@18.3.1)
@@ -1543,6 +1552,14 @@ packages:
   '@tanem/svg-injector@10.1.68':
     resolution: {integrity: sha512-UkJajeR44u73ujtr5GVSbIlELDWD/mzjqWe54YMK61ljKxFcJoPd9RBSaO7xj02ISCWUqJW99GjrS+sVF0UnrA==}
 
+  '@tanstack/query-core@5.56.1':
+    resolution: {integrity: sha512-hH9LvpGCr3yKbHUgi2b+vOwx2pj4dMFnGY7Cjvrm5mOqynWPr015h/GCLiSi5M5JaXXnB8VnLOSLh5KzjBh5fA==}
+
+  '@tanstack/react-query@5.56.1':
+    resolution: {integrity: sha512-jlRCrE1qXEVtJ0i/bubQpqoEuQQSfRo9O26tWciKmNMwg2oXp96+D7A/0sU52sjSTrcKIQE4o7dSlbOOTYKTIg==}
+    peerDependencies:
+      react: ^18 || ^19
+
   '@tauri-apps/api@1.6.0':
     resolution: {integrity: sha512-rqI++FWClU5I2UBp4HXFvl+sBWkdigBkxnpJDQUWttNyG7IZP4FwQGhTNL5EOw0vI8i6eSAJ5frLqO7n7jbJdg==}
     engines: {node: '>= 14.6.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
@@ -2956,6 +2973,12 @@ packages:
     resolution: {integrity: sha512-nQTt1HBKie/5OJDck1qLpV1PeBA6bjJLAczEYAx70PD8R4Mbu7gtexfBUCzJh6W6ecsOfwHksAYAesVth6SN9A==}
     peerDependencies:
       immer: '>=9.0.0'
+      jotai: '>=2.0.0'
+
+  jotai-tanstack-query@0.8.7:
+    resolution: {integrity: sha512-ZDY1+FSpJFVvySklFp+WscJAkhRmWq9O2XVPybd4iSav5krOh4poYnJFWIlGZ1vr6mHRoJoGcl5+vlS8mFRvPQ==}
+    peerDependencies:
+      '@tanstack/query-core': '*'
       jotai: '>=2.0.0'
 
   jotai@2.9.3:
@@ -5937,6 +5960,13 @@ snapshots:
       content-type: 1.0.5
       tslib: 2.7.0
 
+  '@tanstack/query-core@5.56.1': {}
+
+  '@tanstack/react-query@5.56.1(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.56.1
+      react: 18.3.1
+
   '@tauri-apps/api@1.6.0': {}
 
   '@tauri-apps/api@2.0.0-rc.4': {}
@@ -7497,6 +7527,11 @@ snapshots:
   jotai-immer@0.4.1(immer@10.1.1)(jotai@2.9.3(@types/react@18.3.4)(react@18.3.1)):
     dependencies:
       immer: 10.1.1
+      jotai: 2.9.3(@types/react@18.3.4)(react@18.3.1)
+
+  jotai-tanstack-query@0.8.7(@tanstack/query-core@5.56.1)(jotai@2.9.3(@types/react@18.3.4)(react@18.3.1)):
+    dependencies:
+      '@tanstack/query-core': 5.56.1
       jotai: 2.9.3(@types/react@18.3.4)(react@18.3.1)
 
   jotai@2.9.3(@types/react@18.3.4)(react@18.3.1):

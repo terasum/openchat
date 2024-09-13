@@ -1,385 +1,311 @@
-import { useState, useEffect } from "react";
-import { MarkdownDemoData } from "@/lib/data/markdown-demo";
-import { chatCompletionStream, OpenAIReqOpts } from "@/api/openai";
-
-const decoder = new TextDecoder();
+import { Session, SessionData } from "@/model";
+import { useState, useEffect, useCallback } from "react";
 
 import {
-  wrapGetSessionList,
-  wrapGetSessionDataById,
-  wrapSaveSessionData,
-  wrapNewSession,
-  wrapDeleteSession,
-  wrapUpdateSession,
-  Session,
-  SessionData,
-} from "@/rust-bindings";
+  fetchSessions,
+  fetchSessionDatasBySessionId,
+  insertSession,
+  deleteSession,
+  insertSessionData,
+  updateSession,
+} from "@/api/session";
 
-export interface Conversation extends Session {
-  messages: { role: string; content: string }[];
-}
+import { chatWithOpenAI } from "@/api/openai";
+import { debounce, random_id } from "@/lib/utils";
+import { produce } from "immer";
+import { usePrompt } from "@/hooks/use-prompts";
 
+export interface ConvData extends SessionData {}
+export interface Conv extends Session {}
+
+/**
+ * useConversation 会话逻辑 hooks
+ * @returns conversation 会话相关成员
+ */
 export function useConversation() {
-  const [selectedConversation, setSelectedConversation] = useState<string>("");
-  const [conversations, setConversations] = useState<Conversation[]>([]);
+  // 当前选择对话
+  const [selectedConvId, setSelectedConvId] = useState<string>("");
+  //当前会话列表
+  const [conversationList, setConverList] = useState<Conv[]>([]);
+  // 当前的消息列表
+  const [currentMsgList, setConverMsgList] = useState<ConvData[]>([]);
 
-  function getConvMessage(): { role: string; content: string }[] {
-    const selected = conversations.filter((conversation) => {
-      return conversation.id == selectedConversation;
-    });
+  // 是否正在输出
+  const [isResponsing, setIsResponsing] = useState(false);
+  const [selectPrompt, setSelectPrompt] = useState({ system: "" });
 
-    if (selected.length <= 0) {
-      return [{ role: "assistant", content: "有什么可以帮您的吗?" }];
-    }
-
-    const messages = selected[0].messages.map((message) => {
-      return message;
-    });
-
-    return messages.length > 0
-      ? messages
-      : [{ role: "assistant", content: "有什么可以帮您的吗?" }];
-  }
-
-  const handleSelectConversation = async (id: string) => {
-    console.log(
-      "[debug/App.tsx](handleSelectConversation): selectedConversation: ",
-      selectedConversation
-    );
-    setSelectedConversation(id);
-    const session_data = await wrapGetSessionDataById(id);
-    console.log(
-      "[debug/App.tsx](handleSelectConversation): session_data: ",
-      session_data
-    );
-    if (!session_data || session_data instanceof Array) {
-      return;
-    }
-
-      console.log(
-        "[debug/App.tsx](handleSelectConversation): session_data(instance of Array): ",
-        session_data
-      );
-
-      const session_data_list = session_data as unknown as SessionData[];
-      const messages = session_data_list.map((session_data) => {
-        return { role: session_data.role, content: session_data.message };
-      });
-
-      setConversations((prevConversations) => {
-        console.log("prevConversations: ", prevConversations);
-        return prevConversations.map((conversation) =>
-          conversation.id === id && messages.length > 0
-            ? { ...conversation, messages }
-            : conversation
-        );
-      });
-      console.log(`after setConversations`, conversations);
-  };
-
-  const handleCreateConversation = async () => {
-    let promptId = 1;
-    await newConversation(promptId);
-  };
-
-  const handleDeleteConversation = async (id: string) => {
-    try {
-      deleteConversation(id);
-    } catch (e) {
-      console.error("delete convsation error", e);
-    }
-  };
+  const { query } = usePrompt();
+  const { data } = query;
 
   useEffect(() => {
-    wrapGetSessionList(0, 10).then((res) => {
-      console.log("============ wrapGetSessionList ======== ");
-      if (res && res instanceof Array) {
-        const sessionList = res as unknown as Session[];
-        const conversationList = sessionList
-          .map((session) => {
-            console.log("db data session: ", session);
-            return {
-              ...session,
-              messages: [] as { role: string; content: string }[],
-            };
-          })
-          .sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at));
+    console.log("======== refresh prompts ", data);
+    const prompt = data?.find((p) => p.actived);
+    if (prompt) {
+      setSelectPrompt(prompt);
+    }
+  }, [data]);
 
-        conversationList.push({
-          id: "markdown-format",
-          title: "Markdown formatter",
-          prompt_id: 1,
-          with_context: false,
-          with_context_size: 0,
-          session_model: "gpt-4o-mini",
-          messages: [
-            { role: "assistant", content: "请问有什么可以帮您的吗？?" },
-            { role: "user", content: "请问如何处理MDX文档?" },
-            { role: "assistant", content: MarkdownDemoData() },
-          ],
-          updated_at: "2024-01-01T10:00:00.000Z",
-          created_at: "2024-01-01T10:00:00.000Z",
-        });
-        setConversations(conversationList);
-        handleSelectConversation(conversationList[0].id);
-      } else {
-        console.error(res as unknown as string);
-      }
-    });
-  }, []);
+  /**
+   * handleSelectConversation 处理选择某个会话
+   * @param id 会话ID
+   */
+  const handleSelectConver = async (id: string) => {
+    console.log("[hooks]handleSelectConversation| start:", id);
+    const dataList = await fetchSessionDatasBySessionId(id);
+    console.log("[hooks]handleSelectConversation | dataList:", dataList);
+    setConverMsgList(dataList);
+    setSelectedConvId(id);
+    console.log("[hooks]handleSelectConversation| end:", id);
+  };
 
-  function updateCurrentConversation(role: string, message: string) {
-    setConversations((prevConversations) => {
-      return prevConversations.map((conversation) => {
-        if (conversation.id !== selectedConversation){
-          return conversation;
-        }
-
-        // 是当前对话
-          if (conversation.messages.length > 0) {
-            const latest_message =
-              conversation.messages[conversation.messages.length - 1];
-
-            // 如果最后一条，和需要更新的这一条一样 role 说明需要更新当前消息
-            if (role === latest_message.role) {
-              return {
-                ...conversation,
-                messages: [
-                  ...conversation.messages.slice(0, -1),
-                  { role: role, content: message },
-                ],
-              };
-            }
-          }
-
-          
-          // 更新 session title
-          if (conversation.messages.length === 0 && role === "user") {
-            // 用户的第一条消息，需要把当前conversation的title修改为用户消息（取前20个字）
-            conversation.title = message.substring(0, 20);
-            try {
-              // 异步更新数据库的 session title
-              updateConversation(conversation.id, conversation);
-            } catch (e) {
-              console.error("updateConversation error", e);
-            }
-          }
-
-          // 当前消息列表为空，或者最后一条消息不是当前角色
-          return {
-            ...conversation,
-            messages: [
-              ...conversation.messages,
-              { role: role, content: message },
-            ],
-          };
-      });
-    });
-  }
-
-  async function deleteConversation(id: string) {
-    const result = await wrapDeleteSession(id);
-    console.log("delete session id:", result);
-    setConversations((conversations) => {
-      const newConvs = conversations.filter(
-        (conversation) => conversation.id !== id
-      );
-      if (newConvs.length > 0) {
-        // update selected conv, if delete id === current selected id
-        if (id === selectedConversation) {
-          handleSelectConversation(newConvs[0].id);
-        }
-      }
-      return newConvs;
-    });
-  }
-
-  async function updateConversation(id: string, conv: Conversation) {
-    const updatedConv = await wrapUpdateSession(conv);
-
-    setConversations((conversations) => {
-      return conversations.map((conversation) => {
-        if (conversation.id === id) {
-          return {
-            ...conversation,
-            ...updatedConv,
-            // TODO should use updatedConv.updateAt
-            updatedAt: conversation.updated_at,
-          };
-        }
-        return conversation;
-      });
-    });
-  }
-
-  async function newConversation(prompt_id: number) {
-    const result = await wrapNewSession({
-      id: "",
+  /**
+   * handleCreateNewConversation 新建一个会话
+   * @param prompt_id 默认为1
+   */
+  const handleCreateConver = async () => {
+    console.log("[hooks] handleCreateConversation");
+    const newConv = {
+      id: random_id(18),
       title: "新会话",
-      prompt_id: prompt_id,
+      prompt_id: 1,
       with_context: false,
       with_context_size: 10,
       session_model: "gpt-4o-mini",
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
-    });
-    console.log("new session result", result);
-    if (result) {
-      setConversations((conversations) => {
-        return [
-          {
-            id: result.id,
-            title: "新会话",
-            prompt_id: 1,
-            messages: [],
-            with_context: false,
-            with_context_size: 10,
-            session_model: "gpt-4o-mini",
-            created_at: result.created_at,
-            updated_at: result.updated_at,
-          },
-          ...conversations,
-        ].sort((a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at));
-      });
-      handleSelectConversation(result.id);
-    }
-  }
+    } as Conv;
 
-  // ----------------- openAI part -------------------
+    const insertedConv = await insertSession(newConv);
 
-  // 是否增在输出
-  const [isResponsing, setIsResponsing] = useState(false);
-  // 是否忽略
-  const [_, setIsIgnoreResponse] = useState(false);
-
-  async function handleOpenAIRequst(user_message: {
-    role: string;
-    content: string;
-  }) {
-    const opts: OpenAIReqOpts = {
-      api_base: "https://proxy.openchat.dev",
-      api_path: "/v1/chat/completions",
-      api_key: "SK-sc26ff22b40dbb408cbd43c00900e83650",
-      api_model: "gpt-4o-mini",
-      api_temprature: 0.8,
-      api_max_tokens: 2000,
-    };
-
-    const contexts = conversations
-      .filter((conversation) => {
-        return conversation.id === selectedConversation;
-      })
-      .map((conversation) => {
-        return conversation.messages.map((message) => {
-          return message;
-        });
-      });
-    if (contexts.length <= 0) {
-      return;
-    }
-    // TODO fix types
-    const current_context = contexts[0];
-    current_context.push(user_message);
-
-    // const sessionData: SessionDataModel[] = [
-    //   {
-    //     role: "system",
-    //     message:
-    //       "你是一名通用人工智能助手，你将用尽量专业的知识回答用户的问题，所有问题简洁易懂，字数不超过100字，以纯文本格式输出，不要以 Markdown 格式输出。",
-    //     createdAt: new Date(),
-    //     id: 1,
-    //     sessionId: 1,
-    //   },
-    //   {
-    //     role: "user",
-    //     message: "你好，请问 OpenAI 是由谁创建的?",
-    //     createdAt: new Date(),
-    //     id: 2,
-    //     sessionId: 1,
-    //   },
-    // ];
-    console.log("--------- OPENAI START -----------");
-    console.log(`current_context: ${JSON.stringify(current_context)}`);
-
-    const iter = await chatCompletionStream(current_context, opts);
-
-    let line = "";
-    await iter.toReadableStream().pipeTo(
-      new WritableStream({
-        write(chunk) {
-          const temp_json = JSON.parse(decoder.decode(chunk));
-          const temp_tokens = temp_json.data.choices[0].delta.content;
-          if (temp_tokens) {
-            line += temp_tokens;
-            updateCurrentConversation("assistant", line);
-          }
-        },
+    setConverList(
+      produce((draft) => {
+        draft.unshift(insertedConv);
+        // 要放在这个函数里面
+        handleSelectConver(insertedConv.id);
       })
     );
-    console.log("---------- OPENAI END ----------");
-    return line;
-  }
+  };
 
-  function handleSendMessage(message: string) {
-    console.log(`use-openai.tsx handle the message: ${message}`);
-    // 忽略输出
-    setIsIgnoreResponse(false);
+  /**
+   * handleDeleteConversation 处理删除会话
+   * @param id 删除的会话ID
+   */
+  const handleDeleteConver = async (id: string) => {
+    console.log("[hook] handleDeleteConversation | deleted:", id);
+    await deleteSession(id);
+    setConverList((draft) => {
+      const newlist = draft.filter((conv) => conv.id !== id);
+      // 设置为未选中
+      if (id === selectedConvId && newlist.length > 0) {
+        setSelectedConvId(newlist[newlist.length - 1].id);
+      }
+      return newlist;
+    });
+  };
+
+  /**
+   * handleSendMessage 发送请求到openai
+   * @param message 处理openAI请求消息发送
+   */
+  async function handleSendMessage(message: string) {
+    console.log(`[hooks] handle the message: ${message}`);
     // 正在输出状态
     setIsResponsing(true);
-    // 插入消息
-    updateCurrentConversation("user", message);
-    // 请求AI
-    handleOpenAIRequst({
+
+    // 构造会话消息列表，插入用户消息
+    // update 之后，数据库和状态都会一并更新
+    // await updateCurrentConversation("user", message);
+    const newUserMsg = {
+      id: 0,
+      session_id: selectedConvId,
+      message,
+      role: "user",
+      message_type: "text",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    };
+    console.log("[hook]insertSessionData", newUserMsg);
+    await insertSessionData(newUserMsg);
+    setConverMsgList((prevList) => {
+      // 处理首个消息title
+      if (prevList.length === 1 && prevList[0].id === 0) {
+        const currentConv = conversationList.filter(
+          (item) => item.id === selectedConvId
+        );
+        if (currentConv.length > 0) {
+          setConverList((prevList) => {
+            return prevList.map((item) => {
+              if (item.id === selectedConvId) {
+                const pendingUpdateSession = {
+                  ...item,
+                  title: message.slice(0, 20),
+                  updated_at: new Date().toISOString(),
+                };
+                // 更新标题
+                try{
+                  updateSession(pendingUpdateSession);
+                } catch(e: any){
+                  console.log("更新session标题错误", e);
+                }
+                return pendingUpdateSession;
+              }
+              return item;
+            });
+          });
+        }
+      }
+
+      return [...prevList, newUserMsg];
+    });
+
+    const contexts = currentMsgList.map((msg) => {
+      return {
+        role: msg.role,
+        content: msg.message,
+      };
+    });
+    contexts.push({
       role: "user",
       content: message,
-    }).then(async (assistant_message) => {
-      setIsResponsing(false);
-      console.log("to saved user message:", message);
+    });
+    // 添加系统 prompts
+    if (selectPrompt.system) {
+      console.log("=========== unshift prompts ==========");
+      contexts.unshift({ role: "system", content: selectPrompt.system });
+      console.log(contexts);
+    }
 
-      // 需要保持顺序，这个和显示顺序有关
-      await wrapSaveSessionData(selectedConversation, {
-        id: 0,
-        session_id: selectedConversation,
-        message: message,
-        role: "user",
-        message_type: "text",
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+    console.log("[hooks] handleSendMessage| contexts:", contexts);
+    console.log("selectPrompt", selectPrompt);
+
+    const updateContent = debounce((content: string) => {
+      setConverMsgList((prevList) => {
+        const newList = [...prevList];
+        const latest = prevList[prevList.length - 1];
+
+        if (latest.role === "user") {
+          const newAssistantMsg = {
+            id: latest.id + 1,
+            session_id: selectedConvId,
+            message: content,
+            role: "assistant",
+            message_type: "text",
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          };
+          newList.push(newAssistantMsg);
+        } else {
+          // console.log("[hook] openai onUpdate, chunk:", content);
+          newList[newList.length - 1].message = content;
+        }
+
+        return newList;
       });
+    }, 20);
 
-      // 需要保持顺序，这个和显示顺序有关
-      await wrapSaveSessionData(selectedConversation, {
+    let answer = "";
+    const onUpdate = (chunk: string) => {
+      answer += chunk;
+      updateContent(answer);
+    };
+
+    const onDone = async (assistant_message: string) => {
+      console.log(`[hook] openai onDone: ${assistant_message}`);
+
+      const assistant_record = {
         id: 0,
-        session_id: selectedConversation,
-        message: assistant_message|| "<not-responsed>",
+        session_id: selectedConvId,
+        message: assistant_message,
         role: "assistant",
         message_type: "text",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
-      });
+      };
 
-      console.log(`save session data: ${assistant_message}`);
+      // 插入消息
+      await insertSessionData(assistant_record);
+
+      setIsResponsing(false);
       console.log(`use-openai.tsx handle the message done: ${message}`);
-    });
+    };
+
+    const onError = (e: Error) => {
+      setIsResponsing(false);
+      console.error("stream error", e);
+    };
+
+    // 请求AI
+    await chatWithOpenAI(contexts, onUpdate, onDone, onError);
   }
 
   // 立即停止
   function handleStopResponsing() {
-    setIsIgnoreResponse(true);
     setIsResponsing(false);
   }
 
+  function getConvMessage() {
+    return currentMsgList
+      .map((msg) => {
+        return {
+          role: msg.role,
+          content: msg.message,
+          updated_at: msg.updated_at,
+        };
+      })
+      .sort((a, b) => {
+        return Date.parse(a.updated_at) - Date.parse(b.updated_at);
+      });
+  }
+
+  function init() {
+    // ----------------- openAI part -------------------
+    // useConversation的时候，获取会话列表
+    // 目前限制查询数量为 100 条数据
+    console.log(
+      "[hooks] ============== trigger use-conversation-pending render  ============"
+    );
+    fetchSessions(0, 10).then((convs) => {
+      console.log("[hooks]fetchSessions| convs:", convs);
+      setConverList(
+        convs.sort(
+          (a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)
+        )
+      );
+      if (convs.length > 0) {
+        handleSelectConver(convs[0].id);
+      } else {
+        // TODO 应该默认新建一个
+      }
+    });
+  }
+
+  // 当前选择的 conversation id 变化时，自动更新消息列表
+  useEffect(() => {
+    const conv = conversationList.find((conv) => conv.id === selectedConvId);
+    if (!conv) {
+      return;
+    }
+    new Promise(async () => {
+      const dataList = await fetchSessionDatasBySessionId(selectedConvId);
+      setConverMsgList(dataList);
+      console.log("[hooks] conversation list updated:", dataList);
+    });
+  }, [selectedConvId]);
+
   return {
-    conversations,
-    setConversations,
-    setSelectedConversation,
-    selectedConversation,
-    handleSelectConversation,
-    handleCreateConversation,
-    handleDeleteConversation,
-    getConvMessage,
+    initConvers: init,
+    conversations: conversationList,
+    setConversations: setConverList,
+    setSelectedConversation: setSelectedConvId,
+    selectedConversation: selectedConvId,
+    isResponsing,
+    currentMsgList,
+    prompt,
+    handleSelectConversation: handleSelectConver,
+    handleCreateConversation: handleCreateConver,
+    handleDeleteConversation: handleDeleteConver,
     handleSendMessage,
     handleStopResponsing,
-    isResponsing,
+    getConvMessage,
   };
 }

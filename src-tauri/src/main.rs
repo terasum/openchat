@@ -30,6 +30,8 @@ fn generate_bindings() {
             commands::wrap_update_session_data,
             commands::wrap_get_app_config,
             commands::wrap_update_app_config,
+            commands::wrap_get_prompt_list,
+            commands::wrap_update_prompt,
         ],
         "../src/rust-bindings.ts",
     );
@@ -88,6 +90,8 @@ async fn main() -> std::io::Result<()> {
             commands::wrap_update_session_data,
             commands::wrap_get_app_config,
             commands::wrap_update_app_config,
+            commands::wrap_get_prompt_list,
+            commands::wrap_update_prompt,
         ])
         .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())

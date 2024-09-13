@@ -25,7 +25,7 @@ const ChatInterface: React.FC = () => {
         />
       </div>
 
-      <div className="main-area flex flex-row w-[calc(100%-40px)] h-full">
+      <div className="main-area flex flex-row flex-1">
         {selectedTab === "chat" && <TabChat />}
         {selectedTab === "prompt" && <TabPrompt />}
         {selectedTab === "settings" && <SettingsProfilePage />}

@@ -1,7 +1,7 @@
 {
   "name": "openchat",
   "private": true,
-  "version": "0.2.2",
+  "version": "0.2.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "addui": "npx shadcn add -o",
-    "build:icon": "tauri icon ./src-tauri/assets/icon.png"
+    "build:icon": "tauri icon ./src-tauri/assets/icon.png",
+    "prepare": "husky"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -49,6 +50,7 @@
     "date-fns": "^3.6.0",
     "gpt-tokenizer": "^2.2.1",
     "highlight.js": "^11.10.0",
+    "husky": "^9.1.6",
     "immer": "^10.1.1",
     "jotai": "^2.9.3",
     "jotai-immer": "^0.4.1",

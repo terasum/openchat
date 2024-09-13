@@ -1,5 +1,5 @@
 import { Session, SessionData } from "@/model";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 import {
   fetchSessions,

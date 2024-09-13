@@ -148,7 +148,7 @@ async fn init_default_prompt(client: &PrismaClient) -> Result<(), String> {
         .create(
             "ChatGPT".to_string(),
             "通用人工智能助理".to_string(),
-            "你需要作为通用人工智能助理帮助用户解决问题，你的回答专业真实，且以markdown格式输出".to_string(),
+            "作为通用人工智能帮助用户解决问题，回答简洁清晰，按照要点的方式输出，且以markdown格式输出。".to_string(),
             true,
             true,
             true,

@@ -25,14 +25,14 @@ export function PromptToolbar() {
   const prompt =
     prompts?.find((p) => p.id === selected) || prompts ? prompts[0] : undefined;
 
-  const onActiveClick = (prompt: Prompt) => {
-    if (!prompt) return;
-    setActivated(prompt.id);
-    mutation.mutate({
-      ...prompt,
-      actived: !prompt.actived,
-    });
-  };
+  // const onActiveClick = (prompt: Prompt) => {
+  //   if (!prompt) return;
+  //   setActivated(prompt.id);
+  //   mutation.mutate({
+  //     ...prompt,
+  //     actived: !prompt.actived,
+  //   });
+  // };
 
   const onCopyClick = (prompt: Prompt) => {
     navigator.clipboard

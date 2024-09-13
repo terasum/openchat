@@ -18,7 +18,6 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
       for (let entry of entries) {
         const { width, height } = entry.contentRect;
         setSize({ width, height });
-        console.log("ResizeObserver", width, height);
       }
     });
 

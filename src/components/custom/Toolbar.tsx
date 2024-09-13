@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Badge } from "@/components/ui";
 import SidebarIcon from "@/assets/images/side-bar-fill.svg";
-import { useAppSettings } from "@/hooks/use-app-settings";
-
+import { usePrompt } from "@/hooks/use-prompts";
 import "./Toolbar.scss";
-
 
 interface ToolbarProps {
   onToggleSidebar: () => void;
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ onToggleSidebar }) => {
-  const appSettings = useAppSettings();
+  const { query } = usePrompt();
+  const { data } = query;
+
+  const [state, setState] = useState({
+    title: "",
+  });
+
+  useEffect(() => {
+    const prompt = data?.find((p) => p.actived);
+    if (prompt) {
+      setState({
+        title: prompt.title,
+      });
+    }
+  }, [data]);
 
   return (
     <div className="toolbar w-full text-white flex flex-row justify-start items-center px-4 pt-1 pb-1 select-none">
@@ -23,8 +35,9 @@ const Toolbar: React.FC<ToolbarProps> = ({ onToggleSidebar }) => {
       >
         <img className="w-[14px] h-[14px]" src={SidebarIcon} />
       </Button>
+
       <div className="flex flex-row items-center cursor-default">
-        <Badge variant="outline">{appSettings.model.default_model}</Badge>
+        <Badge variant="outline">{state.title}</Badge>
       </div>
 
       <div />

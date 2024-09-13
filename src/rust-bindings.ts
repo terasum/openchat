@@ -34,11 +34,11 @@ export function wrapGetSessionDataById(id: string) {
 }
 
 export function wrapSaveSessionData(sessionId: string, data: SessionData) {
-    return invoke()<null>("wrap_save_session_data", { sessionId,data })
+    return invoke()<SessionData>("wrap_save_session_data", { sessionId,data })
 }
 
 export function wrapUpdateSessionData(data: SessionData) {
-    return invoke()<null>("wrap_update_session_data", { data })
+    return invoke()<SessionData>("wrap_update_session_data", { data })
 }
 
 export function wrapGetAppConfig() {
@@ -49,6 +49,18 @@ export function wrapUpdateAppConfig(config: Settings) {
     return invoke()<null>("wrap_update_app_config", { config })
 }
 
+/**
+ * 定义一个包装器函数来处理异步调用
+ */
+export function wrapGetPromptList(start: number, end: number) {
+    return invoke()<Prompt[]>("wrap_get_prompt_list", { start,end })
+}
+
+export function wrapUpdatePrompt(data: Prompt) {
+    return invoke()<Prompt>("wrap_update_prompt", { data })
+}
+
 export type Settings = { id: number; key: string; value: string; created_at: string; updated_at: string }
-export type Session = { id: string; title: string; prompt_id: number; with_context: boolean; with_context_size: number; session_model: string; created_at: string; updated_at: string }
 export type SessionData = { id: number; session_id: string; role: string; message: string; message_type: string; created_at: string; updated_at: string }
+export type Prompt = { id: number; title: string; desc: string; system: string; favorite: boolean; actived: boolean; with_context: boolean; with_context_size: number; max_tokens: number; top_p: string; temperature: string; opts: string; prehandle_script: string; labels: string; created_at: string; updated_at: string }
+export type Session = { id: string; title: string; prompt_id: number; with_context: boolean; with_context_size: number; session_model: string; created_at: string; updated_at: string }

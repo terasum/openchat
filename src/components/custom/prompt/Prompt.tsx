@@ -1,26 +1,28 @@
-import { Search } from "lucide-react";
+import { Suspense } from "react";
 
-import { Input } from "@/components/ui";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+  Input,
+  Separator,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  TooltipProvider,
+} from "@/components/ui";
 
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Search } from "lucide-react";
+
 import { PromptDisplay } from "@/components/custom/prompt/PromptDisplay";
 import { PromptList } from "@/components/custom/prompt/PromptList";
-import { type Prompt } from "@/hooks/prompts-data";
 import { usePrompt } from "@/hooks/use-prompts";
 
-interface PromptProps {
-  prompt: Prompt[];
-}
-
-export function Prompt({ prompt }: PromptProps) {
-  const [prompt_select] = usePrompt();
+export function Prompt() {
+  const { query } = usePrompt();
+  const { data, isPending, isError } = query;
+  const prompts = data;
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -28,7 +30,7 @@ export function Prompt({ prompt }: PromptProps) {
         direction="horizontal"
         className="h-full items-stretch"
       >
-        <ResizablePanel defaultSize={40} minSize={30}>
+        <ResizablePanel defaultSize={30} minSize={30}>
           <Tabs defaultValue="all" className="h-full">
             <div className="flex items-center px-4 py-2">
               <h1 className="text-xl font-bold">Prompts</h1>
@@ -57,20 +59,22 @@ export function Prompt({ prompt }: PromptProps) {
               </form>
             </div>
             <TabsContent value="all" className="m-0 h-[calc(100%-120px)]">
-              <PromptList items={prompt} />
+              <Suspense fallback={<div>Loading...</div>}>
+                {prompts && <PromptList items={prompts} />}
+              </Suspense>
             </TabsContent>
             <TabsContent value="favorite" className="h-[calc(100%-120px)]">
-              <PromptList items={prompt.filter((item) => item.favoriate)} />
+              <Suspense fallback={<div>Loading...</div>}>
+                {prompts && (
+                  <PromptList items={prompts.filter((item) => item.favorite)} />
+                )}
+              </Suspense>
             </TabsContent>
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={60} minSize={60}>
-          <PromptDisplay
-            prompt={
-              prompt.find((item) => item.id === prompt_select.selected) || null
-            }
-          />
+        <ResizablePanel defaultSize={70} minSize={60}>
+          {!isPending && !isError && <PromptDisplay />}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

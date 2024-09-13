@@ -32,9 +32,7 @@ const ChatBubble: FC<ChatBubbleProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const bubbleRef = useRef(null);
   useEffect(() => {
-    console.log("ChatBubble", parentSize);
     if (bubbleRef.current) {
-      console.log(bubbleRef.current);
       (bubbleRef.current as HTMLDivElement).style.maxWidth = `${
         0.8 * parentSize.width
       }px`;

@@ -5,6 +5,7 @@
 <h1 style="text-align: center">
 <span>OpenChat</span>
 </h1>
+<h4 style="text-align: center">v0.2.3</h4>
 
 <h3 style="text-align: center">
     A lightweight and elegant AI chat client for ChatGPT, Claude and other LLMs.

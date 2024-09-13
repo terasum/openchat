@@ -1,0 +1,20 @@
+{
+  "version": "#{{VERSION}}#",
+  "notes": "##{{NOTES}}##",
+  "pub_date": "#{{DATE}}#",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "##{{MACOS_AARCH64_SIGNATURE}}##",
+      "url": "https://openchat-oss.oss-cn-hangzhou.aliyuncs.com/openchat-oss/release-v#{{VERSION}}#/OpenChat_aarch64.app.tar.gz"
+    },
+    "darwin-x86_64": {
+      "signature": "##{{MACOS_X64_SIGNATURE}}##",
+      "url": "https://openchat-oss.oss-cn-hangzhou.aliyuncs.com/openchat-oss/release-v#{{VERSION}}#/OpenChat_x64.app.tar.gz"
+    },
+    "windows-x86_64": {
+      "signature": "#{{WINDOWS_x86_64_SIGNATURE}}#",
+      "url": "https://openchat-oss.oss-cn-hangzhou.aliyuncs.com/openchat-oss/release-v#{{VERSION}}#/OpenChat_#{{VERSION}}#_x64_zh-CN.msi.zip"
+
+    }
+  }
+}

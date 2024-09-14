@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Button, Badge } from "@/components/ui";
 import SidebarIcon from "@/assets/images/side-bar-fill.svg";
 import { usePrompt } from "@/hooks/use-prompts";
@@ -9,21 +9,7 @@ interface ToolbarProps {
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ onToggleSidebar }) => {
-  const { query } = usePrompt();
-  const { data } = query;
-
-  const [state, setState] = useState({
-    title: "",
-  });
-
-  useEffect(() => {
-    const prompt = data?.find((p) => p.actived);
-    if (prompt) {
-      setState({
-        title: prompt.title,
-      });
-    }
-  }, [data]);
+  const { selectedPrompt } = usePrompt();
 
   return (
     <div className="toolbar w-full text-white flex flex-row justify-start items-center px-4 pt-1 pb-1 select-none">
@@ -37,7 +23,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ onToggleSidebar }) => {
       </Button>
 
       <div className="flex flex-row items-center cursor-default">
-        <Badge variant="outline">{state.title}</Badge>
+        <Badge variant="outline">{selectedPrompt.title}</Badge>
       </div>
 
       <div />

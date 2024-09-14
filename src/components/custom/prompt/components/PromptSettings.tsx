@@ -1,46 +1,11 @@
-import { Label, Switch, Slider } from "@/components/ui";
+import { Label, Switch, Slider, Badge } from "@/components/ui";
+import { PromptStateProps } from "@/hooks/use-prompts";
 
-import { usePrompt } from "@/hooks/use-prompts";
-import { useEffect, useState } from "react";
-
-import { debounce } from "@/lib/utils";
-
-export function PromptSettings() {
-  const { query, selected, mutation } = usePrompt();
-  const { data } = query;
-  const prompts = data;
-  const prompt =
-    prompts?.find((p) => p.id === selected) || prompts ? prompts[0] : undefined;
-
-  const [state, setState] = useState({
-    max_tokens: 1200,
-    temperature: 0.8,
-    top_p: 0.8,
-    with_context: true,
-    with_context_size: 8,
-  });
-
-  const updateDebounceFn = debounce((newState) => {
-    mutation.mutate({
-      ...prompt!,
-      ...newState,
-      temperature: String(newState.temperature),
-      top_p: String(newState.top_p),
-    });
-  }, 400);
-
-  useEffect(() => {
-    setState({
-      max_tokens: Number(prompt?.max_tokens),
-      temperature: Number(prompt?.temperature),
-      top_p: Number(prompt?.top_p),
-      with_context: !!prompt?.with_context,
-      with_context_size: Number(prompt?.with_context_size),
-    });
-  }, []);
+export function PromptSettings({ props }: { props: PromptStateProps }) {
+  const { selectedPrompt, updatePrompt, activatedPrompt } = props;
 
   return (
-    <div className="flex flex-col items-start gap-2 p-2 w-[200px]">
+    <div className="flex flex-col items-start gap-2 p-2 pr-4 pt-8 w-[100%] min-w-[100px] max-w-[320px]">
       <div className="mb-4 w-full">
         <Label
           htmlFor="with_context"
@@ -49,12 +14,12 @@ export function PromptSettings() {
           上下文记忆
           <Switch
             id="with_context"
-            checked={state.with_context}
+            checked={selectedPrompt.with_context}
             onCheckedChange={(e) => {
-              setState((draft) => {
-                draft.with_context = e;
-                updateDebounceFn(draft);
-                return draft;
+              console.log("with_context changed", e);
+              updatePrompt({
+                ...selectedPrompt,
+                with_context: e,
               });
             }}
           />
@@ -65,20 +30,20 @@ export function PromptSettings() {
           htmlFor="with_context_size"
           className="flex text-xs font-normal text-gray-500 justify-between"
         >
-          <span>携带上下文数量</span> <span>{state.with_context_size}</span>
+          <span>携带上下文数量</span>{" "}
+          <span>{selectedPrompt.with_context_size}</span>
         </Label>
         <Slider
           id="with_context_size"
           min={0}
           max={128}
           step={1}
-          value={[state.with_context_size]}
+          value={[selectedPrompt.with_context_size]}
           onValueChange={(e) => {
             console.log(e);
-            setState((draft) => {
-              draft.with_context_size = e[0];
-              updateDebounceFn(draft);
-              return draft;
+            updatePrompt({
+              ...selectedPrompt,
+              with_context_size: e[0],
             });
           }}
         />
@@ -88,20 +53,19 @@ export function PromptSettings() {
           htmlFor="with_context_size"
           className="flex text-xs font-normal text-gray-500 justify-between"
         >
-          <span>最大Token数</span> <span>{state.max_tokens}</span>
+          <span>最大Token数</span> <span>{selectedPrompt.max_tokens}</span>
         </Label>
         <Slider
           id="max_tokens"
           min={100}
           max={2500}
           step={10}
-          value={[state.max_tokens]}
+          value={[selectedPrompt.max_tokens]}
           onValueChange={(e) => {
             console.log(e);
-            setState((draft) => {
-              draft.max_tokens = e[0];
-              updateDebounceFn(draft);
-              return draft;
+            updatePrompt({
+              ...selectedPrompt,
+              max_tokens: e[0],
             });
           }}
         />
@@ -111,47 +75,63 @@ export function PromptSettings() {
           htmlFor="temperature"
           className="flex text-xs font-normal text-gray-500 justify-between"
         >
-          <span>Temperature</span> <span>{state.temperature}</span>
+          <span>Temperature</span> <span>{selectedPrompt.temperature}</span>
         </Label>
         <Slider
           id="temperature"
           min={0.1}
           max={2}
           step={0.1}
-          value={[state.temperature]}
+          value={[Number(selectedPrompt.temperature)]}
           onValueChange={(e) => {
             console.log(e);
-            setState((draft) => {
-              draft.temperature = e[0];
-              updateDebounceFn(draft);
-              return draft;
+            updatePrompt({
+              ...selectedPrompt,
+              temperature: String(e[0]),
             });
           }}
         />{" "}
       </div>
 
-      <div className="mb-4 w-full gap-2 grid grid-rows-2">
+      <div className="mb-0 w-full gap-2 grid grid-rows-2">
         <Label
           htmlFor="top_p"
           className="flex text-xs font-normal text-gray-500 justify-between"
         >
-          <span>Top P</span> <span>{state.top_p}</span>
+          <span>Top P</span> <span>{selectedPrompt.top_p}</span>
         </Label>
         <Slider
           id="top_p"
           min={0.1}
           max={1}
           step={0.1}
-          value={[state.top_p]}
+          value={[Number(selectedPrompt.top_p)]}
           onValueChange={(e) => {
             console.log(e);
-            setState((draft) => {
-              draft.top_p = e[0];
-              updateDebounceFn(draft);
-              return draft;
+            updatePrompt({
+              ...selectedPrompt,
+              top_p: String(e[0]),
             });
           }}
         />
+      </div>
+
+      <div className="flex items-center gap-2 mt-3">
+        {selectedPrompt.labels?.length ? (
+          <div className="flex items-center gap-2">
+            {activatedPrompt.id == selectedPrompt.id ? (
+              <Badge variant={"default"}>{"active"}</Badge>
+            ) : (
+              <Badge variant={"outline"}>{"unused"}</Badge>
+            )}
+
+            {selectedPrompt.labels?.split(",").map((label) => (
+              <Badge key={label} variant={"outline"}>
+                {label}
+              </Badge>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );

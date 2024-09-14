@@ -14,6 +14,7 @@ import { chatWithOpenAI } from "@/api/openai";
 import { debounce, random_id } from "@/lib/utils";
 import { produce } from "immer";
 import { usePrompt } from "@/hooks/use-prompts";
+import { useAppSettings } from "@/hooks/use-app-settings";
 
 export interface ConvData extends SessionData {}
 export interface Conv extends Session {}
@@ -32,18 +33,10 @@ export function useConversation() {
 
   // 是否正在输出
   const [isResponsing, setIsResponsing] = useState(false);
-  const [selectPrompt, setSelectPrompt] = useState({ system: "" });
 
-  const { query } = usePrompt();
-  const { data } = query;
+  const { activatedPrompt } = usePrompt();
 
-  useEffect(() => {
-    console.log("======== refresh prompts ", data);
-    const prompt = data?.find((p) => p.actived);
-    if (prompt) {
-      setSelectPrompt(prompt);
-    }
-  }, [data]);
+  const appSettings = useAppSettings();
 
   /**
    * handleSelectConversation 处理选择某个会话
@@ -142,9 +135,9 @@ export function useConversation() {
                   updated_at: new Date().toISOString(),
                 };
                 // 更新标题
-                try{
+                try {
                   updateSession(pendingUpdateSession);
-                } catch(e: any){
+                } catch (e: any) {
                   console.log("更新session标题错误", e);
                 }
                 return pendingUpdateSession;
@@ -169,14 +162,17 @@ export function useConversation() {
       content: message,
     });
     // 添加系统 prompts
-    if (selectPrompt.system) {
-      console.log("=========== unshift prompts ==========");
-      contexts.unshift({ role: "system", content: selectPrompt.system });
-      console.log(contexts);
+    if (activatedPrompt.system) {
+      console.log("use-conversation.tsx", "unshift actived prompt", {
+        activatedPrompt,
+      });
+      contexts.unshift({ role: "system", content: activatedPrompt.system });
+      console.log(
+        "use-conversation.tsx",
+        "after unshift actived prompt, context: ",
+        { contexts }
+      );
     }
-
-    console.log("[hooks] handleSendMessage| contexts:", contexts);
-    console.log("selectPrompt", selectPrompt);
 
     const updateContent = debounce((content: string) => {
       setConverMsgList((prevList) => {
@@ -234,6 +230,11 @@ export function useConversation() {
       console.error("stream error", e);
     };
 
+    console.log("use-conversation.tsx", "pass to openai's contexts:", {
+      contexts,
+    });
+    console.log(appSettings.apikey);
+
     // 请求AI
     await chatWithOpenAI(contexts, onUpdate, onDone, onError);
   }
@@ -261,11 +262,10 @@ export function useConversation() {
     // ----------------- openAI part -------------------
     // useConversation的时候，获取会话列表
     // 目前限制查询数量为 100 条数据
-    console.log(
-      "[hooks] ============== trigger use-conversation-pending render  ============"
-    );
+    console.log("use-conversation.tsx", "== init ==");
+
     fetchSessions(0, 10).then((convs) => {
-      console.log("[hooks]fetchSessions| convs:", convs);
+      console.log("use-conversation.tsx", "fetchSessions", { convs });
       setConverList(
         convs.sort(
           (a, b) => Date.parse(b.updated_at) - Date.parse(a.updated_at)
@@ -288,7 +288,9 @@ export function useConversation() {
     new Promise(async () => {
       const dataList = await fetchSessionDatasBySessionId(selectedConvId);
       setConverMsgList(dataList);
-      console.log("[hooks] conversation list updated:", dataList);
+      console.log("use-conversation.tsx", "conversation list updated", {
+        dataList,
+      });
     });
   }, [selectedConvId]);
 

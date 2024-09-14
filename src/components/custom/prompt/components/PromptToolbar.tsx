@@ -1,38 +1,58 @@
-import { Star, StarOff, MoreVertical, Copy, DownloadCloud, Tag } from "lucide-react";
-
+import {
+  Star,
+  StarOff,
+  Copy,
+  DownloadCloud,
+  Tag,
+  Trash,
+  Check,
+} from "lucide-react";
 import {
   Button,
   Separator,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
   Input,
 } from "@/components/ui";
 
+import { ask } from "@tauri-apps/api/dialog";
+
 import { Prompt } from "@/rust-bindings";
+import { PromptStateProps } from "@/hooks/use-prompts";
 
-import { usePrompt } from "@/hooks/use-prompts";
+export function PromptToolbar({ props }: { props: PromptStateProps }) {
+  const {
+    activatedPrompt,
+    setActivated,
+    promptDeletation,
+    selectedPrompt,
+    updatePrompt,
+  } = props;
+  const onActiveClick = (id: number) => {
+    new Promise(async () => {
+      const sure = await ask(`确定激活 Prompt ${id}?`, {
+        title: "确认",
+        type: "info",
+      });
+      if (sure) {
+        setActivated(id);
+      }
+    });
+  };
 
-export function PromptToolbar() {
-  const { query, selected, setActivated, mutation } = usePrompt();
-  const { data } = query;
-  const prompts = data;
-
-  const prompt =
-    prompts?.find((p) => p.id === selected) || prompts ? prompts[0] : undefined;
-
-  // const onActiveClick = (prompt: Prompt) => {
-  //   if (!prompt) return;
-  //   setActivated(prompt.id);
-  //   mutation.mutate({
-  //     ...prompt,
-  //     actived: !prompt.actived,
-  //   });
-  // };
+  const onDeleteClick = (prompt: Prompt) => {
+    if (!prompt) return;
+    new Promise(async () => {
+      const sure = await ask(`确定删除 Prompt ${prompt.id}?`, {
+        title: "删除",
+        type: "warning",
+      });
+      if (sure) {
+        promptDeletation.delete(prompt.id);
+      }
+    });
+  };
 
   const onCopyClick = (prompt: Prompt) => {
     navigator.clipboard
@@ -45,29 +65,27 @@ export function PromptToolbar() {
       });
   };
 
-  const onFavoriteClick = (prompt: Prompt) => {
-    if (!prompt) return;
-    setActivated(prompt.id);
-    mutation.mutate({
-      ...prompt,
-      favorite: !prompt.favorite,
+  const onFavoriteClick = () => {
+    updatePrompt({
+      ...selectedPrompt,
+      favorite: !selectedPrompt.favorite,
     });
   };
 
   return (
-    <div className="flex items-center p-2 h-[52px]">
-      <div className="flex items-center gap-2">
+    <div className="flex flex-row items-center p-2 h-[52px] flex-1">
+      <div className="flex items-center gap-2 mr-6">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
               variant="ghost"
               size="icon"
-              disabled={!prompt}
+              disabled={selectedPrompt?.id == 1}
               onClick={() => {
-                onFavoriteClick(prompt!);
+                onFavoriteClick();
               }}
             >
-              {prompt!.favorite ? (
+              {selectedPrompt.favorite ? (
                 <StarOff className="h-4 w-4" />
               ) : (
                 <Star className="h-4 w-4" />
@@ -83,8 +101,7 @@ export function PromptToolbar() {
             <Button
               variant="ghost"
               size="icon"
-              disabled={!prompt}
-              onClick={() => onCopyClick(prompt!)}
+              onClick={() => onCopyClick(selectedPrompt)}
             >
               <Copy className="h-4 w-4" />
               <span className="sr-only">复制</span>
@@ -102,32 +119,55 @@ export function PromptToolbar() {
           </TooltipTrigger>
           <TooltipContent>添加标签</TooltipContent>
         </Tooltip>
-
-        <Separator orientation="vertical" className="mx-2 h-6" />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <MoreVertical className="h-4 w-4" />
-              <span className="sr-only">More</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem disabled={true}>删除</DropdownMenuItem>
-            <DropdownMenuItem disabled={true}>添加标签</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
 
-      <div className="ml-auto flex items-center gap-2">
-        <Input disabled={true} placeholder="https://<prompt url>"></Input>
+      <div className="ml-auto w-full flex items-center gap-2">
+        <Input className="" placeholder="https://<prompt url>"></Input>
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" disabled={true}>
+            <Button
+              variant="ghost"
+              size="icon"
+              disabled={selectedPrompt.id == 1}
+            >
               <DownloadCloud className="h-4 w-4" />
+              <span className="sr-only">下载</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>下载</TooltipContent>
+        </Tooltip>
+        <Separator orientation="vertical" className="mx-2 h-6" />
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                onDeleteClick(selectedPrompt);
+              }}
+            >
+              <Trash className="h-4 w-4" />
               <span className="sr-only">删除</span>
             </Button>
           </TooltipTrigger>
           <TooltipContent>删除</TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              disabled={selectedPrompt.id == activatedPrompt.id}
+              onClick={() => {
+                onActiveClick(selectedPrompt.id);
+              }}
+            >
+              <Check className="h-4 w-4" />
+              <span className="sr-only">激活</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>激活</TooltipContent>
         </Tooltip>
       </div>
 

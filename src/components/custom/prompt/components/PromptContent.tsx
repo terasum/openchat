@@ -1,91 +1,43 @@
-import { Separator, Textarea, Badge } from "@/components/ui";
-import { useState, useEffect } from "react";
+import { Separator, Textarea } from "@/components/ui";
 
-import { usePrompt } from "@/hooks/use-prompts";
-import { cn, debounce } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 import { PromptMeta } from "./PromptMeta";
 import { PromptSettings } from "./PromptSettings";
 import { PromptToolbar } from "./PromptToolbar";
-export function PromptContent() {
-  const { query, selected, mutation } = usePrompt();
-  const { data } = query;
-  const prompts = data;
-  const prompt =
-    prompts?.find((p) => p.id === selected) || prompts ? prompts[0] : undefined;
-  const labels = prompt?.labels ? prompt.labels.split(",") : [];
 
-  const [state, setState] = useState({
-    system: "",
-  });
-
-  useEffect(() => {
-    setState({
-      system: prompt!.system,
-    });
-  }, []);
-
-  const updateDebounceFn = debounce((newText) => {
-    mutation.mutate({
-      ...prompt!,
-      system: newText,
-    });
-  }, 400);
+import { PromptStateProps } from "@/hooks/use-prompts";
+export function PromptContent({ props }: { props: PromptStateProps }) {
+  const { selectedPrompt, updatePrompt } = props;
 
   return (
     <>
-      <PromptMeta />
+      <PromptToolbar props={props} />
       <Separator />
-
-      <div className="flex flex-col h-[calc(100%-100px)] overflow-y-auto">
+      <PromptMeta props={props} />
+      <div className="flex flex-col h-[calc(100%-160px)] overflow-y-auto">
         <div className="flex flex-row flex-1">
           <div
             className={cn(
-              "whitespace-pre-wrap p-4 text-sm overflow-y-auto overflow-x-hidden w-[100%]"
+              "whitespace-pre-wrap p-4  min-h-[280px] w-[100%] min-w-[360px] max-w-[1280px]"
             )}
           >
-            <h3 className="text-md mb-1 text-gray-400">SYSTEM:</h3>
+            <h1 className="text-slate-500">System Prompt:</h1>
             <Textarea
-              value={state.system}
-              className="h-[360px]"
+              value={selectedPrompt.system}
+              className="w-[100%] h-[calc(100%-20px)] text-sm overflow-y-auto"
               onChange={(e) => {
-                console.log(e.target.value);
-                setState((draft) => {
-                  updateDebounceFn(e.target.value);
-                  return {
-                    ...draft,
-                    system: e.target.value,
-                  };
+                updatePrompt({
+                  ...selectedPrompt,
+                  system: e.target.value,
                 });
               }}
             />
-            <div className="flex items-center gap-2 mt-3">
-            {labels.length ? (
-              <div className="flex items-center gap-2">
-                {prompt?.actived ? (
-                  <Badge variant={"default"}>{"active"}</Badge>
-                ) : (
-                  <Badge variant={"outline"}>{"unused"}</Badge>
-                )}
-
-                {labels.map((label) => (
-                  <Badge key={label} variant={"outline"}>
-                    {label}
-                  </Badge>
-                ))}
-              </div>
-            ) : null}
           </div>
-          </div>
-          
-          <Separator orientation="vertical" />
 
-          <PromptSettings />
+          <PromptSettings props={props} />
         </div>
       </div>
-      <Separator />
-
-      <PromptToolbar />
     </>
   );
 }

@@ -49,6 +49,14 @@ export function wrapUpdateAppConfig(config: Settings) {
     return invoke()<null>("wrap_update_app_config", { config })
 }
 
+export function wrapGetSettings(key: string) {
+    return invoke()<Settings | null>("wrap_get_settings", { key })
+}
+
+export function wrapSetSettings(key: string, value: string) {
+    return invoke()<null>("wrap_set_settings", { key,value })
+}
+
 /**
  * 定义一个包装器函数来处理异步调用
  */
@@ -58,6 +66,14 @@ export function wrapGetPromptList(start: number, end: number) {
 
 export function wrapUpdatePrompt(data: Prompt) {
     return invoke()<Prompt>("wrap_update_prompt", { data })
+}
+
+export function wrapNewPrompt() {
+    return invoke()<Prompt>("wrap_new_prompt")
+}
+
+export function wrapDeletePrompt(id: number) {
+    return invoke()<Prompt>("wrap_delete_prompt", { id })
 }
 
 export type Settings = { id: number; key: string; value: string; created_at: string; updated_at: string }

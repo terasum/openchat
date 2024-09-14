@@ -4,6 +4,7 @@ use std::process::Command;
 use tauri::State;
 use webbrowser::{open_browser, Browser};
 
+use crate::db::prisma_client::settings::key;
 use crate::db::prisma_client::PrismaClient;
 
 use crate::db::prisma_client::prompt;
@@ -12,8 +13,8 @@ use crate::db::prisma_client::session_data;
 use crate::db::prisma_client::settings;
 
 use crate::db::db_config;
-use crate::db::db_session;
 use crate::db::db_prompt;
+use crate::db::db_session;
 
 /// 定义一个包装器函数来处理异步调用
 #[tauri::command]
@@ -80,7 +81,7 @@ pub async fn wrap_save_session_data(
     data: session_data::Data,
 ) -> Result<session_data::Data, String> {
     let db_client = Arc::clone(&state);
-    return db_session::save_session_data(&db_client, session_id, data).await
+    return db_session::save_session_data(&db_client, session_id, data).await;
 }
 
 #[tauri::command]
@@ -116,12 +117,29 @@ pub async fn wrap_get_prompt_list(
 
 #[tauri::command]
 #[specta::specta]
+pub async fn wrap_new_prompt(state: State<'_, Arc<PrismaClient>>) -> Result<prompt::Data, String> {
+    let db_client = Arc::clone(&state);
+    db_prompt::new_prompt(&db_client).await
+}
+
+#[tauri::command]
+#[specta::specta]
 pub async fn wrap_update_prompt(
     state: State<'_, Arc<PrismaClient>>,
     data: prompt::Data,
 ) -> Result<prompt::Data, String> {
     let db_client = Arc::clone(&state);
     db_prompt::update_prompt(&db_client, data).await
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_delete_prompt(
+    state: State<'_, Arc<PrismaClient>>,
+    id: i32,
+) -> Result<prompt::Data, String> {
+    let db_client = Arc::clone(&state);
+    db_prompt::delete_prompt(&db_client, id).await
 }
 
 // ----------- config db commands --------
@@ -155,6 +173,27 @@ pub async fn wrap_update_app_config(
     let db_client = Arc::clone(&state);
     let result = db_config::update_app_config(&db_client, config).await;
     return result;
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_get_settings(
+    state: State<'_, Arc<PrismaClient>>,
+    key: String,
+) -> Result<Option<settings::Data>, String> {
+    let db_client = Arc::clone(&state);
+    db_config::get_app_settings(&db_client, key).await
+}
+
+#[tauri::command]
+#[specta::specta]
+pub async fn wrap_set_settings(
+    state: State<'_, Arc<PrismaClient>>,
+    key: String,
+    value: String,
+) -> Result<(), String> {
+    let db_client = Arc::clone(&state);
+    db_config::set_app_settings(&db_client, key, value).await
 }
 
 //------------ app commands -----------

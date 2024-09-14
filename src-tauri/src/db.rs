@@ -12,8 +12,8 @@ use tauri::App;
 use tauri::Manager;
 
 pub mod db_config;
-pub mod db_session;
 pub mod db_prompt;
+pub mod db_session;
 
 pub fn get_db_path(_app: &App) -> String {
     #[cfg(debug_assertions)]
@@ -118,6 +118,14 @@ CREATE TABLE IF NOT EXISTS "settings" (
     "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );"#;
 
+    const INIT_TABLE_SQL4_INDEX: &str = r#"
+-- CreateIndex
+CREATE UNIQUE INDEX "settings_key_key" ON "settings"("key");
+"#;
+
+    const INIT_TABLE_WAL: &str = r#"
+PRAGMA journal_mode=WAL;"#;
+
     client
         ._execute_raw(Raw::new(INIT_TABLE_SQL1, vec![]))
         .exec()
@@ -135,6 +143,16 @@ CREATE TABLE IF NOT EXISTS "settings" (
         .ok();
     client
         ._execute_raw(Raw::new(INIT_TABLE_SQL4, vec![]))
+        .exec()
+        .await
+        .ok();
+    client
+        ._execute_raw(Raw::new(INIT_TABLE_SQL4_INDEX, vec![]))
+        .exec()
+        .await
+        .ok();
+    client
+        ._execute_raw(Raw::new(INIT_TABLE_WAL, vec![]))
         .exec()
         .await
         .ok();

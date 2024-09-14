@@ -1,6 +1,6 @@
 datasource db {
   provider = "sqlite"
-  url      = "file:/Users/chenquan/Library/Application\\ Support/OpenChat/openchat-data-dev.db"
+  url      = "file:/Users/chenquan/Library/Application\\ Support/OpenChat/openchat-data-dev.db?connection_limit=1"
 }
 
 generator client {
@@ -59,7 +59,7 @@ model Session {
 
 model Settings {
   id         Int      @id @default(autoincrement())
-  key        String
+  key        String   @unique
   value      String
   created_at DateTime @default(now()) @map(name: "created_at")
   updated_at DateTime @default(now()) @updatedAt @map(name: "updated_at")

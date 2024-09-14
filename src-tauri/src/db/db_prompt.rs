@@ -3,6 +3,32 @@ use crate::db::prisma_client::PrismaClient;
 use prisma_client_rust::chrono;
 use prisma_client_rust::Direction;
 
+pub async fn new_prompt(db: &PrismaClient) -> Result<prompt::Data, String> {
+    db.prompt()
+        .create(
+            "新 Prompt".to_string(),
+            "默认描述".to_string(),
+            "".to_string(),
+            false,
+            false,
+            true,
+            32,
+            2500,
+            "1".to_string(),
+            "0.8".to_string(),
+            "{}".to_string(),
+            "".to_string(),
+            "default".to_string(),
+            vec![
+                prompt::updated_at::set(chrono::DateTime::from(chrono::Utc::now())),
+                prompt::created_at::set(chrono::DateTime::from(chrono::Utc::now())),
+            ],
+        )
+        .exec()
+        .await
+        .map_err(|e| e.to_string())
+}
+
 pub async fn get_prompt_list(
     db: &PrismaClient,
     offset: i64,
@@ -39,6 +65,15 @@ pub async fn update_prompt(db: &PrismaClient, data: prompt::Data) -> Result<prom
                 prompt::updated_at::set(chrono::DateTime::from(chrono::Utc::now())),
             ],
         )
+        .exec()
+        .await
+        .map_err(|e| e.to_string())
+}
+
+
+pub async fn delete_prompt(db: &PrismaClient, id: i32) -> Result<prompt::Data, String> {
+    db.prompt()
+        .delete(prompt::id::equals(id))
         .exec()
         .await
         .map_err(|e| e.to_string())

@@ -30,8 +30,12 @@ fn generate_bindings() {
             commands::wrap_update_session_data,
             commands::wrap_get_app_config,
             commands::wrap_update_app_config,
+            commands::wrap_get_settings,
+            commands::wrap_set_settings,
             commands::wrap_get_prompt_list,
             commands::wrap_update_prompt,
+            commands::wrap_new_prompt,
+            commands::wrap_delete_prompt,
         ],
         "../src/rust-bindings.ts",
     );
@@ -89,9 +93,13 @@ async fn main() -> std::io::Result<()> {
             commands::wrap_save_session_data,
             commands::wrap_update_session_data,
             commands::wrap_get_app_config,
+            commands::wrap_get_settings,
+            commands::wrap_set_settings,
             commands::wrap_update_app_config,
             commands::wrap_get_prompt_list,
             commands::wrap_update_prompt,
+            commands::wrap_new_prompt,
+            commands::wrap_delete_prompt,
         ])
         .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())

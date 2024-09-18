@@ -42,7 +42,7 @@ export function AboutSettings() {
             }}
             className="mr-2"
           >
-           {version}
+            {version}
           </Badge>
         </SettingsItem>
 
@@ -64,7 +64,7 @@ export function AboutSettings() {
               openBrowser("https://www.openchat.dev/docs/privacy");
             }}
           >
-           <ArrowUpRightSquareIcon size={18} color="#999" />
+            <ArrowUpRightSquareIcon size={18} color="#999" />
           </Button>
         </SettingsItem>
 
@@ -75,7 +75,7 @@ export function AboutSettings() {
               openBrowser("https://www.openchat.dev/docs/terms");
             }}
           >
-          <ArrowUpRightSquareIcon size={18} color="#999" />
+            <ArrowUpRightSquareIcon size={18} color="#999" />
           </Button>
         </SettingsItem>
 

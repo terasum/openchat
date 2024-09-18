@@ -1,5 +1,5 @@
 import Clipboard from "clipboard";
-import { writeText } from "@tauri-apps/api/clipboard";
+
 import { nanoid } from "nanoid";
 
 type RulesArgs = [Array<{ content: string }>, number];
@@ -8,22 +8,22 @@ const PLUGIN_CLASS = "code-copy";
 
 new Clipboard(`.${PLUGIN_CLASS}`, {
   text: (trigger: HTMLElement) => {
-    const uuid = Number(trigger.getAttribute("data-uuid"));
-
+    const uuid = trigger.getAttribute("data-uuid");
     const copyValue = trigger.getAttribute("data-clipboard-text");
+    console.log("code-copy.text", {uuid, copyValue})
+    new Promise(async () =>{
+      const tipContainer = document.getElementById(uuid + "-tip-container");
+      const tipMessage = document.createElement("span");
+      tipMessage.innerText = "复制成功！";
+      if (!tipContainer?.hasChildNodes()) {
+        tipContainer?.appendChild(tipMessage);
+      setTimeout(() => {
+        tipContainer?.removeChild(tipMessage);
+      }, 1000);
+    }
 
-    if (!uuid || !copyValue || window[uuid]) return "";
-
-    trigger.classList.add("copied");
-    // @ts-ignore
-    window[uuid] = setTimeout(() => {
-      trigger.classList.remove("copied");
-      // @ts-ignore
-      clearTimeout(window[uuid]);
-      // @ts-ignore
-      window[uuid] = null;
-    }, 3000);
-
+    })
+    if (!uuid || !copyValue) return "";
     return copyValue;
   },
 });
@@ -41,12 +41,14 @@ const renderCode = (originRule: (...args: RulesArgs) => string) => {
     const originRendered = originRule(...args);
 
     if (!content) return originRendered;
+    const nanoidStr = nanoid(32).replaceAll("-", "");
 
     return `
-    <div class='relative'>
+    <div class='relative' ">
       ${originRendered}
-      <div class="${PLUGIN_CLASS}" data-clipboard-text="${copyContent}" data-uuid="${nanoid()}" title="success"></div>
-    </div>
+      <div class="${PLUGIN_CLASS}" data-clipboard-text="${copyContent}" data-uuid="${nanoidStr}" title="success"></div>
+      <div id="${nanoidStr + '-tip-container'}" style="width: 60px; font-size:11px; color: #c1c1c1; display: block; position: absolute; top: 12px; right: 25px;" ></div>
+      </div>
     `;
   };
 };
@@ -54,43 +56,4 @@ const renderCode = (originRule: (...args: RulesArgs) => string) => {
 export const copyCode = (md: any) => {
   md.renderer.rules.code_block = renderCode(md.renderer.rules.code_block);
   md.renderer.rules.fence = renderCode(md.renderer.rules.fence);
-};
-
-export const copyText = async (
-  event: MouseEvent,
-  payload: { nodeId?: string; content?: string }
-) => {
-  try {
-    const element = event.target as HTMLElement;
-    const uuid = "_" + element.getAttribute("id");
-    // @ts-ignore
-    if (!uuid || window[uuid]) {
-      return;
-    }
-
-    element.classList.add("copied");
-    // @ts-ignore
-    window[uuid] = setTimeout(() => {
-      element.classList.remove("copied");
-      // @ts-ignore
-      clearTimeout(window[uuid]);
-      // @ts-ignore
-      window[uuid] = null;
-    }, 3000);
-
-    const { nodeId } = payload;
-    let { content } = payload;
-
-    if (nodeId) {
-      content = document.getElementById(nodeId)?.innerText;
-    }
-
-    if (!content) return;
-
-    await writeText(content);
-
-    console.log("success");
-  } catch (error) {
-    console.error("tips.copyFail");
-  }
 };

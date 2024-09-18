@@ -18,10 +18,19 @@ import { HelpCircle, Brain, Key, Globe, Route } from "lucide-react";
 
 import { SettingsItem } from "../components/settings-item";
 
-import { useAppSettings } from "@/hooks/use-app-config";
+import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { SettingsModel } from "@/model";
+import { asyncUpdateConfig } from "@/store/app-config";
 
 export function DisplayForm() {
-  const { config, setConfig } = useAppSettings();
+
+  const config = useAppSelector((state) => state.appConfig);
+  const dispatch = useAppDispatch();
+  const setConfig = (config: SettingsModel) =>{
+    console.log("dispatching app-config", config);
+    dispatch(asyncUpdateConfig(config));
+  }
+
   return (
     <Card className="rounded-none border-none shadow-none h-full overflow-y-auto">
       <CardHeader>

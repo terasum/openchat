@@ -13,7 +13,6 @@ import {
 import { chatWithOpenAI } from "@/api/openai";
 import { debounce, random_id } from "@/lib/utils";
 import { produce } from "immer";
-import { useAppSettings } from "@/hooks/use-app-config";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
 import { asyncPromptActiveFetch } from "@/store/prompts";
@@ -41,7 +40,7 @@ export function useConversation() {
     (state) => state.prompts.activatedPrompt
   );
 
-  const { config } = useAppSettings();
+  const config = useAppSelector((state) => state.appConfig);
 
   useEffect(() => {
     dispatch(asyncPromptActiveFetch());
@@ -228,7 +227,11 @@ export function useConversation() {
       };
 
       // 插入消息
-      await insertSessionData(assistant_record);
+      try {
+        await insertSessionData(assistant_record);
+      } catch (e: any) {
+        console.error(`[hook] openai onDone.insertSessionData error`, e);
+      }
 
       setIsResponsing(false);
       console.log(`use-openai.tsx handle the message done: ${message}`);
@@ -243,9 +246,30 @@ export function useConversation() {
       contexts,
     });
     console.log("use-conversation.tsx", "app-config", { config });
+    const requestOpts = {
+      api_key: config.apikey.apikey,
+      api_model: config.model.default_model,
+      api_temprature: Number(activatedPrompt.temperature),
+      api_max_tokens: Number(activatedPrompt.max_tokens),
+      api_base: config.apikey.domain,
+      api_path: config.apikey.path,
+    };
+    console.log("use-conversation.tsx", "opts", { requestOpts });
 
     // 请求AI
-    await chatWithOpenAI(contexts, onUpdate, onDone, onError);
+    try {
+      await chatWithOpenAI(contexts, onUpdate, onDone, onError, requestOpts);
+    } catch (e: any) {
+      console.error("catched error", { error: e });
+      onError(e);
+      if (e.message.includes("Unauthorized")) {
+        const invalidApiKeyTip = "您的 api-key 无效, 请重新获取!";
+        updateContent(invalidApiKeyTip);
+        setTimeout(() => {
+          onDone(invalidApiKeyTip);
+        }, 300);
+      }
+    }
   }
 
   // 立即停止

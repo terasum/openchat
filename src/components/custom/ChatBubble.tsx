@@ -11,14 +11,22 @@ import { MarkdownContent } from "./MarkdownContent";
 import OpenChatIconSVG from "@/assets/images/robot.svg";
 import UserIconSVG from "@/assets/images/user.svg";
 import { cn, date_format } from "@/lib/utils";
+import { clipboard, dialog } from "@tauri-apps/api";
 
 interface ChatBubbleProps {
   message: string;
   messageTime: string;
   isReceived: boolean;
+  isLatest: boolean;
   parentSize: { width: number; height: number };
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onRetryGenerated?: () => void;
+}
+
+async function copyToClipboard(text: string) {
+  await clipboard.writeText(text);
+  await dialog.message("文本已复制到剪贴板");
 }
 
 const ChatBubble: FC<ChatBubbleProps> = ({
@@ -27,10 +35,19 @@ const ChatBubble: FC<ChatBubbleProps> = ({
   message,
   messageTime,
   isReceived,
+  isLatest,
   parentSize,
+  onRetryGenerated,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const bubbleRef = useRef(null);
+
+  const copyFn = (msg: string) => {
+    return () => {
+      copyToClipboard(msg);
+    };
+  };
+
   useEffect(() => {
     if (bubbleRef.current) {
       (bubbleRef.current as HTMLDivElement).style.maxWidth = `${
@@ -57,7 +74,7 @@ const ChatBubble: FC<ChatBubbleProps> = ({
         </Avatar>
       )}
 
-      <div className={``}>
+      <div className={`select-none`}>
         {isReceived ? (
           <div
             className={cn(
@@ -101,13 +118,15 @@ const ChatBubble: FC<ChatBubbleProps> = ({
                 isHovered ? "opacity-100" : "opacity-0"
               )}
             >
-              <button className="mr-1 ">
+              <button className="mr-1" onClick={copyFn(message)}>
                 <CopyIcon width={14} height={14} />
               </button>
 
-              <button className="ml-1 mr-1">
-                <UpdateIcon width={14} height={14} />
-              </button>
+              {isLatest && (
+                <button className="ml-1 mr-1" onClick={onRetryGenerated}>
+                  <UpdateIcon width={14} height={14} />
+                </button>
+              )}
 
               <button className="ml-1 mr-1">
                 <ExternalLinkIcon width={14} height={14} />

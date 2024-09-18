@@ -7,6 +7,7 @@ import deleteAction from "./async-prompt-delete";
 import createAction from "./async-prompt-create";
 import activeFetchAction from "./async-prompt-active-fetch";
 import activeSetAction from "./async-prompt-active-set";
+import initAction from "./async-prompts-init";
 
 export type PromptStateProps = {
   prompts: Prompt[];
@@ -33,10 +34,11 @@ const promptsSlice = createSlice({
       console.log("prompts.setSelectPrompt", { action });
       const selected = state.prompts.find((p) => p.id == action.payload);
       if (!selected) return;
-      state.selectedPrompt =selected;
+      state.selectedPrompt = selected;
     },
   },
   extraReducers(builder) {
+    initAction._bindEffects(builder);
     fetchAction._bindEffects(builder);
     updateAction._bindEffects(builder);
     deleteAction._bindEffects(builder);
@@ -51,6 +53,7 @@ export const { setSelectPrompt } = promptsSlice.actions;
 
 // Async Actions
 export { _asyncPromptsFetch as asyncPromptsFetch } from "./async-prompts-fetch";
+export { _asyncPromptsInit as asyncPromptsInit } from "./async-prompts-init";
 export { _asyncPromptUpdate as asyncPromptUpdate } from "./async-prompt-update";
 export { _asyncPromptDelete as asyncPromptDelete } from "./async-prompt-delete";
 export { _asyncPromptCreate as asyncPromptCreate } from "./async-prompt-create";

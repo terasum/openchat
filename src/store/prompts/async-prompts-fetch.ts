@@ -4,7 +4,7 @@ import { fetchPrompt } from "@/api/prompt";
 const _asyncPromptsFetch = createAsyncThunk(
   "prompts/async-prompts-fetch",
   async () => {
-    const result = fetchPrompt(0, 100);
+    const result = await fetchPrompt(0, 100);
     return result;
   }
 );

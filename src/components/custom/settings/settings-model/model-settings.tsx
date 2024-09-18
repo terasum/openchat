@@ -6,17 +6,15 @@ import {
   SelectTrigger,
   SelectValue,
   Switch,
-  Label,
   Card,
   CardHeader,
   CardDescription,
   CardContent,
   CardFooter,
   CardTitle,
-  Slider,
   Input,
 } from "@/components/ui";
-import { HelpCircle, Brain, Key, Globe, Route, Compass } from "lucide-react";
+import { HelpCircle, Brain, Key, Globe, Route } from "lucide-react";
 
 import { SettingsItem } from "../components/settings-item";
 

@@ -99,7 +99,7 @@ export function useConversation() {
       const newlist = draft.filter((conv) => conv.id !== id);
       // 设置为未选中
       if (id === selectedConvId && newlist.length > 0) {
-        setSelectedConvId(newlist[newlist.length - 1].id);
+        setSelectedConvId(newlist[0].id);
       }
       return newlist;
     });

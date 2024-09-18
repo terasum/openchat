@@ -1,5 +1,5 @@
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { AppWindow, Languages } from "lucide-react";
+import { Languages } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { SettingsItem } from "../components/settings-item";
@@ -33,8 +33,7 @@ const languages = [
 import { useAppSettings } from "@/hooks/use-app-config";
 
 export function AppearanceSettings() {
-  const {config} = useAppSettings();
-
+  const { config } = useAppSettings();
 
   return (
     <Card className="rounded-none border-none shadow-none">

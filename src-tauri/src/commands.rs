@@ -4,7 +4,6 @@ use std::process::Command;
 use tauri::State;
 use webbrowser::{open_browser, Browser};
 
-use crate::db::prisma_client::settings::key;
 use crate::db::prisma_client::PrismaClient;
 
 use crate::db::prisma_client::prompt;

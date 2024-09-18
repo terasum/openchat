@@ -1,7 +1,7 @@
 import "@/styles/global.css";
 import "@/styles/components.css";
 
-import React from "react";
+import React, { useEffect } from "react";
 import TabNavigation from "@/components/custom/TabNavigation";
 
 import TabPrompt from "@/TabPrompt";
@@ -10,9 +10,14 @@ import TabChat from "@/TabChat";
 
 import { useAppSelector } from "@/hooks/use-state";
 import { currentTab } from "./store/navigator";
-
+import { useAppDispatch } from "@/hooks/use-state";
+import { asyncPromptsInit } from "./store/prompts";
 const ChatInterface: React.FC = () => {
   const selectedTabState = useAppSelector(currentTab);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(asyncPromptsInit());
+  }, []);
 
   return (
     <div className="flex flex-row w-full h-full">

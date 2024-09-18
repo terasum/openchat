@@ -6,10 +6,7 @@ import { debounce } from "@/lib/utils";
 
 const logger = new Logger("use-app-config.tsx");
 
-const KEY_APP_CONFIG = "app-config";
-const KEY_APP_CONFIG_UPDATE = "prompts-update";
-
-import { Settings, SettingsModel, defaultSettings } from "@/model";
+import {SettingsModel, defaultSettings } from "@/model";
 
 // const useConfigMutation = () => {
 //   const queryClient = useQueryClient();

@@ -1,9 +1,17 @@
 import { cn } from "@/lib/utils";
-import { PromptStateProps } from "@/hooks/use-prompts";
+import { Prompt } from "@/rust-bindings";
 
-export function PromptList({ props }: { props: PromptStateProps }) {
-  const { prompts, selectedPrompt, setSelected } = props;
+type PromptListProps = {
+  prompts: Prompt[];
+  selectedPrompt: Prompt;
+  setSelected: (id: number) => void;
+};
 
+export function PromptList({
+  prompts,
+  selectedPrompt,
+  setSelected,
+}: PromptListProps) {
   return (
     <div className="h-full overflow-y-auto mt-0">
       <div className="flex flex-col = gap-2 p-4 pt-0 overflow-y-auto">

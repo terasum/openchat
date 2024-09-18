@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useSettingsNavigator } from "@/hooks/use-app-settings-navigator";
+import { useSettingsNavigator } from "@/hooks/use-settings-nav";
 
 export function SettingsNav() {
   const [settingsLinkConfig, setSettingsLinkConfig] = useSettingsNavigator();

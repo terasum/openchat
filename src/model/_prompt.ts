@@ -1,8 +1,3 @@
-export interface Prompt {
-  id: number;
-  title: string;
-  descript: string;
-  prompt: String;
-  createAt: Date;
-  updateAt: Date;
-}
+import type { Prompt as P } from "@/rust-bindings";
+
+export interface Prompt extends P {}

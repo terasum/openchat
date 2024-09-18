@@ -1,16 +1,18 @@
 import React from "react";
 import { Button, Badge } from "@/components/ui";
 import SidebarIcon from "@/assets/images/side-bar-fill.svg";
-import { usePrompt } from "@/hooks/use-prompts";
 import "./Toolbar.scss";
+
+import { useAppSelector } from "@/hooks/use-state";
 
 interface ToolbarProps {
   onToggleSidebar: () => void;
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ onToggleSidebar }) => {
-  const { selectedPrompt } = usePrompt();
-
+  const activatedPrompt = useAppSelector(
+    (state) => state.prompts.activatedPrompt
+  );
   return (
     <div className="toolbar w-full text-white flex flex-row justify-start items-center px-4 pt-1 pb-1 select-none">
       <Button
@@ -23,7 +25,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ onToggleSidebar }) => {
       </Button>
 
       <div className="flex flex-row items-center cursor-default">
-        <Badge variant="outline">{selectedPrompt.title}</Badge>
+        <Badge variant="outline">{activatedPrompt.title}</Badge>
       </div>
 
       <div />

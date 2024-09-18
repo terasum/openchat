@@ -8,11 +8,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { type Prompt } from "@/hooks/prompts-data";
 
 import { SettingsNav } from "@/components/custom/settings/settings-nav";
-import { useSettingsNavigator } from "@/hooks/use-app-settings-navigator";
+import { useSettingsNavigator } from "@/hooks/use-settings-nav";
 import ModelSettings from "@/components/custom/settings/settings-model";
 import AppSettings from "@/components/custom/settings/settings-app";
 import AboutSettings from "@/components/custom/settings/settings-about";
-import AccountSettings from "@/components/custom/settings/settings-account";
 
 
 export default function Prompt() {
@@ -38,9 +37,8 @@ export default function Prompt() {
         <ResizablePanel defaultSize={75} minSize={70}>
           <div className="flex flex-1 h-full overflow-y-auto p-4">
             {settingsLinkConfig.selected == 0 && <ModelSettings />}
-            {settingsLinkConfig.selected == 1 && <AccountSettings />}
-            {settingsLinkConfig.selected == 2 && <AppSettings />}
-            {settingsLinkConfig.selected == 3 && <AboutSettings />}
+            {settingsLinkConfig.selected == 1 && <AppSettings />}
+            {settingsLinkConfig.selected == 2 && <AboutSettings />}
           </div>
         </ResizablePanel>
       </ResizablePanelGroup>

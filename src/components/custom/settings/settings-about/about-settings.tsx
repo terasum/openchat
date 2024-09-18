@@ -19,6 +19,8 @@ import {
 } from "lucide-react";
 import { SettingsItem } from "../components/settings-item";
 
+import { version } from "@/version.json";
+
 import { invoke } from "@tauri-apps/api/tauri";
 
 const openBrowser = async (url: string) => {
@@ -30,7 +32,7 @@ export function AboutSettings() {
     <Card className="rounded-none border-none shadow-none">
       <CardHeader>
         <CardTitle className="text-lg">帮助关于</CardTitle>
-        <CardDescription>Help&About</CardDescription>
+        <CardDescription>About</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
         <SettingsItem title="OpenChat" icon={AppWindow}>
@@ -40,7 +42,7 @@ export function AboutSettings() {
             }}
             className="mr-2"
           >
-            v0.1.28
+           {version}
           </Badge>
         </SettingsItem>
 

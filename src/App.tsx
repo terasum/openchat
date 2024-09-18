@@ -8,27 +8,23 @@ import TabPrompt from "@/TabPrompt";
 import SettingsProfilePage from "@/components/custom/settings/settings";
 import TabChat from "@/TabChat";
 
-import { useNavigator } from "@/hooks/use-navigator";
+import { useAppSelector } from "@/hooks/use-state";
+import { currentTab } from "./store/navigator";
+
 const ChatInterface: React.FC = () => {
-  const { selectedTab, functionTabs, settingsTabs, handleSelectTab } =
-    useNavigator();
+  const selectedTabState = useAppSelector(currentTab);
 
   return (
     <div className="flex flex-row w-full h-full">
       {/* Left-side Tab Navigation */}
       <div className="left-side-bar w-[40px] h-full">
-        <TabNavigation
-          functionTabs={functionTabs}
-          settingsTabs={settingsTabs}
-          selectedTab={selectedTab}
-          onSelectTab={handleSelectTab}
-        />
+        <TabNavigation />
       </div>
 
       <div className="main-area flex flex-row flex-1">
-        {selectedTab === "chat" && <TabChat />}
-        {selectedTab === "prompt" && <TabPrompt />}
-        {selectedTab === "settings" && <SettingsProfilePage />}
+        {selectedTabState === "chat" && <TabChat />}
+        {selectedTabState === "prompt" && <TabPrompt />}
+        {selectedTabState === "settings" && <SettingsProfilePage />}
       </div>
     </div>
   );

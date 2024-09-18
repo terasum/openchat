@@ -13,8 +13,10 @@ import {
 import { chatWithOpenAI } from "@/api/openai";
 import { debounce, random_id } from "@/lib/utils";
 import { produce } from "immer";
-import { usePrompt } from "@/hooks/use-prompts";
-import { useAppSettings } from "@/hooks/use-app-settings";
+import { useAppSettings } from "@/hooks/use-app-config";
+
+import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { asyncPromptActiveFetch } from "@/store/prompts";
 
 export interface ConvData extends SessionData {}
 export interface Conv extends Session {}
@@ -34,9 +36,16 @@ export function useConversation() {
   // 是否正在输出
   const [isResponsing, setIsResponsing] = useState(false);
 
-  const { activatedPrompt } = usePrompt();
+  const dispatch = useAppDispatch();
+  const activatedPrompt = useAppSelector(
+    (state) => state.prompts.activatedPrompt
+  );
 
-  const appSettings = useAppSettings();
+  const { config } = useAppSettings();
+
+  useEffect(() => {
+    dispatch(asyncPromptActiveFetch());
+  }, []);
 
   /**
    * handleSelectConversation 处理选择某个会话
@@ -233,7 +242,7 @@ export function useConversation() {
     console.log("use-conversation.tsx", "pass to openai's contexts:", {
       contexts,
     });
-    console.log(appSettings.apikey);
+    console.log("use-conversation.tsx", "app-config", { config });
 
     // 请求AI
     await chatWithOpenAI(contexts, onUpdate, onDone, onError);

@@ -1,4 +1,18 @@
-import { wrapGetSettings, wrapSetSettings } from "@/rust-bindings";
+import {
+  wrapGetSettings,
+  wrapSetSettings,
+  wrapGetAppConfig,
+  wrapUpdateAppConfig,
+  Settings,
+} from "@/rust-bindings";
+
+export async function getAppConfig() {
+  return await wrapGetAppConfig();
+}
+
+export async function updateAppConfig(config: Settings) {
+  return await wrapUpdateAppConfig(config);
+}
 
 export async function getActivePrompt(key: string) {
   const config = await wrapGetSettings(key);

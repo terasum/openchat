@@ -200,7 +200,7 @@ async fn init_default_prompt(client: &PrismaClient) -> Result<(), String> {
 async fn init_config_table_version(client: &PrismaClient) -> Result<(), String> {
     let version: &str = env!("CARGO_PKG_VERSION");
 
-    let default_config = r#"{"model":{"temperature":[0.7],"max_token_length":[1400],"default_model":"gpt-4o-mini","enable_memory":true},"appearance":{"language":"zh_CN","theme":"light"},"apikey":{"domain":"https://proxy.openchat.dev","path":"/v1/chat/completions","apikey":"SK-<your-api-key>","user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}}"#;
+    let default_config = r#"{"model":{"temperature":[0.7],"max_token_length":[1400],"default_model":"gpt-4o-mini","enable_memory":true},"appearance":{"language":"zh_CN","theme":"light"},"apikey":{"domain":"https://proxy.openchat.dev","path":"/v1/chat/completions","apikey":"SK-<your-api-key>","user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"}}"#;
     let result1 = client
         .settings()
         .create(

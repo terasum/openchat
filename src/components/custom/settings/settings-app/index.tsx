@@ -1,4 +1,4 @@
-import { AppearanceSettings } from "./appearance-settings"
+import { AppearanceSettings } from "./app-settings"
 
 export default function SettingsAppearancePage() {
   return (

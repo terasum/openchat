@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { useEffect } from "react";
 
 import {
   ResizableHandle,
@@ -15,19 +15,35 @@ import {
 
 import { Search, PlusCircle } from "lucide-react";
 
-import { usePrompt } from "@/hooks/use-prompts";
-
 import { PromptList } from "@/components/custom/prompt/components/PromptList";
 import { PromptContent } from "@/components/custom/prompt/components/PromptContent";
 
+import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import {
+  setSelectPrompt,
+  asyncPromptCreate,
+  asyncPromptsFetch,
+  asyncPromptActiveFetch,
+} from "@/store/prompts";
+
 export function Prompt() {
-  const props = usePrompt();
-  const { prompts, selectedPrompt, promptCreation, setSelected } = props;
+  const dispatch = useAppDispatch();
+  const prompts = useAppSelector((state) => state.prompts.prompts);
+  const selectedPrompt = useAppSelector(
+    (state) => state.prompts.selectedPrompt
+  );
+
+  useEffect(() => {
+    dispatch(asyncPromptsFetch());
+    dispatch(asyncPromptActiveFetch());
+  }, []);
+
+  const setSelected = (id: number) => {
+    dispatch(setSelectPrompt(id));
+  };
 
   const onCreateClick = async () => {
-    const newPrompt = await promptCreation.create();
-    console.log(newPrompt);
-    setSelected(newPrompt.id);
+    dispatch(asyncPromptCreate());
   };
 
   return (
@@ -38,7 +54,7 @@ export function Prompt() {
       >
         <ResizablePanel defaultSize={30} minSize={15}>
           <Tabs defaultValue="all" className="h-full">
-            <div className="flex items-center px-4 py-2">
+            <div className="flex items-center px-4 py-2 select-none cursor-default">
               <h1 className="text-xl font-bold">Prompts</h1>
               <TabsList className="ml-auto">
                 <TabsTrigger
@@ -66,22 +82,19 @@ export function Prompt() {
             </div>
 
             <TabsContent value="all" className="h-[calc(100%-165px)]">
-              <Suspense fallback={<div>Loading...</div>}>
-                {prompts && (
-                  <PromptList
-                    props={props}
-                  />
-                )}
-              </Suspense>
+              <PromptList
+                prompts={prompts}
+                selectedPrompt={selectedPrompt}
+                setSelected={setSelected}
+              />
             </TabsContent>
+
             <TabsContent value="favorite" className="h-[calc(100%-165px)]">
-              <Suspense fallback={<div>Loading...</div>}>
-                {prompts && selectedPrompt && (
-                  <PromptList
-                    props={props}
-                  />
-                )}
-              </Suspense>
+              <PromptList
+                prompts={prompts.filter((item) => item.favorite)}
+                selectedPrompt={selectedPrompt}
+                setSelected={setSelected}
+              />
             </TabsContent>
 
             <div className="bg-background/95 p-2 pl-4 pr-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -102,7 +115,7 @@ export function Prompt() {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={70} minSize={60}>
-          {prompts && selectedPrompt && <PromptContent props={props} />}
+          {prompts && selectedPrompt && <PromptContent />}
         </ResizablePanel>
       </ResizablePanelGroup>
     </TooltipProvider>

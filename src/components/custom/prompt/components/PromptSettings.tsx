@@ -1,8 +1,21 @@
 import { Label, Switch, Slider, Badge } from "@/components/ui";
-import { PromptStateProps } from "@/hooks/use-prompts";
+import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { Prompt } from "@/rust-bindings";
+import { asyncPromptUpdate } from "@/store/prompts";
+export function PromptSettings() {
 
-export function PromptSettings({ props }: { props: PromptStateProps }) {
-  const { selectedPrompt, updatePrompt, activatedPrompt } = props;
+  const selectedPrompt = useAppSelector(
+    (state) => state.prompts.selectedPrompt
+  );
+  const activatedPrompt = useAppSelector(
+    (state) => state.prompts.activatedPrompt
+  );
+  const dispatch = useAppDispatch();
+
+  function updatePrompt(prompt: Prompt) {
+    dispatch(asyncPromptUpdate(prompt));
+  }
+
 
   return (
     <div className="flex flex-col items-start gap-2 p-2 pr-4 pt-8 w-[100%] min-w-[100px] max-w-[320px]">

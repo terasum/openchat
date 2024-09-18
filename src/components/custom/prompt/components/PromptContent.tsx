@@ -6,15 +6,25 @@ import { PromptMeta } from "./PromptMeta";
 import { PromptSettings } from "./PromptSettings";
 import { PromptToolbar } from "./PromptToolbar";
 
-import { PromptStateProps } from "@/hooks/use-prompts";
-export function PromptContent({ props }: { props: PromptStateProps }) {
-  const { selectedPrompt, updatePrompt } = props;
+import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { Prompt } from "@/rust-bindings";
+import { asyncPromptUpdate } from "@/store/prompts";
+export function PromptContent() {
+  const selectedPrompt = useAppSelector(
+    (state) => state.prompts.selectedPrompt
+  );
+
+  const dispatch = useAppDispatch();
+
+  function updatePrompt(prompt: Prompt) {
+    dispatch(asyncPromptUpdate(prompt));
+  }
 
   return (
     <>
-      <PromptToolbar props={props} />
+      <PromptToolbar />
       <Separator />
-      <PromptMeta props={props} />
+      <PromptMeta />
       <div className="flex flex-col h-[calc(100%-160px)] overflow-y-auto">
         <div className="flex flex-row flex-1">
           <div
@@ -24,7 +34,7 @@ export function PromptContent({ props }: { props: PromptStateProps }) {
           >
             <h1 className="text-slate-500">System Prompt:</h1>
             <Textarea
-              value={selectedPrompt.system}
+              value={selectedPrompt.system || ""}
               className="w-[100%] h-[calc(100%-20px)] text-sm overflow-y-auto"
               onChange={(e) => {
                 updatePrompt({
@@ -35,7 +45,7 @@ export function PromptContent({ props }: { props: PromptStateProps }) {
             />
           </div>
 
-          <PromptSettings props={props} />
+          <PromptSettings />
         </div>
       </div>
     </>

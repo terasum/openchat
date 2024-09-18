@@ -1,3 +1,6 @@
+import { Settings as S } from "@/rust-bindings";
+export interface Settings extends S {}
+
 export interface SettingsRaw {
   id: number;
   key: string;

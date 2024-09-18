@@ -1,40 +1,15 @@
-import React, { type SetStateAction } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Toaster } from "@/components/ui/toaster";
-
-import { Provider } from "jotai/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useHydrateAtoms } from "jotai/react/utils";
-import { queryClientAtom } from "jotai-tanstack-query";
-
-function createQueryClient(): QueryClient {
-  return new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: Infinity,
-      },
-    },
-  });
-}
-const newQueryClient = createQueryClient();
-
-const HydrateAtoms = ({ children }: any) => {
-  useHydrateAtoms([
-    [queryClientAtom, newQueryClient as SetStateAction<QueryClient>],
-  ]);
-  return children;
-};
+import { Provider } from "react-redux";
+import store from "@/store";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <QueryClientProvider client={newQueryClient}>
-      <Provider>
-        <HydrateAtoms>
-          <App />
-          <Toaster />
-        </HydrateAtoms>
-      </Provider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <App />
+      <Toaster />
+    </Provider>
   </React.StrictMode>
 );

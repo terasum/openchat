@@ -21,19 +21,20 @@ import {
   CardContent,
   CardFooter,
   CardTitle,
-  Label,
+  // Label,
 } from "@/components/ui";
 
 const languages = [
-  { label: "English", value: "en" },
+  // { label: "English", value: "en" },
   { label: "中文简体", value: "zh_CN" },
 ] as const;
 
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useAppSettings } from "@/hooks/use-app-settings";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useAppSettings } from "@/hooks/use-app-config";
 
 export function AppearanceSettings() {
-  const appSettings = useAppSettings();
+  const {config} = useAppSettings();
+
 
   return (
     <Card className="rounded-none border-none shadow-none">
@@ -50,13 +51,13 @@ export function AppearanceSettings() {
                 role="combobox"
                 className={cn(
                   "w-[200px] justify-between",
-                  !appSettings.appearance.language && "text-muted-foreground"
+                  !config.appearance.language && "text-muted-foreground"
                 )}
               >
-                {appSettings.appearance.language
+                {config.appearance.language
                   ? languages.find(
                       (language) =>
-                        language.value === appSettings.appearance.language
+                        language.value === config.appearance.language
                     )?.label
                   : "选择语言"}
                 <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -73,13 +74,13 @@ export function AppearanceSettings() {
                         value={language.label}
                         key={language.value}
                         onSelect={() => {
-                          appSettings.appearance.language = language.value;
+                          config.appearance.language = language.value;
                         }}
                       >
                         <CheckIcon
                           className={cn(
                             "mr-2 h-4 w-4",
-                            language.value === appSettings.appearance.language
+                            language.value === config.appearance.language
                               ? "opacity-100"
                               : "opacity-0"
                           )}
@@ -94,7 +95,7 @@ export function AppearanceSettings() {
           </Popover>
         </SettingsItem>
 
-        <SettingsItem title="主题" icon={AppWindow} className="h-[120px]">
+        {/* <SettingsItem title="主题" icon={AppWindow} className="h-[120px]">
           <RadioGroup defaultValue="comfortable" className="flex flex-row">
             <div className="flex flex-col">
               <Label htmlFor="r1" className="">
@@ -138,7 +139,7 @@ export function AppearanceSettings() {
               <RadioGroupItem value="dark" id="r2" className="mr-2" hidden />
             </div>
           </RadioGroup>
-        </SettingsItem>
+        </SettingsItem> */}
       </CardContent>
       <CardFooter className="justify-end"></CardFooter>
     </Card>

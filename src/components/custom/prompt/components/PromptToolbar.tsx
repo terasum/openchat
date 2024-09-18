@@ -19,16 +19,28 @@ import {
 import { ask } from "@tauri-apps/api/dialog";
 
 import { Prompt } from "@/rust-bindings";
-import { PromptStateProps } from "@/hooks/use-prompts";
 
-export function PromptToolbar({ props }: { props: PromptStateProps }) {
-  const {
-    activatedPrompt,
-    setActivated,
-    promptDeletation,
-    selectedPrompt,
-    updatePrompt,
-  } = props;
+import { useAppSelector, useAppDispatch } from "@/hooks/use-state";
+
+import {
+  asyncPromptDelete,
+  asyncPromptUpdate,
+  asyncPromptActiveSet,
+} from "@/store/prompts";
+
+export function PromptToolbar() {
+
+  const dispatch = useAppDispatch();
+  const prompts = useAppSelector((state) => state.prompts.prompts);
+
+  const activatedPrompt = useAppSelector(
+    (state) => state.prompts.activatedPrompt
+  );
+
+  const selectedPrompt = useAppSelector(
+    (state) => state.prompts.selectedPrompt
+  );
+
   const onActiveClick = (id: number) => {
     new Promise(async () => {
       const sure = await ask(`确定激活 Prompt ${id}?`, {
@@ -36,20 +48,24 @@ export function PromptToolbar({ props }: { props: PromptStateProps }) {
         type: "info",
       });
       if (sure) {
-        setActivated(id);
+        dispatch(asyncPromptActiveSet(id));
       }
     });
   };
 
   const onDeleteClick = (prompt: Prompt) => {
     if (!prompt) return;
+    if (prompts.length <= 1) {
+      alert("无法删除最后一个prompt");
+      return;
+    }
     new Promise(async () => {
       const sure = await ask(`确定删除 Prompt ${prompt.id}?`, {
         title: "删除",
         type: "warning",
       });
       if (sure) {
-        promptDeletation.delete(prompt.id);
+        dispatch(asyncPromptDelete(prompt.id));
       }
     });
   };
@@ -66,10 +82,12 @@ export function PromptToolbar({ props }: { props: PromptStateProps }) {
   };
 
   const onFavoriteClick = () => {
-    updatePrompt({
-      ...selectedPrompt,
-      favorite: !selectedPrompt.favorite,
-    });
+    dispatch(
+      asyncPromptUpdate({
+        ...selectedPrompt,
+        favorite: !selectedPrompt.favorite,
+      })
+    );
   };
 
   return (

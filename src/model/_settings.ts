@@ -11,8 +11,6 @@ export interface SettingsRaw {
 
 export interface SettingsModel {
   model: {
-    temperature: number[];
-    max_token_length: number[];
     default_model: string;
     enable_memory: boolean;
   };
@@ -32,8 +30,6 @@ export interface SettingsModel {
 
 export const defaultSettings: SettingsModel = {
   model: {
-    temperature: [0.7],
-    max_token_length: [1200],
     default_model: "gpt-4o-mini",
     enable_memory: false,
   },

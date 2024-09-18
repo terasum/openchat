@@ -29,11 +29,12 @@ const languages = [
   { label: "中文简体", value: "zh_CN" },
 ] as const;
 
-// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useAppSettings } from "@/hooks/use-app-config";
+import { useAppSelector } from "@/hooks/use-state";
 
 export function AppearanceSettings() {
-  const { config } = useAppSettings();
+
+  const config = useAppSelector((state) => state.appConfig);
+
 
   return (
     <Card className="rounded-none border-none shadow-none">

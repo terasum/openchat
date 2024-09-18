@@ -54,7 +54,7 @@ export async function chatWithOpenAI(
   const defaultOpts = {
     api_base: "https://proxy.openchat.dev",
     api_path: "/v1/chat/completions",
-    api_key: "SK-sc26ff22b40dbb408cbd43c00900e83650",
+    api_key: "SK-<your-api-key>",
     api_model: "gpt-4o-mini",
     api_temprature: 0.8,
     api_max_tokens: 2000,
@@ -67,6 +67,7 @@ export async function chatWithOpenAI(
   }
 
   console.log("--------- OPENAI START -----------");
+  console.log("current_opts", {opts})
   console.log(`current_context: ${JSON.stringify(contexts)}`);
   const iter = await chatCompletionStream(contexts, opts);
   let line = "";

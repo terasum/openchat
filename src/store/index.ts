@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import navigatorReducer from "./navigator";
 import promptsReducer from "./prompts";
+import appCinfigReducer from "./app-config"
 
 const store = configureStore({
   reducer: {
     navigator: navigatorReducer,
     prompts: promptsReducer,
+    appConfig: appCinfigReducer,
   },
 });
 

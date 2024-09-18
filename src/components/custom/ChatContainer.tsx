@@ -42,7 +42,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   }, [messages]);
 
   return (
-    <div className={"chat-container flex-1 flex flex-col " + className}>
+    <div className={"chat-container flex-1 flex flex-col select-none " + className}>
       <div className="overflow-auto flex-1 p-4" ref={divRef}>
         {/* Display Messages */}
         {messages.map((msg, index) => (
@@ -51,6 +51,10 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
             message={msg.content}
             messageTime={""}
             isReceived={msg.role === "assistant"}
+            isLatest={index === messages.length - 1}
+            onRetryGenerated={() =>{
+              console.log("retry generete clicked")
+            }}
             parentSize={size}
           />
         ))}

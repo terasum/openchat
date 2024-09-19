@@ -2,11 +2,9 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import path from "path";
-import jotaiDebugLabel from 'jotai/babel/plugin-debug-label'
-import jotaiReactRefresh from 'jotai/babel/plugin-react-refresh'
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svgr(), react({ babel: { plugins: [jotaiDebugLabel, jotaiReactRefresh] } })],
+  plugins: [svgr(), react()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

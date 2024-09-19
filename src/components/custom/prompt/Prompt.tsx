@@ -52,7 +52,7 @@ export function Prompt() {
         direction="horizontal"
         className="h-full items-stretch"
       >
-        <ResizablePanel defaultSize={30} minSize={15}>
+        <ResizablePanel defaultSize={34} minSize={30}>
           <Tabs defaultValue="all" className="h-full">
             <div className="flex items-center px-4 py-2 select-none cursor-default">
               <h1 className="text-xl font-bold">Prompts</h1>

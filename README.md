@@ -26,12 +26,16 @@
 <img src="./docs/images/ui-index.png" width="680"/>
 </div>
 
+## 如何使用 Openchat
+1. 在设置页面选择OpenChat, 输入API-Key即可
+
+
 ## 如何使用Ollama
 1. 安装ollama，参考[ollama](https://ollama.com/)的安装文档。
 2. 运行ollama, 可以使用轻量模型 `tinyllama`, 运行命令 `ollama run tinyllama`
-<img alt="ollama tinyollama" src="./docs/images/ollama-tinyllama.png"/>
+<img alt="ollama tinyollama" src="./docs/images/ollama-tinyllama.png" width="680"/>
 3. 配置 openchat, 在设置页面选择 ollama, 模型选择 tinyllama 即可
-<img alt="ollama tinyollama" src="./docs/images/ollama-settings.png"/>
+<img alt="ollama tinyollama" src="./docs/images/ollama-settings.png" width="680"/>
 4. 如果没有你需要的模型，欢迎提交pr。
 
 

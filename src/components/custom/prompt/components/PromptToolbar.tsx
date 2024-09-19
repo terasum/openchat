@@ -2,7 +2,6 @@ import {
   Star,
   StarOff,
   Copy,
-  DownloadCloud,
   Tag,
   Trash,
   Check,
@@ -13,7 +12,6 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-  Input,
 } from "@/components/ui";
 
 import { ask } from "@tauri-apps/api/dialog";
@@ -29,7 +27,6 @@ import {
 } from "@/store/prompts";
 
 export function PromptToolbar() {
-
   const dispatch = useAppDispatch();
   const prompts = useAppSelector((state) => state.prompts.prompts);
 
@@ -137,23 +134,6 @@ export function PromptToolbar() {
           </TooltipTrigger>
           <TooltipContent>添加标签</TooltipContent>
         </Tooltip>
-      </div>
-
-      <div className="ml-auto w-full flex items-center gap-2">
-        <Input className="" placeholder="https://<prompt url>"></Input>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              disabled={selectedPrompt.id == 1}
-            >
-              <DownloadCloud className="h-4 w-4" />
-              <span className="sr-only">下载</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>下载</TooltipContent>
-        </Tooltip>
         <Separator orientation="vertical" className="mx-2 h-6" />
         <Tooltip>
           <TooltipTrigger asChild>
@@ -170,7 +150,9 @@ export function PromptToolbar() {
           </TooltipTrigger>
           <TooltipContent>删除</TooltipContent>
         </Tooltip>
+      </div>
 
+      <div className="ml-auto flex items-center gap-2">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button

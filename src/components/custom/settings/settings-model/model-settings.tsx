@@ -86,8 +86,8 @@ export function DisplayForm() {
                 <SelectGroup>
                   <SelectItem value="openchat">OpenChat</SelectItem>
                   <SelectItem value="openai">OpenAI</SelectItem>
-                  <SelectItem value="ollama">ollama</SelectItem>
-                  <SelectItem value="user">用户自定义</SelectItem>
+                  <SelectItem value="ollama">Ollama</SelectItem>
+                  <SelectItem value="user">自定义</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

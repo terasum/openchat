@@ -1,11 +1,4 @@
-import {
-  Star,
-  StarOff,
-  Copy,
-  Tag,
-  Trash,
-  Check,
-} from "lucide-react";
+import { Star, StarOff, Copy, Tag, Trash, Check } from "lucide-react";
 import {
   Button,
   Separator,

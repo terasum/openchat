@@ -23,14 +23,17 @@
 </div>
 
 <div align="center">
-<img src="./docs/images/ui-index.png" width="480"/>
+<table cellspacing="0" cellpadding="0" style="border:none">
+<tr style="border:none">
+<td style="border:none"><img src="./docs/images/ui-index.png" width="480"/></td>
+<td style="border:none"><img src="./docs/images/ui-settings.png" width="480"/></td>
+</tr>
+</table>
 </div>
 
 ## Download
 
 You can download the prebuild binary at [release page](https://github.com/terasum/openchat/releases)
-
-
 
 ## Usage
 
@@ -39,17 +42,14 @@ You can download the prebuild binary at [release page](https://github.com/terasu
 3. Input the API Key, and tap the "SAVE" button
 4. Switch to Chat page, and go chating with AI!
 
-
-
-
 ## How to use with Ollama
-1. Installing Ollama，reference to [ollama](https://ollama.com/)
-2. Runing Ollama, take  `tinyllama` a light weight model as an example, type the command  `ollama run tinyllama` as below:
-<img alt="ollama tinyollama" src="./docs/images/ollama-tinyllama.png" width="480"/>
-3. Configurating OpenChat, select the 'ollama' as the provider, then chose the `tinyllama` model
-<img alt="ollama tinyollama" src="./docs/images/ollama-settings.png" width="480"/>
-4. If the selection doesn't contains your model, PR is welcome!
 
+1. Installing Ollama，reference to [ollama](https://ollama.com/)
+2. Runing Ollama, take `tinyllama` a light weight model as an example, type the command `ollama run tinyllama` as below:
+   <img alt="ollama tinyollama" src="./docs/images/ollama-tinyllama.png" width="480"/>
+3. Configurating OpenChat, select the 'ollama' as the provider, then chose the `tinyllama` model
+   <img alt="ollama tinyollama" src="./docs/images/ollama-settings.png" width="480"/>
+4. If the selection doesn't contains your model, PR is welcome!
 
 ## License
 

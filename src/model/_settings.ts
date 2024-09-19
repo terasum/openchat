@@ -9,39 +9,36 @@ export interface SettingsRaw {
   updated_at: string;
 }
 
-export interface SettingsModel {
+export interface AppConfig {
   model: {
-    default_model: string;
-    enable_memory: boolean;
+    model_provider: string;
+    model_name: string;
+    api_url: string;
+    api_key: string;
+    secret_key: string;
+    model_opts: any;
+    user_agent: string;
   };
 
   appearance: {
     language: string;
     theme: string;
   };
-
-  apikey: {
-    domain: string;
-    apikey: string;
-    path: string;
-    user_agent: string;
-  };
 }
 
-export const defaultSettings: SettingsModel = {
+export const defaultSettings: AppConfig = {
   model: {
-    default_model: "gpt-4o-mini",
-    enable_memory: false,
+    model_provider: "openchat",
+    model_name: "gpt-4o-mini",
+    api_url: "https://proxy.openchat.dev/v1/chat/completions",
+    api_key: "SK-<your-api-key>",
+    secret_key: "",
+    model_opts: {},
+    user_agent:
+      "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
   },
   appearance: {
     language: "zh_CN",
     theme: "light",
-  },
-  apikey: {
-    domain: "https://proxy.openchat.dev",
-    path: "/v1/chat/completions",
-    apikey: "SK-<your-api-key>",
-    user_agent:
-      "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1",
   },
 };

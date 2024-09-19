@@ -3,12 +3,13 @@ import { Stream } from "@/lib/streaming";
 const decoder = new TextDecoder();
 
 export interface OpenAIReqOpts {
+  url: string;
   api_key: string;
-  api_model: string;
-  api_temprature: number;
-  api_max_tokens: number;
-  api_base: string;
-  api_path: string;
+  model: string;
+  temprature: number;
+  max_tokens: number;
+  top_p: number;
+  stream: boolean;
 }
 
 export async function chatCompletionStream(
@@ -17,12 +18,12 @@ export async function chatCompletionStream(
 ) {
   const { response, controller } = await makeRequest({
     method: "post",
-    url: opts.api_base + opts.api_path,
+    url: opts.url,
     body: {
-      model: opts.api_model || "gpt-4o-mini",
+      model: opts.model || "gpt-4o-mini",
       messages,
-      temperature: opts.api_temprature,
-      max_tokens: opts.api_max_tokens,
+      temperature: opts.temprature,
+      max_tokens: opts.max_tokens,
       stream: true,
     },
     headers: {
@@ -52,12 +53,13 @@ export async function chatWithOpenAI(
   abortSignal?: AbortSignal
 ) {
   const defaultOpts = {
-    api_base: "https://proxy.openchat.dev",
-    api_path: "/v1/chat/completions",
+    url: "https://proxy.openchat.dev/v1/chat/completions",
     api_key: "SK-<your-api-key>",
-    api_model: "gpt-4o-mini",
-    api_temprature: 0.8,
-    api_max_tokens: 2000,
+    model: "gpt-4o-mini",
+    temprature: 0.8,
+    max_tokens: 2000,
+    top_p: 1,
+    stream: true,
   };
   opts = opts ?? defaultOpts;
   abortSignal = abortSignal ?? new AbortController().signal;
@@ -67,7 +69,7 @@ export async function chatWithOpenAI(
   }
 
   console.log("--------- OPENAI START -----------");
-  console.log("current_opts", {opts})
+  console.log("current_opts", { opts });
   console.log(`current_context: ${JSON.stringify(contexts)}`);
   const iter = await chatCompletionStream(contexts, opts);
   let line = "";

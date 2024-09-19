@@ -5,8 +5,6 @@ import {
 } from "@/components/ui/resizable";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { type Prompt } from "@/hooks/prompts-data";
-
 import { SettingsNav } from "@/components/custom/settings/settings-nav";
 import { useSettingsNavigator } from "@/hooks/use-settings-nav";
 import ModelSettings from "@/components/custom/settings/settings-model";

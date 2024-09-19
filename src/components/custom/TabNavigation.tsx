@@ -2,6 +2,7 @@ import OpenChatIconSVG from "@/assets/images/openchat-flat-nav.svg?react";
 import GhostIconSVG from "@/assets/images/ghost.svg?react";
 import GearIconSVG from "@/assets/images/gear.svg?react";
 import BugIconSVG from "@/assets/images/bug.svg?react";
+import GithubSVG from "@/assets/images/github.svg?react";
 
 import React from "react";
 import "./TabNavigation.scss";
@@ -14,6 +15,7 @@ import {
   functionTabs,
   settingsTabs,
   openDevTool,
+  openGithub,
 } from "@/store/navigator";
 
 const TabNavigation: React.FC = () => {
@@ -26,19 +28,25 @@ const TabNavigation: React.FC = () => {
       dispatch(openDevTool());
       return;
     }
+    if (tabId == "github") {
+      dispatch(openGithub());
+      return;
+    }
     dispatch(selectTab(tabId));
   };
 
   const renderIcon = (iconType: string) => {
     switch (iconType) {
       case "debug":
-        return <BugIconSVG fill="#222" width={"22"} height={"22"} />;
+        return <BugIconSVG fill="#394150" width={"22"} height={"22"} />;
       case "chat":
-        return <OpenChatIconSVG fill="#222" width={"22"} height={"22"} />;
+        return <OpenChatIconSVG fill="#394150" width={"22"} height={"22"} />;
       case "prompt":
-        return <GhostIconSVG fill="#222" width={"22"} height={"22"} />;
+        return <GhostIconSVG fill="#394150" width={"22"} height={"22"} />;
       case "settings":
-        return <GearIconSVG fill="#222" width={"22"} height={"22"} />;
+        return <GearIconSVG fill="#394150" width={"22"} height={"22"} />;
+      case "github":
+        return <GithubSVG fill="#394150" width={"22"} height={"22"} />;
       default:
         return <span>{iconType}</span>;
     }

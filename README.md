@@ -43,7 +43,7 @@ You can download the prebuild binary at [release page](https://github.com/terasu
 
 
 ## How to use with Ollama
-1. Installing Ollama，reference to [ollama](https://ollama.com/)。
+1. Installing Ollama，reference to [ollama](https://ollama.com/)
 2. Runing Ollama, take  `tinyllama` a light weight model as an example, type the command  `ollama run tinyllama` as below:
 <img alt="ollama tinyollama" src="./docs/images/ollama-tinyllama.png" width="480"/>
 3. Configurating OpenChat, select the 'ollama' as the provider, then chose the `tinyllama` model

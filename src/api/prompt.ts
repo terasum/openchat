@@ -6,8 +6,6 @@ import {
 } from "@/rust-bindings";
 import { Prompt } from "@/rust-bindings";
 
-import { debounce } from "lodash";
-
 import { Logger } from "@/lib/log";
 const logger = new Logger("prompt.ts");
 /**

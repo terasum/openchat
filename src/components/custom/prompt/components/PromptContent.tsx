@@ -83,7 +83,7 @@ export function PromptContent() {
           </Tabs>
         </div>
         <div className="flex flex-row items-center justify-end h-[40px]">
-          <Button className="mr-6 gap-1" onClick={onClickSave}>
+          <Button className="mr-2 gap-1" onClick={onClickSave}>
             <Save width={14} height={14} />
             保存
           </Button>

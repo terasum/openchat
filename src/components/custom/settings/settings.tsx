@@ -6,14 +6,14 @@ import {
 
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SettingsNav } from "@/components/custom/settings/settings-nav";
-import { useSettingsNavigator } from "@/hooks/use-settings-nav";
 import ModelSettings from "@/components/custom/settings/settings-model";
 import AppSettings from "@/components/custom/settings/settings-app";
 import AboutSettings from "@/components/custom/settings/settings-about";
 
+import { useAppSelector } from "@/hooks/use-state";
 
 export default function Prompt() {
-  const [settingsLinkConfig, _] = useSettingsNavigator();
+  const settingsLinkConfig = useAppSelector((state) => state.settingNav);
   return (
     <TooltipProvider delayDuration={0}>
       <ResizablePanelGroup

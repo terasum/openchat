@@ -1,7 +1,6 @@
 import { Input, Separator } from "@/components/ui";
 import { useAppSelector, useAppDispatch } from "@/hooks/use-state";
 import { updateSelectPrompt } from "@/store/prompts";
-import { useState, useEffect } from "react";
 
 export function PromptMeta() {
   const selectedPrompt = useAppSelector(

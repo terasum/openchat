@@ -12,7 +12,6 @@ import {
 
 import { chatWithOpenAI } from "@/api/openai";
 import { debounce, random_id } from "@/lib/utils";
-import { produce } from "immer";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
 import { asyncPromptActiveFetch } from "@/store/prompts";
@@ -78,13 +77,14 @@ export function useConversation() {
 
     const insertedConv = await insertSession(newConv);
 
-    setConverList(
-      produce((draft) => {
-        draft.unshift(insertedConv);
-        // 要放在这个函数里面
-        handleSelectConver(insertedConv.id);
-      })
-    );
+    setConverList((draft) => {
+      handleSelectConver(insertedConv.id);
+      if (draft.length === 0) {
+        return [insertedConv];
+      } else {
+        return [insertedConv, ...draft];
+      }
+    });
   };
 
   /**

@@ -45,7 +45,6 @@ pub async fn init_db(db_path: String) -> Result<PrismaClient, String> {
     match client {
         Ok(client) => {
             // 初始化
-
             init_tables(&client).await.ok();
             init_default_prompt(&client).await.ok();
             init_config_table_version(&client).await.ok();
@@ -199,8 +198,8 @@ async fn init_default_prompt(client: &PrismaClient) -> Result<(), String> {
 
 async fn init_config_table_version(client: &PrismaClient) -> Result<(), String> {
     let version: &str = env!("CARGO_PKG_VERSION");
-
-    let default_config = r#"{"model":{"temperature":[0.7],"max_token_length":[1400],"default_model":"gpt-4o-mini","enable_memory":true},"appearance":{"language":"zh_CN","theme":"light"},"apikey":{"domain":"https://proxy.openchat.dev","path":"/v1/chat/completions","apikey":"SK-<your-api-key>","user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"}}"#;
+    let default_config = r#"{"model":{"model_provider":"openchat","model_name":"gpt-4o-mini","api_url":"https://proxy.openchat.dev/v1/chat/completions","api_key":"SK-<your-api-key>","secret_key":"","model_opts":{},"user_agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"},"appearance":{"language":"zh_CN","theme":"light"}}"#;
+    let default_active_prompt_id = "1";
     let result1 = client
         .settings()
         .create(
@@ -215,9 +214,8 @@ async fn init_config_table_version(client: &PrismaClient) -> Result<(), String> 
         Ok(data) => {
             println!("settings init app_config inserted: {}", data.id);
         }
-        Err(error) => {
-            println!("settings version not created");
-            return Err(error.to_string());
+        Err(_) => {
+            println!("settings version exists, skip");
         }
     }
 
@@ -234,11 +232,30 @@ async fn init_config_table_version(client: &PrismaClient) -> Result<(), String> 
     match result2 {
         Ok(data) => {
             println!("settings init version inserted: {}", data.id);
-            return Ok(());
         }
-        Err(error) => {
-            println!("settings version not created");
-            return Err(error.to_string());
+        Err(_) => {
+            println!("settings version exists, skip");
         }
     }
+
+    let result3 = client
+        .settings()
+        .create(
+            "active-prompt".to_string(),
+            default_active_prompt_id.to_string(),
+            vec![settings::id::set(3)],
+        )
+        .exec()
+        .await;
+
+    match result3 {
+        Ok(data) => {
+            println!("settings init default_active_prompt inserted: {}", data.id);
+        }
+        Err(_) => {
+            println!("settings default_active_prompt exists, skip");
+        }
+    }
+    return Ok(());
+
 }

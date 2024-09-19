@@ -60,31 +60,32 @@ const MessageInput: React.FC<MessageInputProps> = ({
   };
 
   return (
-    <div className="flex items-start m-4 ">
+    <div className="flex items-center m-4 ">
       <div className="grid w-full gap-1.5">
+      <p className="text-[11px] p-0 text-muted-foreground">
+          Token Usage: {isInTokenLimit ? tokenUsage : "2000+"} / 2000
+        </p>
         <Textarea
           value={inputValue}
           onChange={handleInputValueChange}
           placeholder="有什么问题尽管问我 [Ctl/Cmd+Enter 发送]"
-          className="flex-1 p-2 border rounded-md min-h-[32px] text-[12px] resize-none overflow-y-scroll"
+          className="flex-1 p-2 border rounded-md min-h-[60px] text-[12px] resize-none overflow-y-scroll"
           rows={1}
           onKeyDown={handleKeyEnterDown}
         />
-        <p className="text-[11px] p-0 text-muted-foreground">
-          Token Usage: {isInTokenLimit ? tokenUsage : "2000+"} / 2000
-        </p>
+ 
       </div>
       {!isResponsing ? (
         <Button
           onClick={handleSendMessage}
-          className="flex flex-row justify-center items-center w-[36px] h-[32px] ml-2 p-0 rounded-full text-[32px] bg-gray-700"
+          className="flex flex-row justify-center items-center w-[36px] h-[32px] ml-2 p-0 mt-6 rounded-full text-[32px] bg-gray-700"
         >
           <UpArrowIcon fill="#fff" width={20} height={20} />
         </Button>
       ) : (
         <Button
           onClick={stopResponsing}
-          className="flex flex-row justify-center items-center w-[36px] h-[32px] ml-2 p-0 rounded-full text-[32px] bg-gray-700"
+          className="flex flex-row justify-center items-center w-[36px] h-[32px] ml-2 p-0 mt-6 rounded-full text-[32px] bg-gray-700"
         >
           <StopIcon
             className="animate-pulse animate-infinite"

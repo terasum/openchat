@@ -17,6 +17,10 @@ const functionTabsInit = [
 
 const settingsTabsInit = [
   {
+    id: "github",
+    label: "Github",
+  },
+  {
     id: "debug",
     label: "Debug",
   },
@@ -39,13 +43,20 @@ export const openDevTool = createAsyncThunk(
   }
 );
 
+export const openGithub = createAsyncThunk(
+  "navigator/openGithub",
+  async () => {
+    await invoke("open_url", { url: "https://github.com/terasum/openchat" });
+  }
+);
+
 const navigatorSlice = createSlice({
   name: "navigator",
   initialState: initialSlice,
   reducers: {
     selectTab: (state, action) => {
       console.log("navigator.selectTab", { action });
-      if (action.payload === "debug") {
+      if (action.payload === "debug" || action.payload === "github") {
         return;
       }
       state.currentTab = action.payload;

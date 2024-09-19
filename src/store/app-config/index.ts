@@ -1,7 +1,7 @@
 import { invoke } from "@tauri-apps/api/tauri";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { AppThunk } from "@/store";
-import { defaultSettings, SettingsModel } from "@/model";
+import { defaultSettings, AppConfig } from "@/model";
 import { getAppConfig, updateAppConfig } from "@/api/settings";
 
 export type NavigatorTabTypes = "chat" | "prompt" | "settings" | "debug";
@@ -35,7 +35,7 @@ export const asyncInitConfig = (): AppThunk => async (dispatch, _getState) => {
 };
 
 export const asyncUpdateConfig =
-  (config: Partial<SettingsModel>): AppThunk =>
+  (config: Partial<AppConfig>): AppThunk =>
   async (dispatch, getState) => {
     const current = getState().appConfig;
     const newConfig = {

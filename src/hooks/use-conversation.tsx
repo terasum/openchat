@@ -247,12 +247,13 @@ export function useConversation() {
     });
     console.log("use-conversation.tsx", "app-config", { config });
     const requestOpts = {
-      api_key: config.apikey.apikey,
-      api_model: config.model.default_model,
-      api_temprature: Number(activatedPrompt.temperature),
-      api_max_tokens: Number(activatedPrompt.max_tokens),
-      api_base: config.apikey.domain,
-      api_path: config.apikey.path,
+      api_key: config.model.api_key,
+      model: config.model.model_name,
+      temprature: Number(activatedPrompt.temperature),
+      max_tokens: Number(activatedPrompt.max_tokens),
+      url: config.model.api_url,
+      top_p: 1,
+      stream: true,
     };
     console.log("use-conversation.tsx", "opts", { requestOpts });
 

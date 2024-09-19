@@ -50,7 +50,7 @@ const Chat: React.FC = () => {
           }}
         ></Toolbar>
         <ChatContainer
-          className="h-[calc(100vh-110px)]"
+          className="h-[calc(100vh-140px)]"
           messages={getConvMessage()}
         />
         <MessageInput

@@ -1,21 +1,21 @@
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;" align="center">
 <img src='./docs/images/icon.png' width='80'>
 </div>
 
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;" align="center">
 <h1 style="text-align: center"><span>OpenChat</span></h1>
 </div>
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;" align="center">
 <h3 style="text-align: center">v0.2.8</h3>
 </div>
-<div style="display: flex; justify-content: center;">
+<div style="display: flex; justify-content: center;" align="center">
       <img alt="MacOS" src="https://img.shields.io/badge/-MacOS-black?style=flat&logo=apple&logoColor=white" />
       <img alt="Windows" src="https://img.shields.io/badge/-Windows-blue?style=flat&logo=tauri&logoColor=white" />
       <!-- <img alt="Linux" src="https://img.shields.io/badge/-Linux-gray?style=flat&logo=linux&logoColor=white" />-->
 <!-- <img alt="Downloads" src="https://img.shields.io/github/downloads/terasum/openchat/total.svg?style=flat" /> -->
 </div>
 
-<h3 style="text-align: center">
+<h3 style="text-align: center" align="center">
     A Local-First lightweight and elegant AI chat client for ChatGPT and other LLMs.
 </h3>
 

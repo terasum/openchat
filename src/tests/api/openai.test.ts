@@ -12,13 +12,14 @@ test("adds 1 + 2 to equal 3", () => {
 
 test("test openai stream api", async () => {
   const opts: OpenAIReqOpts = {
-    api_base: "https://proxy.openchat.dev",
+    url: "https://proxy.openchat.dev/v1/chat/completions",
     // api_base: "http://localhost:8000",
-    api_path: "/v1/chat/completions",
     api_key: "SK-sc26ff22b40dbb408cbd43c00900e83650",
-    api_model: "gpt-4o-mini",
-    api_temprature: 0.8,
-    api_max_tokens: 2000,
+    model: "gpt-4o-mini",
+    temprature: 0.8,
+    max_tokens: 2000,
+    stream: true,
+    top_p: 1,
   };
 
   const sessionData: SessionData[] = [

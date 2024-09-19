@@ -1,98 +1,64 @@
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Languages } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { SettingsItem } from "../components/settings-item";
 
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  Button,
   Card,
   CardHeader,
   CardDescription,
   CardContent,
   CardFooter,
   CardTitle,
-  // Label,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui";
 
 const languages = [
-  // { label: "English", value: "en" },
+  { label: "English", value: "en" },
   { label: "中文简体", value: "zh_CN" },
 ] as const;
 
 import { useAppSelector } from "@/hooks/use-state";
 
 export function AppearanceSettings() {
-
   const config = useAppSelector((state) => state.appConfig);
-
 
   return (
     <Card className="rounded-none border-none shadow-none">
       <CardHeader>
         <CardTitle className="text-lg">外观设置</CardTitle>
-        <CardDescription> Apperence</CardDescription>
+        <CardDescription>Apperence</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
         <SettingsItem title="语言" icon={Languages}>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                className={cn(
-                  "w-[200px] justify-between",
-                  !config.appearance.language && "text-muted-foreground"
-                )}
-              >
-                {config.appearance.language
-                  ? languages.find(
-                      (language) =>
-                        language.value === config.appearance.language
-                    )?.label
-                  : "选择语言"}
-                <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-              <Command>
-                <CommandInput placeholder="选择语言..." />
-                <CommandList>
-                  <CommandEmpty>No language found.</CommandEmpty>
-                  <CommandGroup>
-                    {languages.map((language) => (
-                      <CommandItem
-                        value={language.label}
-                        key={language.value}
-                        onSelect={() => {
-                          config.appearance.language = language.value;
-                        }}
-                      >
-                        <CheckIcon
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            language.value === config.appearance.language
-                              ? "opacity-100"
-                              : "opacity-0"
-                          )}
-                        />
-                        {language.label}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue
+                placeholder={languages.find(l => l.value == config.appearance.language)?.label}
+              ></SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Languages</SelectLabel>
+                {languages.map((language) => (
+                  <SelectItem
+                    value={language.label}
+                    key={language.value}
+                    onSelect={() => {
+                      config.appearance.language = language.value;
+                    }}
+                  >
+                    {language.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </SettingsItem>
 
         {/* <SettingsItem title="主题" icon={AppWindow} className="h-[120px]">

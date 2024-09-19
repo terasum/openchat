@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
 node "$(dirname -- "$0")/../scripts/check-version.js"
 node "$(dirname -- "$0")/../scripts/update.cjs"

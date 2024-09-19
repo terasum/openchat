@@ -1,7 +1,7 @@
 import { Label, Switch, Slider, Badge } from "@/components/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
 import { Prompt } from "@/rust-bindings";
-import { asyncPromptUpdate } from "@/store/prompts";
+import { updateSelectPrompt } from "@/store/prompts";
 export function PromptSettings() {
 
   const selectedPrompt = useAppSelector(
@@ -13,12 +13,12 @@ export function PromptSettings() {
   const dispatch = useAppDispatch();
 
   function updatePrompt(prompt: Prompt) {
-    dispatch(asyncPromptUpdate(prompt));
+    dispatch(updateSelectPrompt(prompt));
   }
 
 
   return (
-    <div className="flex flex-col items-start gap-2 p-2 pr-4 pt-8 w-[100%] min-w-[100px] max-w-[320px]">
+    <div className="flex flex-col items-start gap-2 p-2 pt-0 pr-6 pl-6 w-[100%] overflow-y-auto h-[100%]">
       <div className="mb-4 w-full">
         <Label
           htmlFor="with_context"
@@ -29,7 +29,6 @@ export function PromptSettings() {
             id="with_context"
             checked={selectedPrompt.with_context}
             onCheckedChange={(e) => {
-              console.log("with_context changed", e);
               updatePrompt({
                 ...selectedPrompt,
                 with_context: e,
@@ -53,7 +52,6 @@ export function PromptSettings() {
           step={1}
           value={[selectedPrompt.with_context_size]}
           onValueChange={(e) => {
-            console.log(e);
             updatePrompt({
               ...selectedPrompt,
               with_context_size: e[0],
@@ -75,7 +73,6 @@ export function PromptSettings() {
           step={10}
           value={[selectedPrompt.max_tokens]}
           onValueChange={(e) => {
-            console.log(e);
             updatePrompt({
               ...selectedPrompt,
               max_tokens: e[0],
@@ -97,7 +94,6 @@ export function PromptSettings() {
           step={0.1}
           value={[Number(selectedPrompt.temperature)]}
           onValueChange={(e) => {
-            console.log(e);
             updatePrompt({
               ...selectedPrompt,
               temperature: String(e[0]),
@@ -120,7 +116,6 @@ export function PromptSettings() {
           step={0.1}
           value={[Number(selectedPrompt.top_p)]}
           onValueChange={(e) => {
-            console.log(e);
             updatePrompt({
               ...selectedPrompt,
               top_p: String(e[0]),

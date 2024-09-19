@@ -16,7 +16,7 @@ const _bindEffects = (builder: ActionReducerMapBuilder<any>) => {
     state.prompts = state.prompts.filter(
       (item: Prompt) => item.id != action.payload.id
     );
-    if (state.promts.length > 0) {
+    if (state.prompts.length > 0) {
       state.selectedPrompt = state.prompts[0];
     }
   });

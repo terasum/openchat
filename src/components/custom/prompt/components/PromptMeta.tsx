@@ -1,10 +1,7 @@
 import { Input, Separator } from "@/components/ui";
-import { Prompt } from "@/rust-bindings";
 import { useAppSelector, useAppDispatch } from "@/hooks/use-state";
-
-import {
-  asyncPromptUpdate,
-} from "@/store/prompts";
+import { updateSelectPrompt } from "@/store/prompts";
+import { useState, useEffect } from "react";
 
 export function PromptMeta() {
   const selectedPrompt = useAppSelector(
@@ -15,9 +12,23 @@ export function PromptMeta() {
   );
   const dispatch = useAppDispatch();
 
-  function updatePrompt(prompt: Prompt) {
-    dispatch(asyncPromptUpdate(prompt));
-  }
+  const onTitleChange = (title: string) => {
+    dispatch(
+      updateSelectPrompt({
+        ...selectedPrompt,
+        title: title,
+      })
+    );
+  };
+  const onDescChange = (title: string) => {
+    dispatch(
+      updateSelectPrompt({
+        ...selectedPrompt,
+        desc: title,
+      })
+    );
+  };
+
 
   return (
     <>
@@ -29,11 +40,7 @@ export function PromptMeta() {
               className="text-md w-[280px] outline-none shadow-none"
               value={selectedPrompt.title || ""}
               onChange={(e) => {
-                console.log(e.target.value);
-                updatePrompt({
-                  ...selectedPrompt,
-                  title: e.target.value,
-                });
+                onTitleChange(e.target.value);
               }}
             />
             <span className="ext-md text-slate-500 pl-4">
@@ -47,10 +54,7 @@ export function PromptMeta() {
               className="ext-md w-[280px] outline-none shadow-none"
               value={selectedPrompt.desc || ""}
               onChange={(e) => {
-                updatePrompt({
-                  ...selectedPrompt,
-                  desc: e.target.value,
-                });
+                onDescChange(e.target.value);
               }}
             />
             <span className="ext-md text-slate-500 pl-4">

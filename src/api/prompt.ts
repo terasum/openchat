@@ -6,6 +6,8 @@ import {
 } from "@/rust-bindings";
 import { Prompt } from "@/rust-bindings";
 
+import { debounce } from "lodash";
+
 import { Logger } from "@/lib/log";
 const logger = new Logger("prompt.ts");
 /**
@@ -37,7 +39,6 @@ export async function fetchPrompt(
 export async function updatePrompt(prompt: Prompt) {
   logger.log("updatePrompt", "update args: ", { prompt });
   const updatePrompt = await wrapUpdatePrompt(prompt);
-  logger.log("updatePrompt", "updated result: ", { updatePrompt });
   return updatePrompt;
 }
 

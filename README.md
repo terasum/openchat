@@ -1,11 +1,19 @@
-<div align="center">
+<div style="display: flex; justify-content: center;">
 <img src='./docs/images/icon.png' width='80'>
 </div>
 
-<h1 style="text-align: center">
-<span>OpenChat</span>
-</h1>
-<h4 style="text-align: center">v0.2.8</h4>
+<div style="display: flex; justify-content: center;">
+<h1 style="text-align: center"><span>OpenChat</span></h1>
+</div>
+<div style="display: flex; justify-content: center;">
+<h3 style="text-align: center">v0.2.8</h3>
+</div>
+<div style="display: flex; justify-content: center;">
+      <img alt="MacOS" src="https://img.shields.io/badge/-MacOS-black?style=flat&logo=apple&logoColor=white" />
+      <img alt="Windows" src="https://img.shields.io/badge/-Windows-blue?style=flat&logo=tauri&logoColor=white" />
+      <!-- <img alt="Linux" src="https://img.shields.io/badge/-Linux-gray?style=flat&logo=linux&logoColor=white" />-->
+<!-- <img alt="Downloads" src="https://img.shields.io/github/downloads/terasum/openchat/total.svg?style=flat" /> -->
+</div>
 
 <h3 style="text-align: center">
     A Local-First lightweight and elegant AI chat client for ChatGPT and other LLMs.
@@ -15,12 +23,7 @@
     <em>OpenChat focuses on the Propmt sharing function to solve the current users' problems of "being able to use" and "making good use of" AI software. Users can get started easily, quickly create personalized AI assistants, and exchange experiences with others through the sharing function.</em>
 </p>
 
-<div align=center>
-      <img alt="MacOS" src="https://img.shields.io/badge/-MacOS-black?style=flat&logo=apple&logoColor=white" />
-      <img alt="Windows" src="https://img.shields.io/badge/-Windows-blue?style=flat&logo=tauri&logoColor=white" />
-      <!-- <img alt="Linux" src="https://img.shields.io/badge/-Linux-gray?style=flat&logo=linux&logoColor=white" />-->
-<!-- <img alt="Downloads" src="https://img.shields.io/github/downloads/terasum/openchat/total.svg?style=flat" /> -->
-</div>
+
 
 <div align="center">
 <table cellspacing="0" cellpadding="0" style="border:none">

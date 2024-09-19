@@ -36,6 +36,16 @@ const promptsSlice = createSlice({
       if (!selected) return;
       state.selectedPrompt = selected;
     },
+    updateSelectPrompt: (state, action) => {
+      console.log("prompts.updateSelectPrompt", { action });
+      state.selectedPrompt = action.payload;
+      state.prompts = state.prompts.map((p)=>{
+        if(p.id == action.payload.id){
+          p = action.payload
+        }
+        return p;
+      })
+    },
   },
   extraReducers(builder) {
     initAction._bindEffects(builder);
@@ -49,7 +59,7 @@ const promptsSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setSelectPrompt } = promptsSlice.actions;
+export const { setSelectPrompt, updateSelectPrompt } = promptsSlice.actions;
 
 // Async Actions
 export { _asyncPromptsFetch as asyncPromptsFetch } from "./async-prompts-fetch";

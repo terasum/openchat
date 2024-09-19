@@ -13,7 +13,7 @@ const _bindEffects = (builder: ActionReducerMapBuilder<any>) => {
   builder.addCase(_asyncPromptCreate.fulfilled, (state, action) => {
     console.log("asyncPromptCreate.fulfilled", { action });
     state.prompts = [action.payload, ...state.prompts];
-    if (state.promts.length > 0) {
+    if (state.prompts.length > 0) {
       state.selectedPrompt = state.prompts[0];
     }
   });

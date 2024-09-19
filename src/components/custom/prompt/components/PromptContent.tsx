@@ -1,14 +1,21 @@
-import { Separator, Textarea } from "@/components/ui";
-
-import { cn } from "@/lib/utils";
+import {
+  Separator,
+  Textarea,
+  Button,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/ui";
+import { Save } from "lucide-react";
 
 import { PromptMeta } from "./PromptMeta";
 import { PromptSettings } from "./PromptSettings";
 import { PromptToolbar } from "./PromptToolbar";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
-import { Prompt } from "@/rust-bindings";
-import { asyncPromptUpdate } from "@/store/prompts";
+import { asyncPromptUpdate, updateSelectPrompt } from "@/store/prompts";
+import { message } from "@tauri-apps/api/dialog";
 export function PromptContent() {
   const selectedPrompt = useAppSelector(
     (state) => state.prompts.selectedPrompt
@@ -16,9 +23,18 @@ export function PromptContent() {
 
   const dispatch = useAppDispatch();
 
-  function updatePrompt(prompt: Prompt) {
-    dispatch(asyncPromptUpdate(prompt));
-  }
+  const onContentChange = (content: string) => {
+    dispatch(
+      updateSelectPrompt({
+        ...selectedPrompt,
+        system: content,
+      })
+    );
+  };
+  const onClickSave = async () => {
+    await dispatch(asyncPromptUpdate({ ...selectedPrompt }));
+    await message("保存成功", { type: "info" });
+  };
 
   return (
     <>
@@ -26,26 +42,51 @@ export function PromptContent() {
       <Separator />
       <PromptMeta />
       <div className="flex flex-col h-[calc(100%-160px)] overflow-y-auto">
-        <div className="flex flex-row flex-1">
-          <div
-            className={cn(
-              "whitespace-pre-wrap p-4  min-h-[280px] w-[100%] min-w-[360px] max-w-[1280px]"
-            )}
-          >
-            <h1 className="text-slate-500">System Prompt:</h1>
-            <Textarea
-              value={selectedPrompt.system || ""}
-              className="w-[100%] h-[calc(100%-20px)] text-sm overflow-y-auto"
-              onChange={(e) => {
-                updatePrompt({
-                  ...selectedPrompt,
-                  system: e.target.value,
-                });
-              }}
-            />
-          </div>
+        <div className="flex flex-row flex-1 h-[calc(100%-40px)]">
+          <Tabs defaultValue="system-prompt" className="h-full w-full">
+            <div className="flex items-center px-4 py-2 select-none cursor-default">
+              <TabsList className="">
+                <TabsTrigger
+                  value="system-prompt"
+                  className="text-zinc-600 dark:text-zinc-200"
+                >
+                  系统提示词
+                </TabsTrigger>
+                <TabsTrigger
+                  value="prompt-settings"
+                  className="text-zinc-600 dark:text-zinc-200"
+                >
+                  提示词设置
+                </TabsTrigger>
+              </TabsList>
+            </div>
 
-          <PromptSettings />
+            <TabsContent
+              value="system-prompt"
+              className="h-[calc(100%-60px)] w-full p-2"
+            >
+              <Textarea
+                value={selectedPrompt.system || ""}
+                className="w-[100%] h-[calc(100%-20px)] text-sm overflow-y-auto"
+                onChange={(e) => {
+                  onContentChange(e.target.value);
+                }}
+              />
+            </TabsContent>
+
+            <TabsContent
+              value="prompt-settings"
+              className="h-[calc(100%-60px)] w-full p-2"
+            >
+              <PromptSettings />
+            </TabsContent>
+          </Tabs>
+        </div>
+        <div className="flex flex-row items-center justify-end h-[40px]">
+          <Button className="mr-6 gap-1" onClick={onClickSave}>
+            <Save width={14} height={14} />
+            保存
+          </Button>
         </div>
       </div>
     </>

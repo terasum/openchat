@@ -78,7 +78,9 @@ export async function chatWithOpenAI(
       write(chunk) {
         try {
           const temp_json = JSON.parse(decoder.decode(chunk));
-          const temp_tokens = temp_json.data.choices[0].delta.content;
+          const choices = temp_json.data?.choices ?? temp_json.choices;
+          
+          const temp_tokens = choices[0].delta.content;
           if (temp_tokens && !abortSignal.aborted) {
             onUpdate(temp_tokens);
             line += temp_tokens;

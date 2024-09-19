@@ -29,16 +29,30 @@ export function DisplayForm() {
     dispatch(asyncUpdateConfig(config));
   };
 
-  const getApiUrl = (model_provider:string) => {
-    switch (model_provider){
+  const getApiUrl = (model_provider: string) => {
+    switch (model_provider) {
       case "openchat":
-        return "https://proxy.openchat.dev/v1/chat/completions"
+        return {
+          url: "https://proxy.openchat.dev/v1/chat/completions",
+          models: ["gpt-4o-mini"],
+        };
       case "openai":
-        return "https://api.openai.com/v1/chat/completions"
+        return {
+          url: "https://api.openai.com/v1/chat/completions",
+          models: ["gpt-4o-mini"],
+        };
+      case "ollama":
+        return {
+          url: "http://localhost:11434/v1/chat/completions",
+          models: ["tinyllama"],
+        };
       default:
-        return ""
+        return {
+          url: "",
+          models: [""],
+        };
     }
-  }
+  };
 
   return (
     <Card className="rounded-none border-none shadow-none h-full overflow-y-auto">
@@ -60,7 +74,7 @@ export function DisplayForm() {
                   model: {
                     ...config.model,
                     model_provider: value,
-                    api_url: getApiUrl(value),
+                    api_url: getApiUrl(value).url,
                   },
                 });
               }}
@@ -72,6 +86,7 @@ export function DisplayForm() {
                 <SelectGroup>
                   <SelectItem value="openchat">OpenChat</SelectItem>
                   <SelectItem value="openai">OpenAI</SelectItem>
+                  <SelectItem value="ollama">ollama</SelectItem>
                   <SelectItem value="user">用户自定义</SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -100,7 +115,15 @@ export function DisplayForm() {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="gpt-4o-mini">GPT-4o-mini</SelectItem>
+                  {getApiUrl(config.model.model_provider).models.map(
+                    (model, index) => {
+                      return (
+                        <SelectItem key={index} value={model}>
+                          {model}
+                        </SelectItem>
+                      );
+                    }
+                  )}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -128,11 +151,7 @@ export function DisplayForm() {
             />
           </div>
         </SettingsItem>
-        <SettingsItem
-          title="API Key"
-          description="如何获取见说明"
-          icon={Key}
-        >
+        <SettingsItem title="API Key" description="如何获取见说明" icon={Key}>
           <div className="flex flex-col justify-center items-center w-[300px]">
             <Input
               className="w-[100%]"

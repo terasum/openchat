@@ -3,12 +3,12 @@
 
 use futures::executor;
 use std::sync::Arc;
-use tauri::Manager; // 0.3.1
+use tauri::{AboutMetadata, Manager}; // 0.3.1
+use tauri::{Menu, MenuItem, Submenu};
 
 mod commands;
 mod db;
 mod tray;
-
 
 #[cfg(all(debug_assertions, not(target_os = "windows")))]
 use specta::functions::collect_types;
@@ -40,17 +40,37 @@ fn generate_bindings() {
         "../src/rust-bindings.ts",
     );
     match result {
-        Ok(_) => {println!("Generated bindings ok")}
+        Ok(_) => {
+            println!("Generated bindings ok")
+        }
         Err(err) => panic!("{}", err),
     }
 }
 
-
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    let version: &str = env!("CARGO_PKG_VERSION");
 
     #[cfg(all(debug_assertions, not(target_os = "windows")))]
     generate_bindings();
+
+    #[cfg(target_os = "windows")]
+    let menu = Menu::new();
+
+    #[cfg(target_os = "macos")]
+    let menu = Menu::new().add_submenu(Submenu::new(
+        "OpenChat",
+        Menu::new()
+            .add_native_item(MenuItem::About(
+                "OpenChat".to_string(),
+                AboutMetadata::new()
+                    .authors(vec!["terasum".to_string()])
+                    .version(version.to_string())
+            ))
+            .add_native_item(MenuItem::Separator)
+            .add_native_item(MenuItem::Hide)
+            .add_native_item(MenuItem::Quit),
+    ));
 
     tauri::Builder::default()
         .setup(|_app| {
@@ -73,7 +93,8 @@ async fn main() -> std::io::Result<()> {
 
             Ok(())
         })
-        .system_tray(tray::main_menu())
+        .menu(menu)
+        // .system_tray(tray::main_menu())
         .plugin(tauri_plugin_system_info::init())
         .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
             let window = app.get_window("main").unwrap();
@@ -101,7 +122,23 @@ async fn main() -> std::io::Result<()> {
             commands::wrap_new_prompt,
             commands::wrap_delete_prompt,
         ])
-        .on_system_tray_event(tray::handler)
+        .on_window_event(|event| match event.event() {
+            tauri::WindowEvent::CloseRequested { api, .. } => {
+                #[cfg(not(target_os = "macos"))]
+                {
+                    event.window().hide().unwrap();
+                }
+
+                #[cfg(target_os = "macos")]
+                {
+                    tauri::AppHandle::hide(&event.window().app_handle()).unwrap();
+                }
+
+                api.prevent_close();
+            }
+            _ => {}
+        })
+        // .on_system_tray_event(tray::handler)
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 

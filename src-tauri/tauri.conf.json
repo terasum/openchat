@@ -75,7 +75,8 @@
         "label": "main",
         "title": "OpenChat",
         "minHeight": 600,
-        "minWidth": 960
+        "minWidth": 960,
+        "visible": false
       }
     ],
     "systemTray": {

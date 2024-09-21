@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   ResizableHandle,
@@ -32,6 +32,8 @@ export function Prompt() {
   const selectedPrompt = useAppSelector(
     (state) => state.prompts.selectedPrompt
   );
+
+  const [searchKey, setSearchKey] = useState("");
 
   useEffect(() => {
     dispatch(asyncPromptsFetch());
@@ -73,17 +75,27 @@ export function Prompt() {
             </div>
 
             <div className="bg-background/95 p-2 pl-4 pr-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <form>
                 <div className="relative">
                   <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search" className="pl-8" />
+                  <Input
+                    placeholder="Search"
+                    className="pl-8"
+                    autoCorrect="off"
+                    autoComplete="off"
+                    autoCapitalize="off"
+                    value={searchKey}
+                    onChange={(e)=> setSearchKey(e.target.value)}
+                  />
                 </div>
-              </form>
             </div>
 
             <TabsContent value="all" className="h-[calc(100%-165px)]">
               <PromptList
-                prompts={prompts}
+                prompts={
+                  searchKey.length > 0
+                    ? prompts.filter((item) => item.title.toLowerCase().includes(searchKey))
+                    : prompts
+                }
                 selectedPrompt={selectedPrompt}
                 setSelected={setSelected}
               />
@@ -91,7 +103,14 @@ export function Prompt() {
 
             <TabsContent value="favorite" className="h-[calc(100%-165px)]">
               <PromptList
-                prompts={prompts.filter((item) => item.favorite)}
+                prompts={
+                  searchKey.length > 0
+                    ? prompts.filter(
+                        (item) =>
+                          item.favorite && item.title.toLowerCase().includes(searchKey)
+                      )
+                    : prompts.filter((item) => item.favorite)
+                }
                 selectedPrompt={selectedPrompt}
                 setSelected={setSelected}
               />

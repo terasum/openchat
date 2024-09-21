@@ -71,12 +71,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
       <Popover
         target={ref}
         render={({ clientRect, isCollapsed, textContent }) => {
-          console.log("popover content", {
-            clientRect,
-            isCollapsed,
-            textContent,
-            ref,
-          });
+        
           if (clientRect == null || isCollapsed) return null;
           if (
             !textContent ||

@@ -2,16 +2,15 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use futures::executor;
+use std::sync::Arc;
+use tauri::{AboutMetadata, Manager, Menu, MenuItem, Submenu};
 #[cfg(target_os = "windows")]
 use window_shadows::set_shadow;
-use std::sync::Arc;
-use tauri::{Manager}; // 0.3.1
-use tauri::{Menu, MenuItem, Submenu};
 
 mod commands;
 mod db;
-mod tray;
 mod dictionary;
+mod tray;
 
 #[cfg(all(debug_assertions, not(target_os = "windows")))]
 use specta::functions::collect_types;
@@ -57,13 +56,15 @@ async fn main() -> std::io::Result<()> {
     #[cfg(all(debug_assertions, not(target_os = "windows")))]
     generate_bindings();
 
-    let edit_menu = Submenu::new("Edit",Menu::new()
-        .add_native_item(MenuItem::Copy)
-        .add_native_item(MenuItem::Cut)
-        .add_native_item(MenuItem::Paste)
-        .add_native_item(MenuItem::Undo)
-        .add_native_item(MenuItem::Redo)
-        .add_native_item(MenuItem::SelectAll),
+    let edit_menu = Submenu::new(
+        "Edit",
+        Menu::new()
+            .add_native_item(MenuItem::Copy)
+            .add_native_item(MenuItem::Cut)
+            .add_native_item(MenuItem::Paste)
+            .add_native_item(MenuItem::Undo)
+            .add_native_item(MenuItem::Redo)
+            .add_native_item(MenuItem::SelectAll),
     );
 
     #[cfg(target_os = "macos")]

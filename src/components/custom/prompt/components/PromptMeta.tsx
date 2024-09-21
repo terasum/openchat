@@ -37,7 +37,7 @@ export function PromptMeta() {
             <span className="ext-md text-slate-500 pr-4">名称:</span>
             <Input
               className="text-md w-[280px] outline-none shadow-none"
-              value={selectedPrompt.title || ""}
+              defaultValue={selectedPrompt.title || ""}
               onChange={(e) => {
                 onTitleChange(e.target.value);
               }}
@@ -51,7 +51,7 @@ export function PromptMeta() {
             <span className="ext-md text-slate-500 pr-4">简介:</span>
             <Input
               className="ext-md w-[280px] outline-none shadow-none"
-              value={selectedPrompt.desc || ""}
+              defaultValue={selectedPrompt.desc || ""}
               onChange={(e) => {
                 onDescChange(e.target.value);
               }}

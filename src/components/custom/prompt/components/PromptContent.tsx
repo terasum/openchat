@@ -66,7 +66,7 @@ export function PromptContent() {
               className="h-[calc(100%-60px)] w-full p-2"
             >
               <Textarea
-                value={selectedPrompt.system || ""}
+              defaultValue={selectedPrompt.system || ""}
                 className="w-[100%] h-[calc(100%-20px)] text-sm overflow-y-auto"
                 onChange={(e) => {
                   onContentChange(e.target.value);

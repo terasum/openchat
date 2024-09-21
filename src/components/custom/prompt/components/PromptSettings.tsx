@@ -1,7 +1,19 @@
-import { Label, Switch, Slider, Badge, Input } from "@/components/ui";
+import {
+  Label,
+  Switch,
+  Slider,
+  Badge,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
 import { Prompt } from "@/rust-bindings";
 import { updateSelectPrompt } from "@/store/prompts";
+import { useState } from "react";
 export function PromptSettings() {
   const selectedPrompt = useAppSelector(
     (state) => state.prompts.selectedPrompt
@@ -15,6 +27,8 @@ export function PromptSettings() {
     dispatch(updateSelectPrompt(prompt));
   }
 
+  const [provider, _] = useState("openchat");
+
   return (
     <div className="gap-2 p-2 pt-0 pr-6 pl-6 w-[100%] overflow-y-auto h-[100%] grid grid-cols-2">
       <div className="flex flex-col">
@@ -24,7 +38,16 @@ export function PromptSettings() {
             className="flex flex-row items-center text-xs font-normal text-gray-500 justify-between w-full"
           >
             <span>模型提供商</span>
-            <Input  id="model_provider" className="w-[100%]" />
+            <Select value={provider}>
+              <SelectTrigger className="w-[60%] text-xs mt-2">
+                <SelectValue placeholder="Select a model" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="openchat">OpenChat</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </Label>
         </div>
       </div>
@@ -152,7 +175,6 @@ export function PromptSettings() {
           ) : null}
         </div>
       </div>
-      
     </div>
   );
 }

@@ -2,8 +2,10 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use futures::executor;
+#[cfg(target_os = "windows")]
+use window_shadows::set_shadow;
 use std::sync::Arc;
-use tauri::{AboutMetadata, Manager}; // 0.3.1
+use tauri::{Manager}; // 0.3.1
 use tauri::{Menu, MenuItem, Submenu};
 
 mod commands;

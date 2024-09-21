@@ -88,13 +88,22 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: "./src-tauri -> target"
-          key: ${{ matrix.target }}
+          key: ${{ matrix.platform }}
 
       - name: fix prisma (macos)
         if: matrix.platform == 'macos-latest'
         run: |
           sed -i '' -E "s|\"(.*)schema.prisma\"|\"/Users/runner/work/openchat/openchat/src-tauri/prisma/schema.prisma\"|g" src-tauri/src/db/prisma_client.rs
           sed -i '' -E "s|\"(.*)/prisma/migrations\"|\"/Users/runner/work/openchat/openchat/src-tauri/prisma/migrations\"|g" src-tauri/src/db/prisma_client.rs
+
+      - name: fix prisma (windows)
+        if: matrix.platform == 'windows-latest'
+        run: |
+          (Get-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs).Replace('/Users/chenquan/Workspace/nodejs/openchat/src-tauri/prisma/schema.prisma', 'D:\\a\\openchat\\openchat\\src-tauri\\prisma\\schema.prisma') | Set-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs
+          (Get-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs).Replace('/Users/chenquan/Workspace/nodejs/openchat/src-tauri/prisma/migrations', 'D:\\a\\openchat\\openchat\\src-tauri\\prisma\\migrations') | Set-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs
+          (Get-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs).Replace('E:\\Workspace\\nodejs\\openchat\\src-tauri\\prisma\\schema.prisma', 'D:\\a\\openchat\\openchat\\src-tauri\\prisma\\schema.prisma') | Set-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs
+          (Get-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs).Replace('E:\\Workspace\\nodejs\\openchat\\src-tauri\\prisma\\migrations', 'D:\\a\\openchat\\openchat\\src-tauri\\prisma\\migrations') | Set-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs
+
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.

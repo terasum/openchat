@@ -23,7 +23,7 @@
       },
       "fs": {
         "all": true,
-        "scope": ["$APPCONFIG/**", "$DOWNLOAD/**"]
+        "scope": ["$APPCONFIG/**", "$DOWNLOAD/**", "$APPDATA/**"]
       },
       "window": {
         "all": true

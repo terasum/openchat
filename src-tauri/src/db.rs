@@ -7,15 +7,32 @@ use prisma_client::settings;
 use prisma_client::PrismaClient;
 use prisma_client_rust::NewClientError;
 use prisma_client_rust::Raw;
-use tauri::api::path::{resolve_path, BaseDirectory};
+use tauri::api::path::{resolve_path, BaseDirectory, config_dir};
 use tauri::App;
 use tauri::Manager;
+use std::fs;
 
 pub mod db_config;
 pub mod db_prompt;
 pub mod db_session;
 
 pub fn get_db_path(_app: &App) -> String {
+    let app_config_dir = resolve_path(
+        &_app.config(),
+        _app.package_info(),
+        &_app.env(),
+        "",
+        Some(BaseDirectory::AppData),
+    ).unwrap();
+
+    if !app_config_dir.exists() {
+        let created_result = fs::create_dir(app_config_dir.clone());
+        match created_result {
+            Ok(_) => println!("app config dir created, {}",app_config_dir.into_os_string().into_string().unwrap()),
+            Err(e) => panic!("{}", e),
+        }
+    }
+
     #[cfg(debug_assertions)]
     let path = resolve_path(
         &_app.config(),
@@ -38,7 +55,7 @@ pub fn get_db_path(_app: &App) -> String {
 
 pub async fn init_db(db_path: String) -> Result<PrismaClient, String> {
     let client: Result<PrismaClient, NewClientError> = PrismaClient::_builder()
-        .with_url(format!("file://{}", db_path))
+        .with_url(format!("file:{}", db_path))
         .build()
         .await;
 

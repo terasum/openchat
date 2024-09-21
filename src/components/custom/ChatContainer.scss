@@ -2,7 +2,25 @@
   flex: 1;
   padding: 20px;
   background-color: white;
+  &>div::-webkit-scrollbar {
+    width: 0.5em;
+  }
+   
+  &>div::-webkit-scrollbar-track {
+    background-color: rgba(229, 231, 235,0.7);
+    border-radius: 3px;
+  }
+   
+  &>div::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 3px;
+  }
+  &>div::-webkit-scrollbar-button{
+    display: none;
+  }
 }
+
+
 
 .__dictionary_container {
   .entry {

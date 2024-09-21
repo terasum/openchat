@@ -4,6 +4,7 @@ import { Textarea } from "../ui/textarea";
 import UpArrowIcon from "@/assets/images/up-arrow.svg?react";
 import StopIcon from "@/assets/images/stop.svg?react";
 import { isWithinTokenLimit } from "gpt-tokenizer";
+import "./MessageInput.scss";
 
 interface MessageInputProps {
   onSend: (message: string) => void;
@@ -70,9 +71,12 @@ const MessageInput: React.FC<MessageInputProps> = ({
           value={inputValue}
           onChange={handleInputValueChange}
           placeholder="有什么问题尽管问我 [Ctl/Cmd+Enter 发送]"
-          className="flex-1 p-2 border rounded-md min-h-[60px] text-[12px] resize-none overflow-y-scroll"
+          className="text-area-box flex-1 p-2 border rounded-md min-h-[60px] text-[12px] resize-none overflow-y-scroll"
           rows={1}
           onKeyDown={handleKeyEnterDown}
+          onContextMenu={(e)=>{
+            e.stopPropagation();
+          }}
         />
  
       </div>

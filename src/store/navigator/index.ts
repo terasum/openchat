@@ -16,10 +16,10 @@ const functionTabsInit = [
 ];
 
 const settingsTabsInit = [
-  {
-    id: "github",
-    label: "Github",
-  },
+  // {
+  //   id: "github",
+  //   label: "Github",
+  // },
   {
     id: "debug",
     label: "Debug",

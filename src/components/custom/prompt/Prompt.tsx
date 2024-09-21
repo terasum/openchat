@@ -78,6 +78,9 @@ export function Prompt() {
                 <div className="relative">
                   <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
+                  onContextMenu={(e)=>{
+                    e.stopPropagation();
+                  }}
                     placeholder="Search"
                     className="pl-8"
                     autoCorrect="off"

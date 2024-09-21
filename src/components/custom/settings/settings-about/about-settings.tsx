@@ -15,7 +15,7 @@ import {
   ArrowUpRightSquareIcon,
   Shield,
   ScrollText,
-  Copyright,
+  Github,
 } from "lucide-react";
 import { SettingsItem } from "../components/settings-item";
 
@@ -79,11 +79,11 @@ export function AboutSettings() {
           </Button>
         </SettingsItem>
 
-        <SettingsItem title="开源协议" icon={Copyright}>
+        <SettingsItem title="Github" icon={Github}>
           <Button
             variant={"ghost"}
             onClick={() => {
-              openBrowser("https://www.openchat.dev/docs/opensource");
+              openBrowser("https://github.com/terasum/openchat");
             }}
           >
             <ArrowUpRightSquareIcon size={18} color="#999" />

@@ -15,7 +15,6 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
   const divRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [ref, setRef] = useState<HTMLElement>();
-  const [selectedText, setSelectedText] = useState("");
   const [lookupText, setLookupText] = useState("");
 
   useEffect(() => {
@@ -45,22 +44,6 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
       divRef.current.scrollTop = divRef.current.scrollHeight;
     }
   }, [messages]);
-
-  const handleMouseUp = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    // Code to handle the mouseup event
-    const selection = window.getSelection();
-    if (selection && selection.rangeCount > 0) {
-      const text = selection.toString();
-      setSelectedText(text);
-      // setSelectRef(event.currentTarget);
-      lookupWord(text).then((result) => {
-        // setPopOverContent(result as string);
-        setLookupText(result as string);
-      });
-    }
-  };
 
   return (
     <div

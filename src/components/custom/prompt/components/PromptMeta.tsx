@@ -38,6 +38,9 @@ export function PromptMeta() {
             <Input
               className="text-md w-[280px] outline-none shadow-none"
               defaultValue={selectedPrompt.title || ""}
+              onContextMenu={(e)=>{
+                e.stopPropagation();
+              }}
               onChange={(e) => {
                 onTitleChange(e.target.value);
               }}
@@ -52,6 +55,9 @@ export function PromptMeta() {
             <Input
               className="ext-md w-[280px] outline-none shadow-none"
               defaultValue={selectedPrompt.desc || ""}
+              onContextMenu={(e)=>{
+                e.stopPropagation();
+              }}
               onChange={(e) => {
                 onDescChange(e.target.value);
               }}

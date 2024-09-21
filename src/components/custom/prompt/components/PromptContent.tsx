@@ -76,6 +76,9 @@ export function PromptContent() {
                 onChange={(e) => {
                   onContentChange(e.target.value);
                 }}
+                onContextMenu={(e)=>{
+                  e.stopPropagation();
+                }}
               />
             </TabsContent>
 

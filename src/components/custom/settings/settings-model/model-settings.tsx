@@ -136,7 +136,10 @@ export function DisplayForm() {
               className="w-[100%]"
               type="text"
               placeholder=""
-              value={config.model.api_url}
+              onContextMenu={(e)=>{
+                e.stopPropagation();
+              }}
+              defaultValue={config.model.api_url}
               disabled={config.model.model_provider !== "user"}
               onChange={(e) => {
                 console.log("settings changed:", { domain: e.target.value });
@@ -157,7 +160,10 @@ export function DisplayForm() {
               className="w-[100%]"
               type="text"
               placeholder="SK-<your-key-here>..."
-              value={config.model.api_key}
+              defaultValue={config.model.api_key}
+              onContextMenu={(e)=>{
+                e.stopPropagation();
+              }}
               onChange={(e) => {
                 console.log("settings changed:", { apikey: e.target.value });
                 setConfig({
@@ -198,7 +204,10 @@ export function DisplayForm() {
               className="w-[100%]"
               type="text"
               placeholder="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
-              value={config.model.user_agent}
+              defaultValue={config.model.user_agent}
+              onContextMenu={(e)=>{
+                e.stopPropagation();
+              }}
               onChange={(e) => {
                 console.log("settings changed:", {
                   user_agent: e.target.value,

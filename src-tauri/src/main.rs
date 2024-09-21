@@ -3,12 +3,12 @@
 
 use futures::executor;
 use std::sync::Arc;
-use tauri::{Manager, Menu, MenuItem, Submenu};
+use tauri::{Manager};
 #[cfg(target_os = "windows")]
 use window_shadows::set_shadow;
 
 #[cfg(target_os = "macos")]
-use tauri::{AboutMetadata};
+use tauri::{AboutMetadata, Manager, Menu, MenuItem, Submenu};
 
 mod commands;
 mod db;
@@ -54,21 +54,23 @@ fn generate_bindings() {
 
 #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    let version: &str = env!("CARGO_PKG_VERSION");
-
     #[cfg(all(debug_assertions, not(target_os = "windows")))]
     generate_bindings();
 
-    let edit_menu = Submenu::new(
-        "Edit",
-        Menu::new()
-            .add_native_item(MenuItem::Copy)
-            .add_native_item(MenuItem::Cut)
-            .add_native_item(MenuItem::Paste)
-            .add_native_item(MenuItem::Undo)
-            .add_native_item(MenuItem::Redo)
-            .add_native_item(MenuItem::SelectAll),
-    );
+    #[cfg(target_os = "macos")]
+    let version: &str = env!("CARGO_PKG_VERSION");
+
+    // #[cfg(target_os = "macos")]
+    // let edit_menu = Submenu::new(
+    //     "Edit",
+    //     Menu::new()
+    //         .add_native_item(MenuItem::Copy)
+    //         .add_native_item(MenuItem::Cut)
+    //         .add_native_item(MenuItem::Paste)
+    //         .add_native_item(MenuItem::Undo)
+    //         .add_native_item(MenuItem::Redo)
+    //         .add_native_item(MenuItem::SelectAll),
+    // );
 
     #[cfg(target_os = "macos")]
     let menu = Menu::new()
@@ -84,34 +86,46 @@ async fn main() -> std::io::Result<()> {
                 .add_native_item(MenuItem::Hide)
                 .add_native_item(MenuItem::Quit),
         ))
-        .add_submenu(edit_menu);
+        .add_submenu(Submenu::new(
+            "Edit",
+            Menu::new()
+                .add_native_item(MenuItem::Copy)
+                .add_native_item(MenuItem::Cut)
+                .add_native_item(MenuItem::Paste)
+                .add_native_item(MenuItem::Undo)
+                .add_native_item(MenuItem::Redo)
+                .add_native_item(MenuItem::SelectAll),
+        ));
 
-    #[cfg(target_os = "windows")]
-    let menu = Menu::new().add_submenu(edit_menu);
+    // #[cfg(target_os = "windows")]
+    // let menu = Menu::new().add_submenu(edit_menu);
 
-    tauri::Builder::default()
-        .setup(|_app| {
-            #[cfg(target_os = "windows")]
-            set_shadow(&_app.get_window("main").unwrap(), true).expect("Unsupported platform!");
+    let app_builder = tauri::Builder::default().setup(|_app| {
+        #[cfg(target_os = "windows")]
+        set_shadow(&_app.get_window("main").unwrap(), true).expect("Unsupported platform!");
 
-            let path_string = db::get_db_path(&_app);
-            println!("[init] database path {}", path_string);
+        let path_string = db::get_db_path(&_app);
+        println!("[init] database path {}", path_string);
 
-            let init_result = executor::block_on(db::init_db(path_string));
-            match init_result {
-                Ok(prisma_client) => {
-                    _app.manage(Arc::new(prisma_client));
-                    println!("[init] database init ok");
-                }
-                Err(err) => {
-                    println!("[init] database init error {}", err);
-                }
+        let init_result = executor::block_on(db::init_db(path_string));
+        match init_result {
+            Ok(prisma_client) => {
+                _app.manage(Arc::new(prisma_client));
+                println!("[init] database init ok");
             }
+            Err(err) => {
+                println!("[init] database init error {}", err);
+            }
+        }
 
-            Ok(())
-        })
-        .menu(menu)
-        // .system_tray(tray::main_menu())
+        Ok(())
+    });
+
+    #[cfg(target_os = "macos")]
+    app_builder.menu(menu);
+    // .system_tray(tray::main_menu())
+
+    app_builder
         .plugin(tauri_plugin_system_info::init())
         .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
             let window = app.get_window("main").unwrap();

@@ -105,7 +105,14 @@ const ChatBubble: FC<ChatBubbleProps> = ({
           </div>
         ) : (
           <div className="p-2 rounded-lg select-text cursor-text bg-blue-500 text-white max-w-[480px]">
-            <p onMouseUp={handleMouseUp}>{message}</p>
+            <p
+              onContextMenu={(e) => {
+                e.stopPropagation();
+              }}
+              onMouseUp={handleMouseUp}
+            >
+              {message}
+            </p>
           </div>
         )}
 

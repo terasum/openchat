@@ -3,9 +3,12 @@
 
 use futures::executor;
 use std::sync::Arc;
-use tauri::{AboutMetadata, Manager, Menu, MenuItem, Submenu};
+use tauri::{Manager, Menu, MenuItem, Submenu};
 #[cfg(target_os = "windows")]
 use window_shadows::set_shadow;
+
+#[cfg(target_os = "macos")]
+use tauri::{AboutMetadata};
 
 mod commands;
 mod db;

@@ -7,7 +7,7 @@ use prisma_client::settings;
 use prisma_client::PrismaClient;
 use prisma_client_rust::NewClientError;
 use prisma_client_rust::Raw;
-use tauri::api::path::{resolve_path, BaseDirectory, config_dir};
+use tauri::api::path::{resolve_path, BaseDirectory};
 use tauri::App;
 use tauri::Manager;
 use std::fs;

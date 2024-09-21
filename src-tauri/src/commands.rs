@@ -15,6 +15,9 @@ use crate::db::db_config;
 use crate::db::db_prompt;
 use crate::db::db_session;
 
+use tauri::command;
+use crate::dictionary;
+
 /// 定义一个包装器函数来处理异步调用
 #[tauri::command]
 #[specta::specta]
@@ -255,4 +258,19 @@ pub fn open_url(url: &str) {
     if open_browser(Browser::Default, &url).is_ok() {
         println!("{}", &url)
     }
+}
+
+// 查询词典
+#[command]
+pub fn lookup_word(word: &str) -> String {
+    if word.is_empty() {
+        return "".to_string();
+    }
+    if !word.is_ascii() {
+        return "".to_string();
+    }
+    if word.len() > 60 {
+        return "".to_string();
+    }
+    return dictionary::lookup(word);
 }

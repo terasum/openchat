@@ -9,6 +9,7 @@ use tauri::{Menu, MenuItem, Submenu};
 mod commands;
 mod db;
 mod tray;
+mod dictionary;
 
 #[cfg(all(debug_assertions, not(target_os = "windows")))]
 use specta::functions::collect_types;
@@ -54,23 +55,33 @@ async fn main() -> std::io::Result<()> {
     #[cfg(all(debug_assertions, not(target_os = "windows")))]
     generate_bindings();
 
-    #[cfg(target_os = "windows")]
-    let menu = Menu::new();
+    let edit_menu = Submenu::new("Edit",Menu::new()
+        .add_native_item(MenuItem::Copy)
+        .add_native_item(MenuItem::Cut)
+        .add_native_item(MenuItem::Paste)
+        .add_native_item(MenuItem::Undo)
+        .add_native_item(MenuItem::Redo)
+        .add_native_item(MenuItem::SelectAll),
+    );
 
     #[cfg(target_os = "macos")]
-    let menu = Menu::new().add_submenu(Submenu::new(
-        "OpenChat",
-        Menu::new()
-            .add_native_item(MenuItem::About(
-                "OpenChat".to_string(),
-                AboutMetadata::new()
-                    .authors(vec!["terasum".to_string()])
-                    .version(version.to_string())
-            ))
-            .add_native_item(MenuItem::Separator)
-            .add_native_item(MenuItem::Hide)
-            .add_native_item(MenuItem::Quit),
-    ));
+    let menu = Menu::new()
+        .add_submenu(Submenu::new(
+            "OpenChat",
+            Menu::new()
+                .add_native_item(MenuItem::About(
+                    "OpenChat".to_string(),
+                    AboutMetadata::new()
+                        .authors(vec!["terasum".to_string()])
+                        .version(version.to_string()),
+                ))
+                .add_native_item(MenuItem::Hide)
+                .add_native_item(MenuItem::Quit),
+        ))
+        .add_submenu(edit_menu);
+
+    #[cfg(target_os = "windows")]
+    let menu = Menu::new().add_submenu(edit_menu);
 
     tauri::Builder::default()
         .setup(|_app| {
@@ -121,6 +132,7 @@ async fn main() -> std::io::Result<()> {
             commands::wrap_update_prompt,
             commands::wrap_new_prompt,
             commands::wrap_delete_prompt,
+            commands::lookup_word,
         ])
         .on_window_event(|event| match event.event() {
             tauri::WindowEvent::CloseRequested { api, .. } => {

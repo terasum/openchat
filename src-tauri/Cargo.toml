@@ -20,7 +20,7 @@ path = "src/main.rs"
 tauri-build = { version = "1.5.3", features = [] }
 
 [dependencies]
-tauri = { version = "1.7.2", features = [
+tauri = { version = "1.8.0", features = [
   "api-all",
   "devtools",
   "macos-private-api",
@@ -52,7 +52,9 @@ tokio = "1.40.0"
 futures = "0.3.30"
 specta = "1.0.5"
 tauri-specta = { version = "1.0.2", features = ["typescript"] }
-
+cocoa = "0.26.0"
+core-foundation = "0.9.4"
+objc = "0.2.7"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

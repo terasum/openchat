@@ -66,7 +66,8 @@
     "tauri-plugin-sql-api": "https://github.com/tauri-apps/tauri-plugin-sql",
     "tauri-plugin-store-api": "https://github.com/tauri-apps/tauri-plugin-store",
     "tauri-plugin-system-info-api": "^2.0.2",
-    "tauri-plugin-window-state-api": "https://github.com/tauri-apps/tauri-plugin-window-state"
+    "tauri-plugin-window-state-api": "https://github.com/tauri-apps/tauri-plugin-window-state",
+    "use-text-selection": "^1.1.5"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^19.5.0",

@@ -22,6 +22,7 @@ interface ChatBubbleProps {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onRetryGenerated?: () => void;
+  setSelectRef: (ref: HTMLDivElement) => void;
 }
 
 async function copyToClipboard(text: string) {
@@ -38,6 +39,7 @@ const ChatBubble: FC<ChatBubbleProps> = ({
   isLatest,
   parentSize,
   onRetryGenerated,
+  setSelectRef,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const bubbleRef = useRef(null);
@@ -46,6 +48,16 @@ const ChatBubble: FC<ChatBubbleProps> = ({
     return () => {
       copyToClipboard(msg);
     };
+  };
+
+  const handleMouseUp = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    // Code to handle the mouseup event
+    const selection = window.getSelection();
+    if (selection && selection.rangeCount > 0) {
+      setSelectRef(event.currentTarget);
+    }
   };
 
   useEffect(() => {
@@ -89,11 +101,11 @@ const ChatBubble: FC<ChatBubbleProps> = ({
               setIsHovered(false);
             }}
           >
-            <MarkdownContent content={message} />
+            <MarkdownContent content={message} onMouseUp={handleMouseUp} />
           </div>
         ) : (
-          <div className="p-2 rounded-lg select-text cursor-text bg-blue-500 text-white">
-            {message}
+          <div className="p-2 rounded-lg select-text cursor-text bg-blue-500 text-white max-w-[480px]">
+            <p onMouseUp={handleMouseUp}>{message}</p>
           </div>
         )}
 

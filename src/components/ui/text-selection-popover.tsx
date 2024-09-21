@@ -1,4 +1,4 @@
-import React, { ComponentProps, ComponentPropsWithoutRef, FunctionComponent, PropsWithChildren } from 'react'
+import { FunctionComponent, PropsWithChildren } from 'react'
 import { createPortal } from 'react-dom'
 import { useTextSelection } from 'use-text-selection'
 

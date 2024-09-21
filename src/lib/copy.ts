@@ -6,8 +6,6 @@ type RulesArgs = [
   Array<{ type: string; content: string; attrs?: Array<string> }>,
   number
 ];
-type LinkArgs = [Array<{ attrs: string }>, number];
-
 const PLUGIN_CLASS = "code-copy";
 
 new Clipboard(`.${PLUGIN_CLASS}`, {
@@ -58,7 +56,7 @@ const renderCode = (originRule: (...args: RulesArgs) => string) => {
   };
 };
 
-const renderLink = (originRule: (...args: RulesArgs) => string) => {
+const renderLink = (_originRule: (...args: RulesArgs) => string) => {
   return (...args: RulesArgs) => {
     const [tokens, _] = args;
     const token_open = tokens[0];

@@ -2,12 +2,16 @@ use crate::db::prisma_client::prompt;
 use crate::db::prisma_client::PrismaClient;
 use prisma_client_rust::chrono;
 use prisma_client_rust::Direction;
+use rand::distributions::{Alphanumeric, DistString};
+
 
 pub async fn new_prompt(db: &PrismaClient) -> Result<prompt::Data, String> {
+    let random_id = Alphanumeric.sample_string(&mut rand::thread_rng(), 16);
+
     db.prompt()
         .create(
-            "新 Prompt".to_string(),
-            "默认描述".to_string(),
+            "New Prompt".to_string(),
+            format!("默认描述-{}",random_id).to_string(),
             "".to_string(),
             false,
             false,

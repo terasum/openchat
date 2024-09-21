@@ -12,7 +12,7 @@ const _asyncPromptCreate = createAsyncThunk(
 const _bindEffects = (builder: ActionReducerMapBuilder<any>) => {
   builder.addCase(_asyncPromptCreate.fulfilled, (state, action) => {
     console.log("asyncPromptCreate.fulfilled", { action });
-    state.prompts = [action.payload, ...state.prompts];
+    state.prompts.unshift(action.payload);
     if (state.prompts.length > 0) {
       state.selectedPrompt = state.prompts[0];
     }

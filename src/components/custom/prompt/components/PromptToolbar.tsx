@@ -1,4 +1,4 @@
-import { Star, StarOff, Copy, Tag, Trash, Check } from "lucide-react";
+import { Star, StarOff, Copy, Tag, Trash } from "lucide-react";
 import {
   Button,
   Separator,
@@ -13,35 +13,15 @@ import { Prompt } from "@/rust-bindings";
 
 import { useAppSelector, useAppDispatch } from "@/hooks/use-state";
 
-import {
-  asyncPromptDelete,
-  asyncPromptUpdate,
-  asyncPromptActiveSet,
-} from "@/store/prompts";
+import { asyncPromptDelete, asyncPromptUpdate } from "@/store/prompts";
 
 export function PromptToolbar() {
   const dispatch = useAppDispatch();
   const prompts = useAppSelector((state) => state.prompts.prompts);
 
-  const activatedPrompt = useAppSelector(
-    (state) => state.prompts.activatedPrompt
-  );
-
   const selectedPrompt = useAppSelector(
     (state) => state.prompts.selectedPrompt
   );
-
-  const onActiveClick = (id: number) => {
-    new Promise(async () => {
-      const sure = await ask(`确定激活 Prompt ${id}?`, {
-        title: "确认",
-        type: "info",
-      });
-      if (sure) {
-        dispatch(asyncPromptActiveSet(id));
-      }
-    });
-  };
 
   const onDeleteClick = (prompt: Prompt) => {
     if (!prompt) return;
@@ -106,20 +86,6 @@ export function PromptToolbar() {
 
         <Tooltip>
           <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onCopyClick(selectedPrompt)}
-            >
-              <Copy className="h-4 w-4" />
-              <span className="sr-only">复制</span>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>复制</TooltipContent>
-        </Tooltip>
-
-        <Tooltip>
-          <TooltipTrigger asChild>
             <Button variant="ghost" size="icon" disabled={true}>
               <Tag className="h-4 w-4" />
               <span className="sr-only">添加标签</span>
@@ -133,15 +99,13 @@ export function PromptToolbar() {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => {
-                onDeleteClick(selectedPrompt);
-              }}
+              onClick={() => onCopyClick(selectedPrompt)}
             >
-              <Trash className="h-4 w-4" />
-              <span className="sr-only">删除</span>
+              <Copy className="h-4 w-4" />
+              <span className="sr-only">复制</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>删除</TooltipContent>
+          <TooltipContent>复制</TooltipContent>
         </Tooltip>
       </div>
 
@@ -151,16 +115,15 @@ export function PromptToolbar() {
             <Button
               variant="ghost"
               size="icon"
-              disabled={selectedPrompt.id == activatedPrompt.id}
               onClick={() => {
-                onActiveClick(selectedPrompt.id);
+                onDeleteClick(selectedPrompt);
               }}
             >
-              <Check className="h-4 w-4" />
-              <span className="sr-only">激活</span>
+              <Trash color="red" className="h-4 w-4" />
+              <span className="sr-only">删除</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>激活</TooltipContent>
+          <TooltipContent>删除</TooltipContent>
         </Tooltip>
       </div>
 

@@ -4,6 +4,7 @@ use core_foundation::string::CFString;
 use objc::runtime::Object;
 use std::ffi::CStr;
 
+#[cfg(target_os = "macos")]
 #[link(name = "CoreServices", kind = "framework")]
 extern "C" {
     pub fn DCSGetActiveDictionaries() -> id;
@@ -17,6 +18,7 @@ extern "C" {
     pub fn DCSRecordCopyData(record: *mut Object) -> id;
 }
 
+#[cfg(target_os = "macos")]
 pub fn lookup(word: &str) -> String {
     let search_term = CFString::new(word);
     // 获取激活的词典
@@ -71,6 +73,8 @@ pub fn lookup(word: &str) -> String {
     return definition;
 }
 
+
+#[cfg(target_os = "macos")]
 #[test]
 fn test_lookup() {
     let result = lookup("hello");

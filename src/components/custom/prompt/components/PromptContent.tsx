@@ -7,14 +7,18 @@ import {
   TabsTrigger,
   TabsContent,
 } from "@/components/ui";
-import { Save } from "lucide-react";
+import { CheckCheck } from "lucide-react";
 
 import { PromptMeta } from "./PromptMeta";
 import { PromptSettings } from "./PromptSettings";
 import { PromptToolbar } from "./PromptToolbar";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
-import { asyncPromptUpdate, updateSelectPrompt } from "@/store/prompts";
+import {
+  asyncPromptUpdate,
+  updateSelectPrompt,
+  asyncPromptActiveSet,
+} from "@/store/prompts";
 import { message } from "@tauri-apps/api/dialog";
 export function PromptContent() {
   const selectedPrompt = useAppSelector(
@@ -33,7 +37,8 @@ export function PromptContent() {
   };
   const onClickSave = async () => {
     await dispatch(asyncPromptUpdate({ ...selectedPrompt }));
-    await message("保存成功", { type: "info" });
+    dispatch(asyncPromptActiveSet(selectedPrompt.id));
+    await message("保存并激活成功", { type: "info" });
   };
 
   return (
@@ -66,7 +71,7 @@ export function PromptContent() {
               className="h-[calc(100%-60px)] w-full p-2"
             >
               <Textarea
-              defaultValue={selectedPrompt.system || ""}
+                defaultValue={selectedPrompt.system || ""}
                 className="w-[100%] h-[calc(100%-20px)] text-sm overflow-y-auto"
                 onChange={(e) => {
                   onContentChange(e.target.value);
@@ -84,8 +89,8 @@ export function PromptContent() {
         </div>
         <div className="flex flex-row items-center justify-end h-[40px]">
           <Button className="mr-2 gap-1" onClick={onClickSave}>
-            <Save width={14} height={14} />
-            保存
+            <CheckCheck width={14} height={14} />
+            保存使用
           </Button>
         </div>
       </div>

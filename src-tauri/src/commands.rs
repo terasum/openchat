@@ -16,6 +16,7 @@ use crate::db::db_prompt;
 use crate::db::db_session;
 
 use tauri::command;
+#[cfg(target_os = "macos")]
 use crate::dictionary;
 
 /// 定义一个包装器函数来处理异步调用
@@ -262,6 +263,7 @@ pub fn open_url(url: &str) {
 
 // 查询词典
 #[command]
+#[cfg(target_os = "macos")]
 pub fn lookup_word(word: &str) -> String {
     if word.is_empty() {
         return "".to_string();
@@ -274,3 +276,10 @@ pub fn lookup_word(word: &str) -> String {
     }
     return dictionary::lookup(word);
 }
+
+#[command]
+#[cfg(target_os = "windows")]
+pub fn lookup_word(word: &str) -> String {
+    return "".to_string();
+}
+

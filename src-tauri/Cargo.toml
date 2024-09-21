@@ -1,6 +1,6 @@
 [package]
 name = "openchat"
-version = "0.2.9"
+version = "0.2.10"
 description = "openchat"
 authors = ["terasum"]
 license = "Reserved"

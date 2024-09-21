@@ -6,7 +6,7 @@
 <h1 style="text-align: center"><span>OpenChat</span></h1>
 </div>
 <div style="display: flex; justify-content: center;" align="center">
-<h3 style="text-align: center">v0.2.8</h3>
+<h3 style="text-align: center">v0.2.9</h3>
 </div>
 <div style="display: flex; justify-content: center;" align="center">
       <img alt="MacOS" src="https://img.shields.io/badge/-MacOS-black?style=flat&logo=apple&logoColor=white" />

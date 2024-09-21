@@ -1,7 +1,12 @@
+#[cfg(target_os = "macos")]
 use cocoa::base::id;
+#[cfg(target_os = "macos")]
 use cocoa::foundation::{NSArray, NSString};
+#[cfg(target_os = "macos")]
 use core_foundation::string::CFString;
+#[cfg(target_os = "macos")]
 use objc::runtime::Object;
+#[cfg(target_os = "macos")]
 use std::ffi::CStr;
 
 #[cfg(target_os = "macos")]

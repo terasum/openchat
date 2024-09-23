@@ -76,7 +76,7 @@ export function wrapDeletePrompt(id: number) {
     return invoke()<Prompt>("wrap_delete_prompt", { id })
 }
 
-export type Settings = { id: number; key: string; value: string; created_at: string; updated_at: string }
 export type SessionData = { id: number; session_id: string; role: string; message: string; message_type: string; created_at: string; updated_at: string }
-export type Prompt = { id: number; title: string; desc: string; system: string; favorite: boolean; actived: boolean; with_context: boolean; with_context_size: number; max_tokens: number; top_p: string; temperature: string; opts: string; prehandle_script: string; labels: string; created_at: string; updated_at: string }
 export type Session = { id: string; title: string; prompt_id: number; with_context: boolean; with_context_size: number; session_model: string; created_at: string; updated_at: string }
+export type Settings = { id: number; key: string; value: string; created_at: string; updated_at: string }
+export type Prompt = { id: number; title: string; desc: string; system: string; favorite: boolean; actived: boolean; with_context: boolean; with_context_size: number; max_tokens: number; top_p: string; temperature: string; opts: string; prehandle_script: string; labels: string; created_at: string; updated_at: string }

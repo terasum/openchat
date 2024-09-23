@@ -11,14 +11,26 @@ import {
   TabsList,
   TabsTrigger,
   TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui";
 
-import { Search, PlusCircle } from "lucide-react";
+import { Search, PlusCircle, DownloadCloud } from "lucide-react";
 
 import { PromptList } from "@/components/custom/prompt/components/PromptList";
 import { PromptContent } from "@/components/custom/prompt/components/PromptContent";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { useAppDispatch, useAppSelector } from "@/store";
+
 import {
   setSelectPrompt,
   asyncPromptCreate,
@@ -35,6 +47,8 @@ export function Prompt() {
 
   const [searchKey, setSearchKey] = useState("");
 
+  const [openDownloadDialog, setOpenDownloadDialog] = useState(false);
+
   useEffect(() => {
     dispatch(asyncPromptsFetch());
     dispatch(asyncPromptActiveFetch());
@@ -46,6 +60,10 @@ export function Prompt() {
 
   const onCreateClick = async () => {
     dispatch(asyncPromptCreate());
+  };
+
+  const onDownloadClick = async () => {
+    setOpenDownloadDialog(true);
   };
 
   return (
@@ -75,28 +93,30 @@ export function Prompt() {
             </div>
 
             <div className="bg-background/95 p-2 pl-4 pr-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="relative">
-                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                  onContextMenu={(e)=>{
+              <div className="relative">
+                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  onContextMenu={(e) => {
                     e.stopPropagation();
                   }}
-                    placeholder="Search"
-                    className="pl-8"
-                    autoCorrect="off"
-                    autoComplete="off"
-                    autoCapitalize="off"
-                    value={searchKey}
-                    onChange={(e)=> setSearchKey(e.target.value)}
-                  />
-                </div>
+                  placeholder="Search"
+                  className="pl-8"
+                  autoCorrect="off"
+                  autoComplete="off"
+                  autoCapitalize="off"
+                  value={searchKey}
+                  onChange={(e) => setSearchKey(e.target.value)}
+                />
+              </div>
             </div>
 
             <TabsContent value="all" className="h-[calc(100%-165px)]">
               <PromptList
                 prompts={
                   searchKey.length > 0
-                    ? prompts.filter((item) => item.title.toLowerCase().includes(searchKey))
+                    ? prompts.filter((item) =>
+                        item.title.toLowerCase().includes(searchKey)
+                      )
                     : prompts
                 }
                 selectedPrompt={selectedPrompt}
@@ -110,7 +130,8 @@ export function Prompt() {
                   searchKey.length > 0
                     ? prompts.filter(
                         (item) =>
-                          item.favorite && item.title.toLowerCase().includes(searchKey)
+                          item.favorite &&
+                          item.title.toLowerCase().includes(searchKey)
                       )
                     : prompts.filter((item) => item.favorite)
                 }
@@ -120,10 +141,26 @@ export function Prompt() {
             </TabsContent>
 
             <div className="bg-background/95 p-2 pl-4 pr-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-              <div className="flex flex-row flex-1 justify-center">
+              <div className="flex flex-row flex-1 justify-between">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="flex  w-[45%] bg-[#F2F5F9]"
+                      onClick={() => {
+                        onDownloadClick();
+                      }}
+                    >
+                      <DownloadCloud className="h-4 w-4" />{" "}
+                      <span className="pl-4">下载</span>
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>从 OpenChat Could 下载Prompt</TooltipContent>
+                </Tooltip>
+
                 <Button
-                  variant="default"
-                  className="flex  w-[80%]"
+                  variant="outline"
+                  className="flex  w-[45%] bg-[#F2F5F9]"
                   onClick={() => {
                     onCreateClick();
                   }}
@@ -133,6 +170,45 @@ export function Prompt() {
                 </Button>
               </div>
             </div>
+
+            <AlertDialog
+              open={openDownloadDialog}
+              onOpenChange={setOpenDownloadDialog}
+            >
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>从云上下载Prompt</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    <div className="bg-red">
+                      <div className="">
+                        请将您要下载的Prompt ID 粘贴到下方，例如：
+                        <div className="text-center">
+                          <div className="bg-[#F2F5F9] p-2 mt-2 rounded-md">
+                            <span className="text-[#555555]">
+                              {"PID_STD_A192K183"}
+                              <span className="text-[#F2F5F9]">{""}</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <Input
+                          placeholder="Prompt ID"
+                          className="mt-2"
+                          autoCorrect="off"
+                          autoComplete="off"
+                          autoCapitalize="off"
+                        />
+                      </div>
+                    </div>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>取消</AlertDialogCancel>
+                  <AlertDialogAction>下载</AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </Tabs>
         </ResizablePanel>
         <ResizableHandle withHandle />

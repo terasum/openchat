@@ -12,8 +12,9 @@ import { CheckCheck } from "lucide-react";
 import { PromptMeta } from "./PromptMeta";
 import { PromptSettings } from "./PromptSettings";
 import { PromptToolbar } from "./PromptToolbar";
+import { useState } from "react";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { useAppDispatch, useAppSelector } from "@/store";
 import {
   asyncPromptUpdate,
   updateSelectPrompt,
@@ -27,14 +28,15 @@ export function PromptContent() {
 
   const dispatch = useAppDispatch();
 
-  const onContentChange = (content: string) => {
-    dispatch(
+  const onContentChange = async (content: string) => {
+    await dispatch(
       updateSelectPrompt({
         ...selectedPrompt,
         system: content,
       })
     );
   };
+
   const onClickSave = async () => {
     await dispatch(asyncPromptUpdate({ ...selectedPrompt }));
     dispatch(asyncPromptActiveSet(selectedPrompt.id));
@@ -76,7 +78,7 @@ export function PromptContent() {
                 onChange={(e) => {
                   onContentChange(e.target.value);
                 }}
-                onContextMenu={(e)=>{
+                onContextMenu={(e) => {
                   e.stopPropagation();
                 }}
               />

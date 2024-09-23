@@ -8,9 +8,8 @@ import TabPrompt from "@/TabPrompt";
 import SettingsProfilePage from "@/components/custom/settings/settings";
 import TabChat from "@/TabChat";
 
-import { useAppSelector } from "@/hooks/use-state";
+import { useAppSelector,useAppDispatch } from "@/store";
 import { currentTab } from "./store/navigator";
-import { useAppDispatch } from "@/hooks/use-state";
 import { asyncPromptsInit } from "./store/prompts";
 import { asyncInitConfig } from "./store/app-config";
 const ChatInterface: React.FC = () => {

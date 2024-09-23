@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
-import { setSettingsNav } from "@/store/settings-nav";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { setSettingsNav } from "@/store/settings";
 import { Brain, AppWindow, CircleHelp, AppWindowMac } from "lucide-react";
 export function SettingsNav() {
   const dispatch = useAppDispatch();

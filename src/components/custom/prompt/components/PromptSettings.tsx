@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui";
-import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { Prompt } from "@/rust-bindings";
 import { updateSelectPrompt } from "@/store/prompts";
 import { useState } from "react";

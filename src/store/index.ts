@@ -2,7 +2,9 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import navigatorReducer from "./navigator";
 import promptsReducer from "./prompts";
 import appCinfigReducer from "./app-config";
-import settingsNav from "./settings-nav";
+import settingsNav from "./settings";
+import sidebarReducer from "./siderbar";
+import conversationReducer from "./conversation";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ const store = configureStore({
     prompts: promptsReducer,
     appConfig: appCinfigReducer,
     settingNav: settingsNav,
+    sidebar: sidebarReducer,
+    conversation: conversationReducer,
   },
 });
 
@@ -21,5 +25,9 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;

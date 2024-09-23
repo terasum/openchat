@@ -8,7 +8,7 @@ import React from "react";
 import "./TabNavigation.scss";
 import { cn } from "@/lib/utils";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { useAppDispatch, useAppSelector } from "@/store";
 import {
   currentTab,
   selectTab,

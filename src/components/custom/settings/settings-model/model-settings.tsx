@@ -17,7 +17,7 @@ import { Brain, Key, Globe, Compass, Sparkle } from "lucide-react";
 
 import { SettingsItem } from "../components/settings-item";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { AppConfig } from "@/model";
 import { asyncUpdateConfig } from "@/store/app-config";
 

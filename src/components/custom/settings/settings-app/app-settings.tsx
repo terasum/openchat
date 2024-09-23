@@ -23,7 +23,7 @@ const languages = [
   { label: "中文简体", value: "zh_CN" },
 ] as const;
 
-import { useAppSelector } from "@/hooks/use-state";
+import { useAppSelector } from "@/store";
 
 export function AppearanceSettings() {
   const config = useAppSelector((state) => state.appConfig);

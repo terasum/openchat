@@ -10,7 +10,7 @@ import ModelSettings from "@/components/custom/settings/settings-model";
 import AppSettings from "@/components/custom/settings/settings-app";
 import AboutSettings from "@/components/custom/settings/settings-about";
 
-import { useAppSelector } from "@/hooks/use-state";
+import { useAppSelector } from "@/store";
 
 export default function Prompt() {
   const settingsLinkConfig = useAppSelector((state) => state.settingNav);

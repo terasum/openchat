@@ -13,6 +13,7 @@ import UserIconSVG from "@/assets/images/user.svg";
 import { cn, date_format } from "@/lib/utils";
 import { clipboard, dialog } from "@tauri-apps/api";
 
+
 interface ChatBubbleProps {
   message: string;
   messageTime: string;
@@ -43,6 +44,7 @@ const ChatBubble: FC<ChatBubbleProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const bubbleRef = useRef(null);
+
 
   const copyFn = (msg: string) => {
     return () => {

@@ -1,6 +1,6 @@
-import Toolbar from "@/components/custom/chatbox/chat-toolbar";
-import ChatContainer from "@/components/custom/chatbox/chat-container";
-import MessageInput from "@/components/custom/chatbox/message-input";
+import Toolbar from "@/components/chatbox/chat-toolbar";
+import ChatContainer from "@/components/chatbox/chat-container";
+import MessageInput from "@/components/chatbox/message-input";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { sendMessage, setIsResponsing } from "@/store/conversation";
 

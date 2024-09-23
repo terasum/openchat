@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import ChatBubble from "@/components/custom/chatbox/chat-bubble";
+import ChatBubble from "@/components/chatbox/chat-bubble";
 import { Popover } from "@/components/ui/text-selection-popover";
 import { lookupWord } from "@/api/app";
-import "@/components/custom/chatbox/chat-container.scss";
+import "@/components/chatbox/chat-container.scss";
 interface ChatContainerProps {
   messages: { content: string; role: string }[];
   className: string;

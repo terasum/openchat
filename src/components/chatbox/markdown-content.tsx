@@ -3,7 +3,7 @@ import MarkdownIt from "markdown-it";
 import MarkdownItHighlight from "markdown-it-highlightjs";
 import mk from "@traptitech/markdown-it-katex";
 import { copyCode, alink } from "@/lib/copy";
-import "@/components/custom/chatbox/markdown-content.scss";
+import "@/components/chatbox/markdown-content.scss";
 import "highlight.js/styles/default.css";
 
 interface MarkdownContentProps {

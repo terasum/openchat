@@ -5,10 +5,10 @@ import {
 } from "@/components/ui/resizable";
 
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { SettingsNav } from "@/components/custom/settings/settings-nav";
-import ModelSettings from "@/components/custom/settings/settings-model";
-import AppSettings from "@/components/custom/settings/settings-app";
-import AboutSettings from "@/components/custom/settings/settings-about";
+import { SettingsNav } from "@/components/settings/settings-nav";
+import ModelSettings from "@/components/settings/settings-model";
+import AppSettings from "@/components/settings/settings-app";
+import AboutSettings from "@/components/settings/settings-about";
 
 import { useAppSelector } from "@/store";
 

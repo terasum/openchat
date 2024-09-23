@@ -5,7 +5,7 @@ import BugIconSVG from "@/assets/images/bug.svg?react";
 import GithubSVG from "@/assets/images/github.svg?react";
 
 import React from "react";
-import "@/components/custom/navigation.scss";
+import "@/components/navigation.scss";
 import { cn } from "@/lib/utils";
 
 import { useAppDispatch, useAppSelector } from "@/store";

@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui";
 
-import "./index.scss";
+import "@/components/custom/sidebar/index.scss";
 
 import { useAppSelector, useAppDispatch } from "@/store";
 import { RootState } from "@/store";

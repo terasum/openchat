@@ -25,7 +25,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "types": ["vite/client", "node", "vite-plugin-svgr/client"]
+    "types": ["vite/client", "node", "vite-plugin-svgr/client"],
+    "forceConsistentCasingInFileNames": true,
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]

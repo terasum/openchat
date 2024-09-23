@@ -3593,7 +3593,7 @@ dependencies = [
 
 [[package]]
 name = "openchat"
-version = "0.2.10"
+version = "0.2.11"
 dependencies = [
  "cocoa 0.24.1",
  "core-foundation 0.9.4",

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui";
-import { Textarea } from "../../ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import UpArrowIcon from "@/assets/images/up-arrow.svg?react";
 import StopIcon from "@/assets/images/stop.svg?react";
 import { isWithinTokenLimit } from "gpt-tokenizer";

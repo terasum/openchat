@@ -1,6 +1,6 @@
 import { Conversation } from '@/types';
 import { FC } from 'react';
-import { ConversationComponent } from './conversation';
+import { ConversationComponent } from '@/components/custom/sidebar/conversation';
 
 interface Props {
   loading: boolean;

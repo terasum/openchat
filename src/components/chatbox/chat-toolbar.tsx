@@ -3,7 +3,7 @@ import { Button, Badge } from "@/components/ui";
 import {
   IconLayoutSidebarRightCollapse,
 } from "@tabler/icons-react";
-import "@/components/custom/chatbox/chat-toolbar.scss";
+import "@/components/chatbox/chat-toolbar.scss";
 import { toggleSidebar } from "@/store/siderbar";
 
 import { useAppSelector, useAppDispatch } from "@/store";

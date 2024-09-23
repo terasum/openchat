@@ -4,7 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import UpArrowIcon from "@/assets/images/up-arrow.svg?react";
 import StopIcon from "@/assets/images/stop.svg?react";
 import { isWithinTokenLimit } from "gpt-tokenizer";
-import "@/components/custom/chatbox/message-input.scss";
+import "@/components/chatbox/message-input.scss";
 
 interface MessageInputProps {
   onSend: (message: string) => void;

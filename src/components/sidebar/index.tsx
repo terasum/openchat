@@ -7,15 +7,15 @@ import {
 } from "@tabler/icons-react";
 import { FC, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Conversations } from "@/components/custom/sidebar/conversations";
-import { Folders } from "@/components/custom/sidebar/folders";
-import { Search } from "@/components/custom/sidebar/search";
-import { ClearConversations } from "@/components/custom/sidebar/clear-conversations";
+import { Conversations } from "@/components/sidebar/conversations";
+import { Folders } from "@/components/sidebar/folders";
+import { Search } from "@/components/sidebar/search";
+import { ClearConversations } from "@/components/sidebar/clear-conversations";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui";
 
-import "@/components/custom/sidebar/index.scss";
+import "@/components/sidebar/index.scss";
 
 import { useAppSelector, useAppDispatch } from "@/store";
 import { RootState } from "@/store";

@@ -1,5 +1,5 @@
-import { Sidebar } from "@/components/custom/sidebar";
-import { ChatBox } from "@/components/custom/chatbox";
+import { Sidebar } from "@/components/sidebar";
+import { ChatBox } from "@/components/chatbox";
 import { useAppSelector, RootState } from "@/store";
 import { useEffect, useCallback } from "react";
 import { useAppDispatch } from "@/store";

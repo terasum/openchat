@@ -7,7 +7,7 @@ import {
   RadiobuttonIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
-import { MarkdownContent } from "@/components/custom/chatbox/markdown-content";
+import { MarkdownContent } from "@/components/chatbox/markdown-content";
 import OpenChatIconSVG from "@/assets/images/robot.svg";
 import UserIconSVG from "@/assets/images/user.svg";
 import { cn, date_format } from "@/lib/utils";

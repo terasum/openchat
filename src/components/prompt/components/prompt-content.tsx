@@ -9,9 +9,9 @@ import {
 } from "@/components/ui";
 import { CheckCheck } from "lucide-react";
 
-import { PromptMeta } from "@/components/custom/prompt/components/prompt-meta";
-import { PromptSettings } from "@/components/custom/prompt/components/prompt-settings";
-import { PromptToolbar } from "@/components/custom/prompt/components/prompt-toolbar";
+import { PromptMeta } from "@/components/prompt/components/prompt-meta";
+import { PromptSettings } from "@/components/prompt/components/prompt-settings";
+import { PromptToolbar } from "@/components/prompt/components/prompt-toolbar";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 import {

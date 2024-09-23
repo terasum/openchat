@@ -2,11 +2,11 @@ import "@/styles/global.css";
 import "@/styles/components.css";
 
 import React, { useEffect } from "react";
-import TabNavigation from "@/components/custom/TabNavigation";
+import TabNavigation from "@/components/custom/navigation";
 
-import TabPrompt from "@/TabPrompt";
+import TabPrompt from "@/tab-prompt";
 import SettingsProfilePage from "@/components/custom/settings/settings";
-import TabChat from "@/TabChat";
+import TabChat from "@/tab-chat";
 
 import { useAppSelector,useAppDispatch } from "@/store";
 import { currentTab } from "./store/navigator";

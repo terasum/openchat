@@ -9,7 +9,7 @@ import {
   updateSession,
 } from "@/api/session";
 import { chatWithOpenAI } from "@/api/openai";
-import { debounce, random_id } from "@/lib/utils";
+import { random_id } from "@/lib/utils";
 import { RootState } from "@/store";
 import { ChatFolder } from "@/types";
 
@@ -69,7 +69,7 @@ export const fetchConversations = createAsyncThunk(
 
 export const setSelectedConversation = createAsyncThunk(
   "conversation/setSelectedConversation",
-  async (conversation: Conversation, { dispatch }) => {
+  async (conversation: Conversation, {  }) => {
     const dataList = await fetchSessionDatasBySessionId(conversation.id);
     return { conversation, dataList };
   }
@@ -94,7 +94,7 @@ export const clearConversations = createAsyncThunk(
 
 export const createConversation = createAsyncThunk(
   "conversation/createConversation",
-  async (_, { dispatch }) => {
+  async (_, { }) => {
     const newConv = {
       id: random_id(18),
       title: "新会话",

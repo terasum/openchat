@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from "react";
-import ChatBubble from "./ChatBubble";
+import ChatBubble from "./chat-bubble";
 import { Popover } from "@/components/ui/text-selection-popover";
 import { lookupWord } from "@/api/app";
-import "./ChatContainer.scss";
+import "@/components/custom/chatbox/chat-container.scss";
 interface ChatContainerProps {
   messages: { content: string; role: string }[];
   className: string;
@@ -49,7 +49,7 @@ const ChatContainer: React.FC<ChatContainerProps> = ({
     <div
       className={"chat-container flex-1 flex flex-col select-none " + className}
     >
-      <div className="overflow-auto flex-1 p-4" ref={divRef}>
+      <div className="overflow-auto flex-1" ref={divRef}>
         {/* Display Messages */}
         {messages.map((msg, index) => (
           <ChatBubble

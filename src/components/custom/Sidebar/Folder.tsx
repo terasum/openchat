@@ -8,7 +8,7 @@ import {
   IconX,
 } from '@tabler/icons-react';
 import { FC, KeyboardEvent, useEffect, useState } from 'react';
-import { ConversationComponent } from './Conversation';
+import { ConversationComponent } from './conversation';
 
 interface Props {
   searchTerm: string;
@@ -56,7 +56,7 @@ export const Folder: FC<Props> = ({
     setIsRenaming(false);
   };
 
-  const handleDrop = (e: any, folder: ChatFolder) => {
+  const handleDrop = (e: any, _folder: ChatFolder) => {
     if (e.dataTransfer) {
       setIsOpen(true);
 

@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Badge } from "@/components/ui";
-import SidebarIcon from "@/assets/images/side-bar-fill.svg";
-import "../ChatBox/Toolbar.scss";
+import {
+  IconLayoutSidebarRightCollapse,
+} from "@tabler/icons-react";
+import "@/components/custom/chatbox/chat-toolbar.scss";
 import { toggleSidebar } from "@/store/siderbar";
 
 import { useAppSelector, useAppDispatch } from "@/store";
@@ -12,23 +14,26 @@ const Toolbar: React.FC= () => {
   const activatedPrompt = useAppSelector(
     (state) => state.prompts.activatedPrompt
   );
+  const {sidebarOpen} = useAppSelector(
+    (state) => state.sidebar
+  );
 
   const model_provider = useAppSelector(
     (state) => state.appConfig.model.model_provider
   );
 
   return (
-    <div className="toolbar w-full text-white flex flex-row justify-start items-center px-4 pt-1 pb-1 select-none">
-      <Button
-        className="h-[20px] pl-2 pr-2 shadow-none mr-3"
-        size="sm"
-        variant="outline"
+    <div className="toolbar w-full h-[36px] mt-2  gap-2 flex flex-row justify-start items-center select-none">
+       {!sidebarOpen && <Button
+            variant="ghost"
+            size="icon"
+            className="hover:bg-gray-100 ml-2"
         onClick={() => dispatch(toggleSidebar())}
       >
-        <img className="w-[14px] h-[14px]" src={SidebarIcon} />
-      </Button>
+        <IconLayoutSidebarRightCollapse size={18} />
+      </Button>}
 
-      <div className="flex flex-row items-center cursor-default gap-1">
+      <div className="flex flex-row items-center cursor-default gap-1 h-[30px] ml-2">
         <Badge variant="outline">{model_provider}</Badge>
         <Badge variant="outline">{activatedPrompt.title}</Badge>
       </div>

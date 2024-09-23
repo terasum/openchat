@@ -13,7 +13,7 @@ import {
 import { chatWithOpenAI } from "@/api/openai";
 import { debounce, random_id } from "@/lib/utils";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/use-state";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { asyncPromptActiveFetch } from "@/store/prompts";
 
 export interface ConvData extends SessionData {}

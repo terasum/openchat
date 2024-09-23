@@ -11,7 +11,7 @@ import { ask } from "@tauri-apps/api/dialog";
 
 import { Prompt } from "@/rust-bindings";
 
-import { useAppSelector, useAppDispatch } from "@/hooks/use-state";
+import { useAppSelector, useAppDispatch } from "@/store";
 
 import { asyncPromptDelete, asyncPromptUpdate } from "@/store/prompts";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui";
-import { Textarea } from "../ui/textarea";
+import { Textarea } from "../../ui/textarea";
 import UpArrowIcon from "@/assets/images/up-arrow.svg?react";
 import StopIcon from "@/assets/images/stop.svg?react";
 import { isWithinTokenLimit } from "gpt-tokenizer";
@@ -54,7 +54,6 @@ const MessageInput: React.FC<MessageInputProps> = ({
   };
 
   const handleKeyEnterDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    console.log("keydown", {key: e})
     if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       handleSendMessage();

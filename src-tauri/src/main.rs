@@ -8,7 +8,7 @@ use tauri::{Manager};
 use window_shadows::set_shadow;
 
 #[cfg(target_os = "macos")]
-use tauri::{AboutMetadata, Manager, Menu, MenuItem, Submenu};
+use tauri::{AboutMetadata, Menu, MenuItem, Submenu};
 
 mod commands;
 mod db;
@@ -100,7 +100,7 @@ async fn main() -> std::io::Result<()> {
     // #[cfg(target_os = "windows")]
     // let menu = Menu::new().add_submenu(edit_menu);
 
-    let app_builder = tauri::Builder::default().setup(|_app| {
+    let mut app_builder = tauri::Builder::default().setup(|_app| {
         #[cfg(target_os = "windows")]
         set_shadow(&_app.get_window("main").unwrap(), true).expect("Unsupported platform!");
 
@@ -122,8 +122,10 @@ async fn main() -> std::io::Result<()> {
     });
 
     #[cfg(target_os = "macos")]
-    app_builder.menu(menu);
-    // .system_tray(tray::main_menu())
+    {
+        app_builder = app_builder.menu(menu);
+        // .system_tray(tray::main_menu())
+    }
 
     app_builder
         .plugin(tauri_plugin_system_info::init())

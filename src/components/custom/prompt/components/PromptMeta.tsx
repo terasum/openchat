@@ -1,5 +1,5 @@
 import { Input, Separator } from "@/components/ui";
-import { useAppSelector, useAppDispatch } from "@/hooks/use-state";
+import { useAppSelector, useAppDispatch } from "@/store";
 import { updateSelectPrompt } from "@/store/prompts";
 
 export function PromptMeta() {
@@ -9,6 +9,7 @@ export function PromptMeta() {
   const activatedPrompt = useAppSelector(
     (state) => state.prompts.activatedPrompt
   );
+
   const dispatch = useAppDispatch();
 
   const onTitleChange = (title: string) => {
@@ -19,15 +20,14 @@ export function PromptMeta() {
       })
     );
   };
-  const onDescChange = (title: string) => {
+  const onDescChange = (desc: string) => {
     dispatch(
       updateSelectPrompt({
         ...selectedPrompt,
-        desc: title,
+        desc: desc,
       })
     );
   };
-
 
   return (
     <>
@@ -37,8 +37,8 @@ export function PromptMeta() {
             <span className="ext-md text-slate-500 pr-4">名称:</span>
             <Input
               className="text-md w-[280px] outline-none shadow-none"
-              defaultValue={selectedPrompt.title || ""}
-              onContextMenu={(e)=>{
+              defaultValue={selectedPrompt.title}
+              onContextMenu={(e) => {
                 e.stopPropagation();
               }}
               onChange={(e) => {
@@ -54,8 +54,8 @@ export function PromptMeta() {
             <span className="ext-md text-slate-500 pr-4">简介:</span>
             <Input
               className="ext-md w-[280px] outline-none shadow-none"
-              defaultValue={selectedPrompt.desc || ""}
-              onContextMenu={(e)=>{
+              defaultValue={selectedPrompt.desc}
+              onContextMenu={(e) => {
                 e.stopPropagation();
               }}
               onChange={(e) => {

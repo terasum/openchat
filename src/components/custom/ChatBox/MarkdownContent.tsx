@@ -2,7 +2,7 @@ import React from "react";
 import MarkdownIt from "markdown-it";
 import MarkdownItHighlight from "markdown-it-highlightjs";
 import mk from "@traptitech/markdown-it-katex";
-import { copyCode, alink } from "../../lib/copy";
+import { copyCode, alink } from "../../../lib/copy";
 import "./MarkdownContent.scss";
 import "highlight.js/styles/default.css";
 

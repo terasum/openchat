@@ -35,6 +35,7 @@ const promptsSlice = createSlice({
       const selected = state.prompts.find((p) => p.id == action.payload);
       if (!selected) return;
       state.selectedPrompt = selected;
+      console.log("prompts.setSelectPrompt.selected", {action, selected, currentSelectPrompt: state.selectedPrompt})
     },
     updateSelectPrompt: (state, action) => {
       console.log("prompts.updateSelectPrompt", { action });

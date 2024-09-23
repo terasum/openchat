@@ -20,3 +20,4 @@ export * from "./command";
 export * from "./popover";
 export * from "./dialog";
 export * from "./textarea";
+export * from "./alert-dialog";

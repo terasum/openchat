@@ -1,6 +1,6 @@
-import Toolbar from "@/components/custom/ChatBox/Toolbar";
-import ChatContainer from "@/components/custom/ChatBox/ChatContainer";
-import MessageInput from "@/components/custom/ChatBox/MessageInput";
+import Toolbar from "@/components/custom/chatbox/chat-toolbar";
+import ChatContainer from "@/components/custom/chatbox/chat-container";
+import MessageInput from "@/components/custom/chatbox/message-input";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { sendMessage, setIsResponsing } from "@/store/conversation";
 
@@ -21,7 +21,7 @@ export const ChatBox = () => {
       <Toolbar/>
 
       <ChatContainer
-        className="h-[calc(100vh-140px)]"
+        className="h-[calc(100vh-160px)]"
         messages={messages.map(msg => ({ content: msg.message, role: msg.role }))}
       />
       <MessageInput

@@ -1,45 +1,57 @@
-import { ChatFolder, Conversation } from "@/types";
+import { Conversation } from "@/types";
 import {
   IconFolderPlus,
   IconMessagesOff,
   IconPlus,
   IconLayoutSidebarLeftCollapse,
 } from "@tabler/icons-react";
-import { FC, useEffect, useState, useRef } from "react";
+import { FC, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Conversations } from "./Conversations";
-import { Folders } from "./Folders";
-import { Search } from "./Search";
+import { Conversations } from "@/components/custom/sidebar/conversations";
+import { Folders } from "@/components/custom/sidebar/folders";
+import { Search } from "@/components/custom/sidebar/search";
+import { ClearConversations } from "@/components/custom/sidebar/clear-conversations";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui";
-import { ClearConversations } from "./ClearConversations";
+
 import "./index.scss";
 
 import { useAppSelector, useAppDispatch } from "@/store";
 import { RootState } from "@/store";
-import { createFolder, deleteFolder, updateFolder, toggleSidebar } from "@/store/siderbar";
+import {
+  deleteFolder,
+  updateFolder,
+  toggleSidebar,
+} from "@/store/siderbar";
 
 import {
   setSelectedConversation,
   createConversation,
   updateConversationAsync,
-  clearConversations,
   deleteConversation,
 } from "@/store/conversation";
-
 
 export const Sidebar: FC = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation("sidebar");
 
-
-  const { loading, folders } =
-    useAppSelector((state: RootState) => state.sidebar);
+  const { loading, folders } = useAppSelector(
+    (state: RootState) => state.sidebar
+  );
 
   const { sidebarOpen } = useAppSelector((state: RootState) => state.sidebar);
 
-  const {conversationList} = useAppSelector((state: RootState) => state.conversation);
+  const { conversationList } = useAppSelector(
+    (state: RootState) => state.conversation
+  );
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const filteredConversations = searchTerm
+    ? conversationList.filter((conversation) =>
+        conversation.title.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : conversationList;
 
   const conversations = conversationList.map((conversation) => ({
     ...conversation,
@@ -47,15 +59,13 @@ export const Sidebar: FC = () => {
     folderId: 0,
   }));
 
-  const selectedConversation = useAppSelector((state: RootState) => state.conversation.selectedConversation);
-
-
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
+  const selectedConversation = useAppSelector(
+    (state: RootState) => state.conversation.selectedConversation
+  );
 
   const conversationsDivRef = useRef<HTMLDivElement>(null);
 
-  const onCreateFolder = (name: string) => dispatch(createFolder(name));
+  // const _onCreateFolder = (name: string) => dispatch(createFolder(name));
 
   const onDeleteFolder = (folderId: number) => dispatch(deleteFolder(folderId));
 
@@ -71,13 +81,16 @@ export const Sidebar: FC = () => {
     dispatch(deleteConversation(conversation.id));
 
   const onToggleSidebar = () => {
-    console.log("onToggleSidebar", {sidebarOpen});
+    console.log("onToggleSidebar", { sidebarOpen });
     dispatch(toggleSidebar());
-  }
+  };
 
-  const onClearConversations = () => dispatch(clearConversations());
+  const onClearConversations = () => {
+    alert("Not implemented");
+    // dispatch(clearConversations());
+  };
 
-  const handleUpdateConversation = (conversation: Conversation) => {
+  const handleUpdateConversation = (conversation: Conversation): void => {
     dispatch(updateConversationAsync(conversation));
     setSearchTerm("");
   };
@@ -100,7 +113,7 @@ export const Sidebar: FC = () => {
     e.preventDefault();
   };
 
-  const highlightDrop = (e: any) => {
+  const highlightDrop = (_e: any) => {
     if (conversationsDivRef.current) {
       const dropOverlay = document.createElement("div");
       dropOverlay.className = "drop-overlay";
@@ -113,7 +126,7 @@ export const Sidebar: FC = () => {
     }
   };
 
-  const removeHighlight = (e: any) => {
+  const removeHighlight = (_e: any) => {
     if (conversationsDivRef.current) {
       const overlay = conversationsDivRef.current.querySelector(".overlay");
       if (overlay) {
@@ -122,21 +135,6 @@ export const Sidebar: FC = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (searchTerm) {
-  //     setFilteredConversations(
-  //       conversations.filter((conversation) => {
-  //         const searchable =
-  //           conversation.name.toLocaleLowerCase() +
-  //           " " +
-  //           conversation.messages.map((message) => message.content).join(" ");
-  //         return searchable.toLowerCase().includes(searchTerm.toLowerCase());
-  //       })
-  //     );
-  //   } else {
-  //     setFilteredConversations(conversations);
-  //   }
-  // }, [searchTerm, conversations]);
 
   return (
     <aside
@@ -160,7 +158,10 @@ export const Sidebar: FC = () => {
             variant="ghost"
             size="icon"
             className="hover:bg-white"
-            onClick={() => onCreateFolder(t("New folder"))}
+            onClick={() => {
+              alert("Not implemented");
+              // onCreateFolder(t("New folder")
+            }}
           >
             <IconFolderPlus size={18} />
           </Button>
@@ -176,7 +177,7 @@ export const Sidebar: FC = () => {
           <div className="flex border-b border-white/20 pb-2">
             <Folders
               searchTerm={searchTerm}
-              conversations={conversations.filter(
+              conversations={filteredConversations.filter(
                 (conversation) => conversation.folderId !== 0
               )}
               selectedConversation={selectedConversation}
@@ -203,7 +204,7 @@ export const Sidebar: FC = () => {
           >
             <Conversations
               loading={loading}
-              conversations={conversations.filter(
+              conversations={filteredConversations.filter(
                 (conversation) =>
                   conversation.folderId === 0 ||
                   !folders[conversation.folderId - 1]
@@ -224,15 +225,6 @@ export const Sidebar: FC = () => {
         )}
       </div>
 
-      {/* <SidebarSettings
-        lightMode={lightMode}
-        onToggleLightMode={onToggleLightMode}
-        onClearConversations={onClearConversations}
-        onExportConversations={onExportConversations}
-        onImportConversations={onImportConversations}
-        keyConfiguration={keyConfiguration}
-        onKeyConfigurationChange={onKeyConfigurationChange}
-      /> */}
       <div className="flex flex-row justify-center">
         <Button
           size="icon"

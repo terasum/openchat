@@ -26,8 +26,8 @@ import {
 
 import { Search, PlusCircle, DownloadCloud } from "lucide-react";
 
-import { PromptList } from "@/components/custom/prompt/components/PromptList";
-import { PromptContent } from "@/components/custom/prompt/components/PromptContent";
+import { PromptList } from "@/components/custom/prompt/components/prompt-list";
+import { PromptContent } from "@/components/custom/prompt/components/prompt-content";
 
 import { useAppDispatch, useAppSelector } from "@/store";
 

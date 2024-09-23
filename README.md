@@ -29,7 +29,7 @@
 <table cellspacing="0" cellpadding="0" style="border:none">
 <tr style="border:none">
 <td style="border:none"><img src="./docs/images/ui-index.png" width="480"/></td>
-<td style="border:none"><img src="./docs/images/ui-settings.png" width="480"/></td>
+<td style="border:none"><img src="./docs/images/ui-prompts.png" width="480"/></td>
 </tr>
 </table>
 </div>

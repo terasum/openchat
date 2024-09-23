@@ -1,6 +1,6 @@
 import { Conversation } from '@/types';
 import { FC } from 'react';
-import { ConversationComponent } from './Conversation';
+import { ConversationComponent } from './conversation';
 
 interface Props {
   loading: boolean;

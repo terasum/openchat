@@ -1,6 +1,6 @@
 import { ChatFolder, Conversation } from "@/types";
 import { FC } from "react";
-import { Folder } from "./Folder";
+import { Folder } from "./folder";
 
 interface Props {
   searchTerm: string;

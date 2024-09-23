@@ -1,7 +1,7 @@
-import { Sidebar } from "@/components/custom/Sidebar/sidebar";
-import { ChatBox } from "@/components/custom/ChatBox";
+import { Sidebar } from "@/components/custom/sidebar";
+import { ChatBox } from "@/components/custom/chatbox";
 import { useAppSelector, RootState } from "@/store";
-import { useMemo, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useAppDispatch } from "@/store";
 import { fetchConversations } from "@/store/conversation";
 

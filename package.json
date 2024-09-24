@@ -4,14 +4,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:app": "tauri dev",
     "test": "vitest",
     "build": "tsc && vite build",
-    "build:app": "tauri build",
     "preview": "vite preview",
-    "tauri": "tauri",
     "addui": "npx shadcn add -o",
-    "build:icon": "tauri icon ./src-tauri/assets/icon.png",
+    "tauri": "sh scripts/tauri-wrapper.sh",
+    "dev:app": "sh scripts/tauri-wrapper.sh dev",
+    "build:app": "sh scripts/tauri-wrapper.sh build",
+    "build:icon": "sh scripts/tauri-wrapper.sh icon ./src-tauri/assets/icon.png",
     "prepare": "husky"
   },
   "dependencies": {

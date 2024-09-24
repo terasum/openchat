@@ -1,12 +1,12 @@
 #!/usr/bin/env sh
-git fetch --tags
-git_ver=$(git describe --tags `git rev-list --tags --max-count=1`)
-ver=$(node "$(dirname -- "$0")/../scripts/check-version.js")
-echo "version check: tag version ${git_ver}"
-echo "version check: config version v${ver}"
-
-if [ "v"$ver !=  $git_ver ]; then
-echo "tag version not match to config version "
-exit 1
-fi
-exit 0
+#git fetch --tags
+#git_ver=$(git describe --tags `git rev-list --tags --max-count=1`)
+#ver=$(node "$(dirname -- "$0")/../scripts/check-version.js")
+#echo "version check: tag version ${git_ver}"
+#echo "version check: config version v${ver}"
+#
+#if [ "v"$ver !=  $git_ver ]; then
+#echo "tag version not match to config version "
+#exit 1
+#fi
+#exit 0

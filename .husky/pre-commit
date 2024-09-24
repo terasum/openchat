@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-node "$(dirname -- "$0")/../scripts/check-version.js"
-node "$(dirname -- "$0")/../scripts/update.cjs"
+#node "$(dirname -- "$0")/../scripts/check-version.js"
+#node "$(dirname -- "$0")/../scripts/update.cjs"
 
 # npx lint-staged

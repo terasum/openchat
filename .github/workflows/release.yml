@@ -149,6 +149,9 @@ jobs:
           TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_KEY_PASSWORD: ""
         with:
+          projectPath: ${{ github.workspace }}
+          includeUpdaterJson: true
+          tauriScript: "pnpm run tauri"
           releaseId: ${{ needs.create-release.outputs.release_id }}
           args: ${{ matrix.args }}
 

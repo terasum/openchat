@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -evx
 FILEPATH=$(readlink -f $0)
 ROOTDIR=$(readlink -f "$(dirname "$FILEPATH")/../")
 echo $ROOTDIR

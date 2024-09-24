@@ -71,7 +71,6 @@ jobs:
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.OPENCHAT_RUST_DEPLOY_KEY_PRIVATE }}
-          ssh-public-key: ${{ secrets.OPENCHAT_RUST_DEPLOY_KEY_PUBLIC }}
       
       - name: Initialize submodule
         run: git submodule update --init --recursive --remote
@@ -125,6 +124,16 @@ jobs:
 
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: prepare tauri config (macos and ubuntu)
+        if: matrix.platform == 'macos-latest' || matrix.platform == 'ubuntu-22.04'
+        run: |
+          sed -i '' -E "s|#__ROOTDIR__#|${{ github.workspace }}|g" src-tauri/tauri.conf.template.json > src-tauri/tauri.conf.json
+
+      - name:  prepare tauri config (windows)
+        if: matrix.platform == 'windows-latest'
+        run: |
+          (Get-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs).Replace('#__ROOTDIR__#', 'D:\\a\\openchat\\openchat') | Set-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs
 
       - uses: tauri-apps/tauri-action@v0
         id: tauri-action

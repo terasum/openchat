@@ -128,13 +128,13 @@ jobs:
       - name: prepare tauri config (macos)
         if: matrix.platform == 'macos-latest'
         run: |
-          sed -i '' -E "s|#__ROOTDIR__#|${{ github.workspace }}|g" src-tauri/tauri.conf.template.json > src-tauri/tauri.conf.json
+          sed  -E "s|#__ROOTDIR__#|${{ github.workspace }}|g" src-tauri/tauri.conf.template.json > src-tauri/tauri.conf.json
           cat src-tauri/tauri.conf.json
 
       - name: prepare tauri config (ubuntu)
         if:  matrix.platform == 'ubuntu-22.04'
         run: |
-          sed -i -E "s|#__ROOTDIR__#|${{ github.workspace }}|g" src-tauri/tauri.conf.template.json > src-tauri/tauri.conf.json
+          sed -E "s|#__ROOTDIR__#|${{ github.workspace }}|g" src-tauri/tauri.conf.template.json > src-tauri/tauri.conf.json
           cat src-tauri/tauri.conf.json
 
       - name:  prepare tauri config (windows)

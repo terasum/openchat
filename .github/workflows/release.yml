@@ -125,23 +125,6 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: prepare tauri config (macos)
-        if: matrix.platform == 'macos-latest'
-        run: |
-          sed  -E "s|#__ROOTDIR__#|${{ github.workspace }}|g" src-tauri/tauri.conf.template.json > src-tauri/tauri.conf.json5
-          cat src-tauri/tauri.conf.json5
-
-      - name: prepare tauri config (ubuntu)
-        if:  matrix.platform == 'ubuntu-22.04'
-        run: |
-          sed -E "s|#__ROOTDIR__#|${{ github.workspace }}|g" src-tauri/tauri.conf.template.json > src-tauri/tauri.conf.json5
-          cat src-tauri/tauri.conf.json5
-
-      - name:  prepare tauri config (windows)
-        if: matrix.platform == 'windows-latest'
-        run: |
-          (Get-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs).Replace('#__ROOTDIR__#', 'D:\\a\\openchat\\openchat') | Set-Content D:\a\openchat\openchat\src-tauri\src\db\prisma_client.rs
-          
       - uses: tauri-apps/tauri-action@v0
         id: tauri-action
         env:
@@ -151,7 +134,6 @@ jobs:
         with:
           projectPath: ${{ github.workspace }}
           includeUpdaterJson: true
-          tauriScript: "pnpm run tauri"
           releaseId: ${{ needs.create-release.outputs.release_id }}
           args: ${{ matrix.args }}
 

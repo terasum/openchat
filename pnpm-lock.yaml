@@ -162,8 +162,8 @@ importers:
         specifier: https://github.com/tauri-apps/tauri-plugin-store
         version: git+https://git@github.com:tauri-apps/tauri-plugin-store.git#0b7079b8c55bf25f6d9d9e8c57812d03b48a9788
       tauri-plugin-system-info-api:
-        specifier: ^2.0.2
-        version: 2.0.3
+        specifier: ^2.0.6
+        version: 2.0.6(typescript@5.5.4)
       tauri-plugin-window-state-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-window-state
         version: git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#aa0b2a9cbf96f87a172e999670be79c4bb5d67dd
@@ -5071,8 +5071,8 @@ packages:
     resolution: {commit: 0b7079b8c55bf25f6d9d9e8c57812d03b48a9788, repo: git@github.com:tauri-apps/tauri-plugin-store.git, type: git}
     version: 0.0.0
 
-  tauri-plugin-system-info-api@2.0.3:
-    resolution: {integrity: sha512-0aedG6Csp7lDdTWWEW2BkVnUG4PyYSqwOjPHc7p+GhgSeQ5TPo/WSl1UgR8lWNXVCvMGs0WmrPDtKrfq5y+Yig==}
+  tauri-plugin-system-info-api@2.0.6:
+    resolution: {integrity: sha512-7q8ieMK1bweMiLDbIWNNX3Dy7KNNwiB+WNEqKQutl0TKEGAb+efpy2SAzVLGu+i9tjDagCai8fZNuLLIpoQ9TA==}
 
   tauri-plugin-window-state-api@git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
     resolution: {commit: aa0b2a9cbf96f87a172e999670be79c4bb5d67dd, repo: git@github.com:tauri-apps/tauri-plugin-window-state.git, type: git}
@@ -5324,8 +5324,13 @@ packages:
     resolution: {integrity: sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==}
     hasBin: true
 
-  valibot@0.36.0:
-    resolution: {integrity: sha512-CjF1XN4sUce8sBK9TixrDqFM7RwNkuXdJu174/AwmQUB62QbCQADg5lLe8ldBalFgtj1uKj+pKwDJiNo4Mn+eQ==}
+  valibot@0.40.0:
+    resolution: {integrity: sha512-XHKnaVtwHqxPwnGOsLrwka9CEaL7yNeLNp707OKv/bmT29GnPVdl6PxBOZ6BW7hF66/6QT6iVbOlnW7qVPmoKw==}
+    peerDependencies:
+      typescript: '>=5'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
@@ -10788,10 +10793,12 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
-  tauri-plugin-system-info-api@2.0.3:
+  tauri-plugin-system-info-api@2.0.6(typescript@5.5.4):
     dependencies:
       '@tauri-apps/api': 2.0.0-rc.4
-      valibot: 0.36.0
+      valibot: 0.40.0(typescript@5.5.4)
+    transitivePeerDependencies:
+      - typescript
 
   tauri-plugin-window-state-api@git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
     dependencies:
@@ -11025,7 +11032,9 @@ snapshots:
 
   uuid@10.0.0: {}
 
-  valibot@0.36.0: {}
+  valibot@0.40.0(typescript@5.5.4):
+    optionalDependencies:
+      typescript: 5.5.4
 
   validate-npm-package-license@3.0.4:
     dependencies:

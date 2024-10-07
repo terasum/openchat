@@ -163,13 +163,13 @@ importers:
         version: git+https://git@github.com:tauri-apps/tauri-plugin-store.git#0b7079b8c55bf25f6d9d9e8c57812d03b48a9788
       tauri-plugin-system-info-api:
         specifier: ^2.0.6
-        version: 2.0.6(typescript@5.5.4)
+        version: 2.0.6(typescript@5.6.2)
       tauri-plugin-window-state-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-window-state
         version: git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#aa0b2a9cbf96f87a172e999670be79c4bb5d67dd
       use-text-selection:
         specifier: ^1.1.5
-        version: 1.1.5(@swc/helpers@0.5.13)(postcss@8.4.41)(react@18.3.1)(typescript@5.5.4)
+        version: 1.1.5(@swc/helpers@0.5.13)(postcss@8.4.41)(react@18.3.1)(typescript@5.6.2)
     devDependencies:
       '@commitlint/config-conventional':
         specifier: ^19.5.0
@@ -206,7 +206,7 @@ importers:
         version: 10.4.20(postcss@8.4.41)
       commitlint:
         specifier: ^19.5.0
-        version: 19.5.0(@types/node@18.19.47)(typescript@5.5.4)
+        version: 19.5.0(@types/node@18.19.47)(typescript@5.6.2)
       globby:
         specifier: ^14.0.2
         version: 14.0.2
@@ -229,8 +229,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       typescript:
-        specifier: ^5.2.2
-        version: 5.5.4
+        specifier: ^5.6.2
+        version: 5.6.2
       vite:
         specifier: ^5.4.8
         version: 5.4.8(@types/node@18.19.47)(lightningcss@1.27.0)(sass-embedded@1.77.8)
@@ -5224,8 +5224,8 @@ packages:
   typedarray@0.0.6:
     resolution: {integrity: sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==}
 
-  typescript@5.5.4:
-    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+  typescript@5.6.2:
+    resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -5709,11 +5709,11 @@ snapshots:
 
   '@bufbuild/protobuf@1.10.0': {}
 
-  '@commitlint/cli@19.5.0(@types/node@18.19.47)(typescript@5.5.4)':
+  '@commitlint/cli@19.5.0(@types/node@18.19.47)(typescript@5.6.2)':
     dependencies:
       '@commitlint/format': 19.5.0
       '@commitlint/lint': 19.5.0
-      '@commitlint/load': 19.5.0(@types/node@18.19.47)(typescript@5.5.4)
+      '@commitlint/load': 19.5.0(@types/node@18.19.47)(typescript@5.6.2)
       '@commitlint/read': 19.5.0
       '@commitlint/types': 19.5.0
       tinyexec: 0.3.0
@@ -5760,15 +5760,15 @@ snapshots:
       '@commitlint/rules': 19.5.0
       '@commitlint/types': 19.5.0
 
-  '@commitlint/load@19.5.0(@types/node@18.19.47)(typescript@5.5.4)':
+  '@commitlint/load@19.5.0(@types/node@18.19.47)(typescript@5.6.2)':
     dependencies:
       '@commitlint/config-validator': 19.5.0
       '@commitlint/execute-rule': 19.5.0
       '@commitlint/resolve-extends': 19.5.0
       '@commitlint/types': 19.5.0
       chalk: 5.3.0
-      cosmiconfig: 9.0.0(typescript@5.5.4)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@18.19.47)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4)
+      cosmiconfig: 9.0.0(typescript@5.6.2)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@18.19.47)(cosmiconfig@9.0.0(typescript@5.6.2))(typescript@5.6.2)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -6109,14 +6109,14 @@ snapshots:
       - '@parcel/core'
       - '@swc/helpers'
 
-  '@parcel/config-default@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.5.4)':
+  '@parcel/config-default@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.6.2)':
     dependencies:
       '@parcel/bundler-default': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
       '@parcel/compressor-raw': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
       '@parcel/core': 2.12.0(@swc/helpers@0.5.13)
       '@parcel/namer-default': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
       '@parcel/optimizer-css': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
-      '@parcel/optimizer-htmlnano': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.5.4)
+      '@parcel/optimizer-htmlnano': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.6.2)
       '@parcel/optimizer-image': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
       '@parcel/optimizer-svgo': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
       '@parcel/optimizer-swc': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
@@ -6249,10 +6249,10 @@ snapshots:
       - '@parcel/core'
       - '@swc/helpers'
 
-  '@parcel/optimizer-htmlnano@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.5.4)':
+  '@parcel/optimizer-htmlnano@2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.6.2)':
     dependencies:
       '@parcel/plugin': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)
-      htmlnano: 2.1.1(postcss@8.4.41)(svgo@2.8.0)(typescript@5.5.4)
+      htmlnano: 2.1.1(postcss@8.4.41)(svgo@2.8.0)(typescript@5.6.2)
       nullthrows: 1.1.1
       posthtml: 0.16.6
       svgo: 2.8.0
@@ -8164,9 +8164,9 @@ snapshots:
 
   commander@8.3.0: {}
 
-  commitlint@19.5.0(@types/node@18.19.47)(typescript@5.5.4):
+  commitlint@19.5.0(@types/node@18.19.47)(typescript@5.6.2):
     dependencies:
-      '@commitlint/cli': 19.5.0(@types/node@18.19.47)(typescript@5.5.4)
+      '@commitlint/cli': 19.5.0(@types/node@18.19.47)(typescript@5.6.2)
       '@commitlint/types': 19.5.0
     transitivePeerDependencies:
       - '@types/node'
@@ -8328,12 +8328,12 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@18.19.47)(cosmiconfig@9.0.0(typescript@5.5.4))(typescript@5.5.4):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@18.19.47)(cosmiconfig@9.0.0(typescript@5.6.2))(typescript@5.6.2):
     dependencies:
       '@types/node': 18.19.47
-      cosmiconfig: 9.0.0(typescript@5.5.4)
+      cosmiconfig: 9.0.0(typescript@5.6.2)
       jiti: 1.21.6
-      typescript: 5.5.4
+      typescript: 5.6.2
 
   cosmiconfig@8.1.3:
     dependencies:
@@ -8342,14 +8342,14 @@ snapshots:
       parse-json: 5.2.0
       path-type: 4.0.0
 
-  cosmiconfig@9.0.0(typescript@5.5.4):
+  cosmiconfig@9.0.0(typescript@5.6.2):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.5.4
+      typescript: 5.6.2
 
   cross-spawn@7.0.3:
     dependencies:
@@ -9042,9 +9042,9 @@ snapshots:
     dependencies:
       void-elements: 3.1.0
 
-  htmlnano@2.1.1(postcss@8.4.41)(svgo@2.8.0)(typescript@5.5.4):
+  htmlnano@2.1.1(postcss@8.4.41)(svgo@2.8.0)(typescript@5.6.2):
     dependencies:
-      cosmiconfig: 9.0.0(typescript@5.5.4)
+      cosmiconfig: 9.0.0(typescript@5.6.2)
       posthtml: 0.16.6
       timsort: 0.3.0
     optionalDependencies:
@@ -9910,9 +9910,9 @@ snapshots:
       registry-url: 6.0.1
       semver: 7.6.3
 
-  parcel@2.12.0(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.5.4):
+  parcel@2.12.0(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.6.2):
     dependencies:
-      '@parcel/config-default': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.5.4)
+      '@parcel/config-default': 2.12.0(@parcel/core@2.12.0(@swc/helpers@0.5.13))(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.6.2)
       '@parcel/core': 2.12.0(@swc/helpers@0.5.13)
       '@parcel/diagnostic': 2.12.0
       '@parcel/events': 2.12.0
@@ -10793,10 +10793,10 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
-  tauri-plugin-system-info-api@2.0.6(typescript@5.5.4):
+  tauri-plugin-system-info-api@2.0.6(typescript@5.6.2):
     dependencies:
       '@tauri-apps/api': 2.0.0-rc.4
-      valibot: 0.40.0(typescript@5.5.4)
+      valibot: 0.40.0(typescript@5.6.2)
     transitivePeerDependencies:
       - typescript
 
@@ -10932,7 +10932,7 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typescript@5.5.4: {}
+  typescript@5.6.2: {}
 
   uc.micro@2.1.0: {}
 
@@ -11011,9 +11011,9 @@ snapshots:
     dependencies:
       react: 18.3.1
 
-  use-text-selection@1.1.5(@swc/helpers@0.5.13)(postcss@8.4.41)(react@18.3.1)(typescript@5.5.4):
+  use-text-selection@1.1.5(@swc/helpers@0.5.13)(postcss@8.4.41)(react@18.3.1)(typescript@5.6.2):
     dependencies:
-      parcel: 2.12.0(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.5.4)
+      parcel: 2.12.0(@swc/helpers@0.5.13)(postcss@8.4.41)(typescript@5.6.2)
       react: 18.3.1
     transitivePeerDependencies:
       - '@swc/helpers'
@@ -11032,9 +11032,9 @@ snapshots:
 
   uuid@10.0.0: {}
 
-  valibot@0.40.0(typescript@5.5.4):
+  valibot@0.40.0(typescript@5.6.2):
     optionalDependencies:
-      typescript: 5.5.4
+      typescript: 5.6.2
 
   validate-npm-package-license@3.0.4:
     dependencies:

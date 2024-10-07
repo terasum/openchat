@@ -47,7 +47,7 @@
     "date-fns": "^3.6.0",
     "gpt-tokenizer": "^2.4.0",
     "highlight.js": "^11.10.0",
-    "lucide-react": "^0.436.0",
+    "lucide-react": "^0.447.0",
     "markdown-it": "^14.1.0",
     "markdown-it-highlightjs": "^4.2.0",
     "nanoid": "^5.0.7",

@@ -75,8 +75,8 @@ importers:
         specifier: ^2.2.7
         version: 2.2.7(react-redux@9.1.2(@types/react@18.3.4)(react@18.3.1)(redux@5.0.1))(react@18.3.1)
       '@tabler/icons-react':
-        specifier: ^3.17.0
-        version: 3.17.0(react@18.3.1)
+        specifier: ^3.23.0
+        version: 3.23.0(react@18.3.1)
       '@tauri-apps/api':
         specifier: ^1.2.0
         version: 1.6.0
@@ -151,22 +151,22 @@ importers:
         version: 1.0.7(tailwindcss@3.4.10)
       tauri-plugin-autostart-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-autostart
-        version: git+https://git@github.com:tauri-apps/tauri-plugin-autostart.git#6e4666fe3462f0534e90ed6bc075394dff1a1bde
+        version: git+https://git@github.com:tauri-apps/tauri-plugin-autostart.git#a9b47759a9f3887f9b49809a48aeff45e048f51f
       tauri-plugin-log-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-log
-        version: git+https://git@github.com:tauri-apps/tauri-plugin-log.git#cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f
+        version: git+https://git@github.com:tauri-apps/tauri-plugin-log.git#ee47371e75db7bc5190c74c3f94cfad3b81ac36d
       tauri-plugin-sql-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-sql
-        version: git+https://git@github.com:tauri-apps/tauri-plugin-sql.git#10c441d2e90e5df0e414c40ba81f597b6c38b164
+        version: git+https://git@github.com:tauri-apps/tauri-plugin-sql.git#84c076c4a341ed9216a99229679ee34ace1efa8c
       tauri-plugin-store-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-store
-        version: git+https://git@github.com:tauri-apps/tauri-plugin-store.git#0b7079b8c55bf25f6d9d9e8c57812d03b48a9788
+        version: git+https://git@github.com:tauri-apps/tauri-plugin-store.git#a599aee9b0ec92c68ac992ca25084c205ef468eb
       tauri-plugin-system-info-api:
         specifier: ^2.0.6
         version: 2.0.6(typescript@5.6.2)
       tauri-plugin-window-state-api:
         specifier: https://github.com/tauri-apps/tauri-plugin-window-state
-        version: git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#aa0b2a9cbf96f87a172e999670be79c4bb5d67dd
+        version: git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#e4f784d8313c937fe4944827da5b51274ef1b93e
       use-text-selection:
         specifier: ^1.1.5
         version: 1.1.5(@swc/helpers@0.5.13)(postcss@8.4.41)(react@18.3.1)(typescript@5.6.2)
@@ -2056,13 +2056,13 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tabler/icons-react@3.17.0':
-    resolution: {integrity: sha512-Ndm9Htv7KpIU1PYYrzs5EMhyA3aZGcgaxUp9Q1XOxcRZ+I0X+Ub2WS5f4bkRyDdL1s0++k2T9XRgmg2pG113sw==}
+  '@tabler/icons-react@3.23.0':
+    resolution: {integrity: sha512-uSJfu1Tnhk6AAkerNCOBL3KL3aPpb/bnB4UjTbV3jItTJKitEgr4a98ted67qu5FHB3/tG1bxs32pqy5OL7NGw==}
     peerDependencies:
       react: '>= 16'
 
-  '@tabler/icons@3.17.0':
-    resolution: {integrity: sha512-sCSfAQ0w93KSnSL7tS08n73CdIKpuHP8foeLMWgDKiZaCs8ZE//N3ytazCk651ZtruTtByI3b+ZDj7nRf+hHvA==}
+  '@tabler/icons@3.23.0':
+    resolution: {integrity: sha512-Cz+X58jfRm0g/KcupXXuPw5knj671lNR054AnmLXvCjudiQBWI0wZulDDSsqDoGezvBzMTNPQtNcjLkZs82ZxQ==}
 
   '@tauri-apps/api@1.6.0':
     resolution: {integrity: sha512-rqI++FWClU5I2UBp4HXFvl+sBWkdigBkxnpJDQUWttNyG7IZP4FwQGhTNL5EOw0vI8i6eSAJ5frLqO7n7jbJdg==}
@@ -5103,27 +5103,27 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  tauri-plugin-autostart-api@git+https://git@github.com:tauri-apps/tauri-plugin-autostart.git#6e4666fe3462f0534e90ed6bc075394dff1a1bde:
-    resolution: {commit: 6e4666fe3462f0534e90ed6bc075394dff1a1bde, repo: git@github.com:tauri-apps/tauri-plugin-autostart.git, type: git}
+  tauri-plugin-autostart-api@git+https://git@github.com:tauri-apps/tauri-plugin-autostart.git#a9b47759a9f3887f9b49809a48aeff45e048f51f:
+    resolution: {commit: a9b47759a9f3887f9b49809a48aeff45e048f51f, repo: git@github.com:tauri-apps/tauri-plugin-autostart.git, type: git}
     version: 0.0.0
 
-  tauri-plugin-log-api@git+https://git@github.com:tauri-apps/tauri-plugin-log.git#cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f:
-    resolution: {commit: cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f, repo: git@github.com:tauri-apps/tauri-plugin-log.git, type: git}
+  tauri-plugin-log-api@git+https://git@github.com:tauri-apps/tauri-plugin-log.git#ee47371e75db7bc5190c74c3f94cfad3b81ac36d:
+    resolution: {commit: ee47371e75db7bc5190c74c3f94cfad3b81ac36d, repo: git@github.com:tauri-apps/tauri-plugin-log.git, type: git}
     version: 0.0.0
 
-  tauri-plugin-sql-api@git+https://git@github.com:tauri-apps/tauri-plugin-sql.git#10c441d2e90e5df0e414c40ba81f597b6c38b164:
-    resolution: {commit: 10c441d2e90e5df0e414c40ba81f597b6c38b164, repo: git@github.com:tauri-apps/tauri-plugin-sql.git, type: git}
+  tauri-plugin-sql-api@git+https://git@github.com:tauri-apps/tauri-plugin-sql.git#84c076c4a341ed9216a99229679ee34ace1efa8c:
+    resolution: {commit: 84c076c4a341ed9216a99229679ee34ace1efa8c, repo: git@github.com:tauri-apps/tauri-plugin-sql.git, type: git}
     version: 0.0.0
 
-  tauri-plugin-store-api@git+https://git@github.com:tauri-apps/tauri-plugin-store.git#0b7079b8c55bf25f6d9d9e8c57812d03b48a9788:
-    resolution: {commit: 0b7079b8c55bf25f6d9d9e8c57812d03b48a9788, repo: git@github.com:tauri-apps/tauri-plugin-store.git, type: git}
+  tauri-plugin-store-api@git+https://git@github.com:tauri-apps/tauri-plugin-store.git#a599aee9b0ec92c68ac992ca25084c205ef468eb:
+    resolution: {commit: a599aee9b0ec92c68ac992ca25084c205ef468eb, repo: git@github.com:tauri-apps/tauri-plugin-store.git, type: git}
     version: 0.0.0
 
   tauri-plugin-system-info-api@2.0.6:
     resolution: {integrity: sha512-7q8ieMK1bweMiLDbIWNNX3Dy7KNNwiB+WNEqKQutl0TKEGAb+efpy2SAzVLGu+i9tjDagCai8fZNuLLIpoQ9TA==}
 
-  tauri-plugin-window-state-api@git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
-    resolution: {commit: aa0b2a9cbf96f87a172e999670be79c4bb5d67dd, repo: git@github.com:tauri-apps/tauri-plugin-window-state.git, type: git}
+  tauri-plugin-window-state-api@git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#e4f784d8313c937fe4944827da5b51274ef1b93e:
+    resolution: {commit: e4f784d8313c937fe4944827da5b51274ef1b93e, repo: git@github.com:tauri-apps/tauri-plugin-window-state.git, type: git}
     version: 0.0.0
 
   term-size@2.2.1:
@@ -7672,12 +7672,12 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tabler/icons-react@3.17.0(react@18.3.1)':
+  '@tabler/icons-react@3.23.0(react@18.3.1)':
     dependencies:
-      '@tabler/icons': 3.17.0
+      '@tabler/icons': 3.23.0
       react: 18.3.1
 
-  '@tabler/icons@3.17.0': {}
+  '@tabler/icons@3.23.0': {}
 
   '@tauri-apps/api@1.6.0': {}
 
@@ -10828,19 +10828,19 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tauri-plugin-autostart-api@git+https://git@github.com:tauri-apps/tauri-plugin-autostart.git#6e4666fe3462f0534e90ed6bc075394dff1a1bde:
+  tauri-plugin-autostart-api@git+https://git@github.com:tauri-apps/tauri-plugin-autostart.git#a9b47759a9f3887f9b49809a48aeff45e048f51f:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
-  tauri-plugin-log-api@git+https://git@github.com:tauri-apps/tauri-plugin-log.git#cc86b2d9878d6ec02c9f25bd48292621a4bc2a6f:
+  tauri-plugin-log-api@git+https://git@github.com:tauri-apps/tauri-plugin-log.git#ee47371e75db7bc5190c74c3f94cfad3b81ac36d:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
-  tauri-plugin-sql-api@git+https://git@github.com:tauri-apps/tauri-plugin-sql.git#10c441d2e90e5df0e414c40ba81f597b6c38b164:
+  tauri-plugin-sql-api@git+https://git@github.com:tauri-apps/tauri-plugin-sql.git#84c076c4a341ed9216a99229679ee34ace1efa8c:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
-  tauri-plugin-store-api@git+https://git@github.com:tauri-apps/tauri-plugin-store.git#0b7079b8c55bf25f6d9d9e8c57812d03b48a9788:
+  tauri-plugin-store-api@git+https://git@github.com:tauri-apps/tauri-plugin-store.git#a599aee9b0ec92c68ac992ca25084c205ef468eb:
     dependencies:
       '@tauri-apps/api': 1.6.0
 
@@ -10851,7 +10851,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  tauri-plugin-window-state-api@git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#aa0b2a9cbf96f87a172e999670be79c4bb5d67dd:
+  tauri-plugin-window-state-api@git+https://git@github.com:tauri-apps/tauri-plugin-window-state.git#e4f784d8313c937fe4944827da5b51274ef1b93e:
     dependencies:
       '@tauri-apps/api': 1.6.0
 

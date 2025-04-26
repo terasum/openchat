@@ -93,7 +93,7 @@ export function DisplayForm() {
             </Select>
           </div>
         </SettingsItem>
-        <SettingsItem title="默认模型" icon={Brain}>
+        {/* <SettingsItem title="默认模型" icon={Brain}>
           <div className="flex flex-col justify-center items-center w-[200px]">
             <Select
               value={config.model.model_name}
@@ -128,6 +128,31 @@ export function DisplayForm() {
               </SelectContent>
             </Select>
           </div>
+        </SettingsItem> */}
+
+        <SettingsItem title="模型名称" description="选择默认模型名称" icon={Globe}>
+          <div className="flex flex-col justify-center items-center w-[300px]">
+            <Input
+              className="w-[100%]"
+              type="text"
+              placeholder=""
+              onContextMenu={(e)=>{
+                e.stopPropagation();
+              }}
+              defaultValue={config.model.model_name}
+              // disabled={config.model.model_provider !== "user"}
+              onChange={(e) => {
+                console.log("settings changed:", { domain: e.target.value });
+                setConfig({
+                  ...config,
+                  model: {
+                    ...config.model,
+                    model_name: e.target.value,
+                  },
+                });
+              }}
+            />
+          </div>
         </SettingsItem>
 
         <SettingsItem title="API地址" description="支持https协议" icon={Globe}>
@@ -140,7 +165,7 @@ export function DisplayForm() {
                 e.stopPropagation();
               }}
               defaultValue={config.model.api_url}
-              disabled={config.model.model_provider !== "user"}
+              // disabled={config.model.model_provider !== "user"}
               onChange={(e) => {
                 console.log("settings changed:", { domain: e.target.value });
                 setConfig({

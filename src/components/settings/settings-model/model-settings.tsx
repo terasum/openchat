@@ -13,7 +13,7 @@ import {
   CardTitle,
   Input,
 } from "@/components/ui";
-import { Brain, Key, Globe, Compass, Sparkle } from "lucide-react";
+import { Key, Globe, Compass, Sparkle } from "lucide-react";
 
 import { SettingsItem } from "../components/settings-item";
 
